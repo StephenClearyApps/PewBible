@@ -92,9 +92,11 @@ namespace ImportAndCompare
 
                 var punctuationJson = JsonConvert.SerializeObject(punctuation.Select(x => x.Replace("`", "'s")), Formatting.None);
                 File.WriteAllText("punctuation.js", "define(function () { return " + punctuationJson + "; });", utf8);
+                File.WriteAllText("Constants.Punctuation.cs", "namespace PewBible {\npublic static partial class Constants {\npublic static string[] Punctuation = " + CSharpSerialize(punctuation.Select(x => x.Replace("`", "'s"))) + "\n}\n}");
 
                 var wordsJson = JsonConvert.SerializeObject(words, Formatting.None);
                 File.WriteAllText("words.js", "define(function () { return " + wordsJson + "; });", utf8);
+                File.WriteAllText("Constants.Words.cs", "namespace PewBible {\npublic static partial class Constants {\npublic static string[] Words = " + CSharpSerialize(words) + "\n}\n}");
 
                 var jsonStructure = JsonConvert.SerializeObject(verses.Structure().Books, Formatting.None);
                 File.WriteAllText("structure.js", "define(function () { return " + jsonStructure + "; });", utf8);
@@ -178,6 +180,15 @@ namespace ImportAndCompare
             Console.WriteLine("CIWords: " + verses.NumberOfCaseInsensitiveWords());
             Console.WriteLine("Punct: " + verses.NumberOfPunctuation());
             Console.WriteLine("Total text: " + verses.SelectMany(x => x.Words).Count());
+        }
+
+        private static string CSharpSerialize(object obj)
+        {
+            if (obj is IEnumerable<string> stringArray)
+            {
+                return "new string[] { " + string.Join(", ", stringArray.Select(JsonConvert.SerializeObject)) + " };";
+            }
+            throw new InvalidOperationException($"Cannot serialize {obj.GetType().Name} to C#.");
         }
     }
 }
