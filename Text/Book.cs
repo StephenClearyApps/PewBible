@@ -5,14 +5,20 @@ namespace PewBible.Text
 {
     public sealed class Book
     {
-        public string Name { get; set; }
+        public Book(string name, int beginVerse, int endVerse, IReadOnlyList<Chapter> chapters)
+        {
+            Name = name;
+            BeginVerse = beginVerse;
+            EndVerse = endVerse;
+            Chapters = chapters;
+        }
 
-        public int Index { get; set; }
+        public string Name { get; }
 
-        public List<Chapter> Chapters { get; } = new List<Chapter>();
+        public int BeginVerse { get; }
 
-        public int BeginVerse { get; set; }
+        public int EndVerse { get; }
 
-        public int EndVerse { get; set; }
+        public IReadOnlyList<Chapter> Chapters { get; }
     }
 }

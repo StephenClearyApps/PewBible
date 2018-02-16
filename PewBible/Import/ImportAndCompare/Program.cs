@@ -195,9 +195,19 @@ namespace ImportAndCompare
             {
                 return "{\n" + string.Join(",\n", enumerable.Cast<object>().Select(CSharpSerialize)) + "\n}";
             }
-            return "new " + obj.GetType().Name + " {\n" +
-                   string.Join(",\n", obj.GetType().GetProperties().Select(property => property.Name + " = " + CSharpSerialize(property.GetValue(obj)))) +
-                   "\n}";
+            if (obj is Structure structure)
+            {
+                return $"new Structure(new Book[] {CSharpSerialize(structure.Books)})";
+            }
+            if (obj is Book book)
+            {
+                return $"new Book({CSharpSerialize(book.Name)}, {book.BeginVerse}, {book.EndVerse}, new Chapter[] {CSharpSerialize(book.Chapters)})";
+            }
+            if (obj is Chapter chapter)
+            {
+                return $"new Chapter({chapter.BeginVerse}, {chapter.EndVerse})";
+            }
+            throw new InvalidOperationException($"Can't serialize type {obj.GetType().Name} to C#");
         }
     }
 }

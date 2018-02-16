@@ -6,10 +6,14 @@ namespace PewBible.Text
 {
     public sealed class Chapter
     {
-        public int Index { get; set; }
+        public Chapter(int beginVerse, int endVerse)
+        {
+            BeginVerse = beginVerse;
+            EndVerse = endVerse;
+        }
 
-        public int BeginVerse { get; set; }
+        public int BeginVerse { get; }
 
-        public int EndVerse { get; set; }
+        public int EndVerse { get; }
     }
 }
