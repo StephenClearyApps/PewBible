@@ -9,7 +9,7 @@ namespace PewBible.Text
 
         public int Index { get; set; }
 
-        public List<Chapter> Chapters { get; set; }
+        public List<Chapter> Chapters { get; } = new List<Chapter>();
 
         public int BeginVerse { get; set; }
 

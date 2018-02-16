@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -92,14 +93,16 @@ namespace ImportAndCompare
 
                 var punctuationJson = JsonConvert.SerializeObject(punctuation.Select(x => x.Replace("`", "'s")), Formatting.None);
                 File.WriteAllText("punctuation.js", "define(function () { return " + punctuationJson + "; });", utf8);
-                File.WriteAllText("Constants.Punctuation.cs", "namespace PewBible {\npublic static partial class Constants {\npublic static string[] Punctuation = " + CSharpSerialize(punctuation.Select(x => x.Replace("`", "'s"))) + "\n}\n}");
+                File.WriteAllText("Constants.Punctuation.cs", "namespace PewBible {\npublic static partial class Constants {\npublic static string[] Punctuation = " + CSharpSerialize(punctuation.Select(x => x.Replace("`", "'s"))) + ";\n}\n}");
 
                 var wordsJson = JsonConvert.SerializeObject(words, Formatting.None);
                 File.WriteAllText("words.js", "define(function () { return " + wordsJson + "; });", utf8);
-                File.WriteAllText("Constants.Words.cs", "namespace PewBible {\npublic static partial class Constants {\npublic static string[] Words = " + CSharpSerialize(words) + "\n}\n}");
+                File.WriteAllText("Constants.Words.cs", "namespace PewBible {\npublic static partial class Constants {\npublic static string[] Words = " + CSharpSerialize(words) + ";\n}\n}");
 
-                var jsonStructure = JsonConvert.SerializeObject(verses.Structure().Books, Formatting.None);
+                var structure = verses.Structure();
+                var jsonStructure = JsonConvert.SerializeObject(structure.Books, Formatting.None);
                 File.WriteAllText("structure.js", "define(function () { return " + jsonStructure + "; });", utf8);
+                File.WriteAllText("Structure.cs", CSharpSerialize(structure));
 
                 var verseIndex = new List<int>();
                 using (var dataFile = new FileStream("verses.dat", FileMode.Create))
@@ -184,11 +187,17 @@ namespace ImportAndCompare
 
         private static string CSharpSerialize(object obj)
         {
-            if (obj is IEnumerable<string> stringArray)
+            if (obj is string || obj is int)
             {
-                return "new string[] { " + string.Join(", ", stringArray.Select(JsonConvert.SerializeObject)) + " };";
+                return JsonConvert.SerializeObject(obj);
             }
-            throw new InvalidOperationException($"Cannot serialize {obj.GetType().Name} to C#.");
+            if (obj is IEnumerable enumerable)
+            {
+                return "{\n" + string.Join(",\n", enumerable.Cast<object>().Select(CSharpSerialize)) + "\n}";
+            }
+            return "new " + obj.GetType().Name + " {\n" +
+                   string.Join(",\n", obj.GetType().GetProperties().Select(property => property.Name + " = " + CSharpSerialize(property.GetValue(obj)))) +
+                   "\n}";
         }
     }
 }
