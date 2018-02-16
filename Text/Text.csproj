@@ -5,4 +5,12 @@
     <RootNamespace>PewBible.Text</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Embedded\verses.dat" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Embedded\verses.dat" />
+  </ItemGroup>
+
 </Project>
