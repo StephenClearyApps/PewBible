@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PewBible", "PewBible\PewBib
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImportAndCompare", "PewBible\Import\ImportAndCompare\ImportAndCompare.csproj", "{45D13C0C-8348-4770-B532-E82975BF4849}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Text", "Text\Text.csproj", "{ED045C85-8855-4534-99B7-A342CB20D6FC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Util", "Util", "{09D76D4C-E243-4AC2-91E4-7643BA55B431}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,9 +33,16 @@ Global
 		{45D13C0C-8348-4770-B532-E82975BF4849}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45D13C0C-8348-4770-B532-E82975BF4849}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45D13C0C-8348-4770-B532-E82975BF4849}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED045C85-8855-4534-99B7-A342CB20D6FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED045C85-8855-4534-99B7-A342CB20D6FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED045C85-8855-4534-99B7-A342CB20D6FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED045C85-8855-4534-99B7-A342CB20D6FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{45D13C0C-8348-4770-B532-E82975BF4849} = {09D76D4C-E243-4AC2-91E4-7643BA55B431}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A1578CEE-B521-4A77-9531-DA1F46AE38A5}
