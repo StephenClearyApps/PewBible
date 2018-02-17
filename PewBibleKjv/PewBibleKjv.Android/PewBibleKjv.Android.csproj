@@ -82,6 +82,12 @@
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Text\Text.csproj">
+      <Project>{ed045c85-8855-4534-99b7-a342cb20d6fc}</Project>
+      <Name>Text</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="..\PewBibleKjv\PewBibleKjv.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
