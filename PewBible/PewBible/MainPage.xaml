@@ -4,8 +4,10 @@
              xmlns:local="clr-namespace:PewBible"
              x:Class="PewBible.MainPage">
 
-	<Label Text="Welcome to Xamarin.Forms!" 
+    <ListView x:Name="ListView1" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"></ListView>
+    
+	<!--<Label Text="Welcome to Xamarin.Forms!" 
            VerticalOptions="Center" 
-           HorizontalOptions="Center" />
+           HorizontalOptions="Center" />-->
 
 </ContentPage>
