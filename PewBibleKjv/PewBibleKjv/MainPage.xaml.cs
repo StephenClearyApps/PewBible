@@ -32,11 +32,11 @@ namespace PewBibleKjv
 
 	    public class TestViewHolder : RecyclerView.ViewHolder
 	    {
-	        public TextView View { get; }
+	        public Label Label { get; }
 
-	        public TestViewHolder(TextView view) : base(view)
+	        public TestViewHolder(Label label, Android.Views.View view) : base(view)
 	        {
-	            View = view;
+	            Label = label;
 	        }
 	    }
 
@@ -52,13 +52,26 @@ namespace PewBibleKjv
 	        public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
 	        {
 	            var vh = (TestViewHolder)holder;
-	            vh.View.Text = _data[position].ToString();
+	            vh.Label.Text = _data[position].ToString();
 	        }
 
 	        public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
 	        {
-                var view = new TextView(parent.Context);
-                return new TestViewHolder(view);
+	            var label = new Label { Text = "Hello!" };
+	            var cv = new ContentView
+	            {
+                    VerticalOptions = LayoutOptions.Start,
+                    HorizontalOptions = LayoutOptions.Start,
+	                Content = label,
+	            };
+	            var renderer = Xamarin.Forms.Platform.Android.Platform.CreateRendererWithContext(cv, parent.Context);
+	            var view = renderer.View;
+	            renderer.Tracker.UpdateLayout();
+                view.LayoutParameters = new RecyclerView.LayoutParams(400, 400);
+	            cv.Layout(Rectangle.FromLTRB(0, 0, 400, 400));
+                view.Layout(0, 0, (int)cv.WidthRequest, (int)cv.HeightRequest);
+
+                return new TestViewHolder(label, view);
 	        }
 
 	        public override int ItemCount => _data.Count;
