@@ -67,9 +67,9 @@ namespace PewBibleKjv
 	            var renderer = Xamarin.Forms.Platform.Android.Platform.CreateRendererWithContext(cv, parent.Context);
 	            var view = renderer.View;
 	            renderer.Tracker.UpdateLayout();
-                view.LayoutParameters = new RecyclerView.LayoutParams(400, 400);
-	            cv.Layout(Rectangle.FromLTRB(0, 0, 400, 400));
-                view.Layout(0, 0, (int)cv.WidthRequest, (int)cv.HeightRequest);
+                view.LayoutParameters = new RecyclerView.LayoutParams(parent.Width, parent.Height);
+	            cv.Layout(Rectangle.FromLTRB(0, 0, parent.Width, parent.Height));
+                view.Layout(0, 0, (int)cv.Width, (int)cv.Height);
 
                 return new TestViewHolder(label, view);
 	        }
