@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:PewBibleKjv"
+             xmlns:recyclerView="clr-namespace:Android.Support.V7.Widget;assembly=Xamarin.Android.Support.v7.RecyclerView"
+             xmlns:app="clr-namespace:Android.App;assembly=Mono.Android"
+             x:Class="PewBibleKjv.MainPage">
+
+    <ContentView x:Name="RecyclerViewParent">
+        <!-- ReSharper disable Xaml.ConstructorWarning -->
+        <!-- ReSharper disable Xaml.InvalidType -->
+        <recyclerView:RecyclerView x:Arguments="{x:Static app:Application.Context}"/>
+        <!-- ReSharper restore Xaml.InvalidType -->
+        <!-- ReSharper restore Xaml.ConstructorWarning -->
+    </ContentView>
+
+</ContentPage>
