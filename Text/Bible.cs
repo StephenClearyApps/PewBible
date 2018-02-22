@@ -1,11 +1,79 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace PewBible.Text
 {
     public static class Bible
     {
+        public static FormattedVerse FormattedVerse(int verseNumber)
+        {
+            var result = new FormattedVerse();
+            var text = new StringBuilder();
+            var preventSpace = false;
+            foreach (var word in VerseWords(verseNumber))
+            {
+                if (!NoPreSpace.Contains(word))
+                {
+                    if (!preventSpace)
+                    {
+                        text.Append(' ');
+                    }
+                    FormatWord(word, text, result);
+                }
+                else
+                {
+                    FormatWord(word, text, result);
+                }
+                preventSpace = NoPostSpace.Contains(word);
+            }
+            result.Text = text.ToString();
+            return result;
+        }
+
+        private static void FormatWord(string word, StringBuilder text, FormattedVerse result)
+        {
+            if (word == "<")
+            {
+                result.Spans.Add(new FormattedVerse.Span
+                {
+                    Type = Text.FormattedVerse.SpanType.Colophon,
+                    Begin = text.Length
+                });
+            }
+            else if (word == "[")
+            {
+                result.Spans.Add(new FormattedVerse.Span
+                {
+                    Type = Text.FormattedVerse.SpanType.Italics,
+                    Begin = text.Length
+                });
+            }
+            else if (word == ">" || word == "]")
+            {
+                result.Spans[result.Spans.Count - 1].End = text.Length;
+            }
+            else if (word == "-")
+            {
+                text.Append("-\u200B");
+            }
+            else if (word == "—")
+            {
+                text.Append("—\u200B");
+            }
+            else
+            {
+                text.Append(word);
+            }
+        }
+
+        // Punctuation that prevents a space from being appended after them.
+        private static readonly string[] NoPostSpace = {"(", "[", "<", "-", "—"};
+
+        // Punctuation that prevents a space from being prepended before them.
+        private static readonly string[] NoPreSpace = {"'", "-", "—", "!", ")", ",", ".", ":", ";", "?", "]", "'s", ">"};
+
         public static IEnumerable<string> VerseWords(int verseNumber)
         {
             var beginEndBytes = new byte[sizeof(int) * 2];
