@@ -93,16 +93,16 @@ namespace ImportAndCompare
 
                 var punctuationJson = JsonConvert.SerializeObject(punctuation.Select(x => x.Replace("`", "'s")), Formatting.None);
                 File.WriteAllText("punctuation.js", "define(function () { return " + punctuationJson + "; });", utf8);
-                File.WriteAllText("Constants.Punctuation.cs", "namespace PewBible {\npublic static partial class Constants {\npublic static string[] Punctuation = " + CSharpSerialize(punctuation.Select(x => x.Replace("`", "'s"))) + ";\n}\n}");
+                File.WriteAllText("Constants.Punctuation.cs", "namespace PewBible {\npublic static partial class Constants {\npublic static const string[] Punctuation = " + CSharpSerialize(punctuation.Select(x => x.Replace("`", "'s"))) + ";\n}\n}");
 
                 var wordsJson = JsonConvert.SerializeObject(words, Formatting.None);
                 File.WriteAllText("words.js", "define(function () { return " + wordsJson + "; });", utf8);
-                File.WriteAllText("Constants.Words.cs", "namespace PewBible {\npublic static partial class Constants {\npublic static string[] Words = " + CSharpSerialize(words) + ";\n}\n}");
+                File.WriteAllText("Constants.Words.cs", "namespace PewBible {\npublic static partial class Constants {\npublic static const string[] Words = " + CSharpSerialize(words) + ";\n}\n}");
 
                 var structure = verses.Structure();
                 var jsonStructure = JsonConvert.SerializeObject(structure.Books, Formatting.None);
                 File.WriteAllText("structure.js", "define(function () { return " + jsonStructure + "; });", utf8);
-                File.WriteAllText("Structure.cs", CSharpSerialize(structure));
+                File.WriteAllText("Structure.cs", "namespace PewBible {\npublic static class Structure {\npublic static readonly Book[] Books = " + CSharpSerialize(structure) + ";\n}\n}");
 
                 var verseIndex = new List<int>();
                 using (var dataFile = new FileStream("verses.dat", FileMode.Create))
@@ -140,6 +140,7 @@ namespace ImportAndCompare
 
                 var verseIndexJson = JsonConvert.SerializeObject(verseIndex, Formatting.None);
                 File.WriteAllText("verseIndex.js", "define(function () { return " + verseIndexJson + "; });", utf8);
+                File.WriteAllBytes("verseIndex.dat", verseIndex.SelectMany(BitConverter.GetBytes).ToArray());
 
                 var concordance = new List<int>[words.Count];
                 for (var i = 0; i != concordance.Length; ++i)
@@ -197,7 +198,7 @@ namespace ImportAndCompare
             }
             if (obj is Structure structure)
             {
-                return $"new Structure(new Book[] {CSharpSerialize(structure.Books)})";
+                return $"new Book[] {CSharpSerialize(structure.Books)}";
             }
             if (obj is Book book)
             {
