@@ -53,7 +53,7 @@ namespace PewBibleKjv
 	        public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
 	        {
 	            var vh = (TestViewHolder)holder;
-	            vh.View.Text = _data[position].ToString();
+	            vh.View.Text = _data[position];
 	        }
 
 	        public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)

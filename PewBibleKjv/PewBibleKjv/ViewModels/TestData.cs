@@ -6,14 +6,14 @@ using System.Text;
 
 namespace PewBibleKjv.ViewModels
 {
-    public sealed class TestData: IReadOnlyList<int>
+    public sealed class TestData: IReadOnlyList<string>
     {
-        public IEnumerator<int> GetEnumerator()
+        public IEnumerator<string> GetEnumerator()
         {
             for (var i = 0; i != Count; ++i)
             {
                 Debug.WriteLine("Enumerating " + i);
-                yield return i;
+                yield return this[i];
             }
         }
 
@@ -22,14 +22,14 @@ namespace PewBibleKjv.ViewModels
             return GetEnumerator();
         }
 
-        public int Count => 10000;
+        public int Count => 31102;
 
-        public int this[int index]
+        public string this[int index]
         {
             get
             {
                 Debug.WriteLine("Retrieving " + index);
-                return index;
+                return PewBible.Text.Bible.FormattedVerse(index).Text;
             }
         }
     }
