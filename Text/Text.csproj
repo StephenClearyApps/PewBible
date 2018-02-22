@@ -6,10 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Embedded\verseIndex.dat" />
     <None Remove="Embedded\verses.dat" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Embedded\verseIndex.dat" />
     <EmbeddedResource Include="Embedded\verses.dat" />
   </ItemGroup>
 

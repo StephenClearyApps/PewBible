@@ -93,16 +93,16 @@ namespace ImportAndCompare
 
                 var punctuationJson = JsonConvert.SerializeObject(punctuation.Select(x => x.Replace("`", "'s")), Formatting.None);
                 File.WriteAllText("punctuation.js", "define(function () { return " + punctuationJson + "; });", utf8);
-                File.WriteAllText("Constants.Punctuation.cs", "namespace PewBible {\npublic static partial class Constants {\npublic static const string[] Punctuation = " + CSharpSerialize(punctuation.Select(x => x.Replace("`", "'s"))) + ";\n}\n}");
+                File.WriteAllText("Constants.Punctuation.cs", "namespace PewBible.Text {\npublic static partial class Constants {\npublic static readonly string[] Punctuation = " + CSharpSerialize(punctuation.Select(x => x.Replace("`", "'s"))) + ";\n}\n}");
 
                 var wordsJson = JsonConvert.SerializeObject(words, Formatting.None);
                 File.WriteAllText("words.js", "define(function () { return " + wordsJson + "; });", utf8);
-                File.WriteAllText("Constants.Words.cs", "namespace PewBible {\npublic static partial class Constants {\npublic static const string[] Words = " + CSharpSerialize(words) + ";\n}\n}");
+                File.WriteAllText("Constants.Words.cs", "namespace PewBible.Text {\npublic static partial class Constants {\npublic static readonly string[] Words = " + CSharpSerialize(words) + ";\n}\n}");
 
                 var structure = verses.Structure();
                 var jsonStructure = JsonConvert.SerializeObject(structure.Books, Formatting.None);
                 File.WriteAllText("structure.js", "define(function () { return " + jsonStructure + "; });", utf8);
-                File.WriteAllText("Structure.cs", "namespace PewBible {\npublic static class Structure {\npublic static readonly Book[] Books = " + CSharpSerialize(structure) + ";\n}\n}");
+                File.WriteAllText("Structure.cs", "namespace PewBible.Text {\npublic static class Structure {\npublic static readonly Book[] Books = " + CSharpSerialize(structure) + ";\n}\n}");
 
                 var verseIndex = new List<int>();
                 using (var dataFile = new FileStream("verses.dat", FileMode.Create))
