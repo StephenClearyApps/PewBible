@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PewBible.Text
+namespace PewBibleKjv.Text
 {
     public sealed class FormattedVerse
     {

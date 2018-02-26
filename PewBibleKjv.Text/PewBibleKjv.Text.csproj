@@ -2,7 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>PewBible.Text</RootNamespace>
+    <RootNamespace>PewBibleKjv.Text</RootNamespace>
+    <AssemblyName>PewBibleKjv.Text</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

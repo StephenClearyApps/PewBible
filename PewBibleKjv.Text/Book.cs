@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PewBible.Text
+namespace PewBibleKjv.Text
 {
     public sealed class Book
     {

@@ -107,9 +107,9 @@
     <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Text\Text.csproj">
-      <Project>{ed045c85-8855-4534-99b7-a342cb20d6fc}</Project>
-      <Name>Text</Name>
+    <ProjectReference Include="..\PewBibleKjv.Text\PewBibleKjv.Text.csproj">
+      <Project>{4aa1929c-1cc9-4f67-a24b-8364732a2bd2}</Project>
+      <Name>PewBibleKjv.Text</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

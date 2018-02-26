@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Nito.Comparers;
-using PewBible.Text;
+using PewBibleKjv.Text;
 
 namespace UnitTests
 {

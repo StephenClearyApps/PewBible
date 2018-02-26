@@ -73,13 +73,13 @@
     <Analyzer Include="..\packages\xunit.analyzers.0.8.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Text\Text.csproj">
-      <Project>{ed045c85-8855-4534-99b7-a342cb20d6fc}</Project>
-      <Name>Text</Name>
-    </ProjectReference>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+    <ProjectReference Include="..\PewBibleKjv.Text\PewBibleKjv.Text.csproj">
+      <Project>{4aa1929c-1cc9-4f67-a24b-8364732a2bd2}</Project>
+      <Name>PewBibleKjv.Text</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

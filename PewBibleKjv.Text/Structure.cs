@@ -1,4 +1,4 @@
-namespace PewBible.Text {
+namespace PewBibleKjv.Text {
 public static class Structure {
 public static readonly Book[] Books = new Book[] {
 new Book("Genesis", 0, 1533, new Chapter[] {

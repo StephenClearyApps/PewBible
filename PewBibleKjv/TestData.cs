@@ -29,7 +29,7 @@ namespace PewBibleKjv.ViewModels
             get
             {
                 Debug.WriteLine("Retrieving " + index);
-                return PewBible.Text.Bible.FormattedVerse(index).Text;
+                return Text.Bible.FormattedVerse(index).Text;
             }
         }
     }

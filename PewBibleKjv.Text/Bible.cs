@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PewBible.Text
+namespace PewBibleKjv.Text
 {
     public static class Bible
     {
