@@ -1,9 +1,11 @@
-﻿using Android.App;
+﻿using System.Runtime.InteropServices;
+using Android.App;
 using Android.Widget;
 using Android.OS;
 using Android.Support.V7.Widget;
 using Android.Views;
 using PewBibleKjv.ViewModels;
+using Debug = System.Diagnostics.Debug;
 
 namespace PewBibleKjv
 {
@@ -18,14 +20,35 @@ namespace PewBibleKjv
             SetContentView(Resource.Layout.Main);
 
             var recyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView);
-            recyclerView.SetLayoutManager(new LinearLayoutManager(this));
+            var layoutManager = new LinearLayoutManager(this);
+            recyclerView.SetLayoutManager(layoutManager);
             recyclerView.SetAdapter(new TestAdapter(new TestData()));
+            recyclerView.AddOnScrollListener(new ScrollListener(layoutManager));
             recyclerView.ScrollToPosition(1000);
+        }
+
+        public class ScrollListener : RecyclerView.OnScrollListener
+        {
+            private readonly LinearLayoutManager _layoutManager;
+
+            public ScrollListener(LinearLayoutManager layoutManager)
+            {
+                _layoutManager = layoutManager;
+            }
+
+            public override void OnScrolled(RecyclerView recyclerView, int dx, int dy)
+            {
+                var firstIndex = _layoutManager.FindFirstVisibleItemPosition();
+                Debug.WriteLine("Scrolled to position: " + firstIndex);
+                var view = (TestViewHolder)recyclerView.FindViewHolderForLayoutPosition(firstIndex);
+                Debug.WriteLine("Scrolled to verse: " + view.Verse);
+            }
         }
 
         public class TestViewHolder : RecyclerView.ViewHolder
         {
             public TextView View { get; }
+            public int Verse { get; set; }
 
             public TestViewHolder(TextView view) : base(view)
             {
@@ -45,6 +68,7 @@ namespace PewBibleKjv
             public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
             {
                 var vh = (TestViewHolder)holder;
+                vh.Verse = position;
                 vh.View.Text = _data[position];
             }
 
