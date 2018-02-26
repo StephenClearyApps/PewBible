@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{46735C6B-2BC3-4906-8C74-0823F17A8CE6}</ProjectGuid>
+    <ProjectGuid>{F95DBC7F-78D5-4012-AC86-50128B37D551}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FastStartupTest</RootNamespace>
-    <AssemblyName>FastStartupTest</AssemblyName>
+    <RootNamespace>PewBibleKjv</RootNamespace>
+    <AssemblyName>PewBibleKjv</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <AndroidApplication>True</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>

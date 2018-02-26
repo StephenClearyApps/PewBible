@@ -5,13 +5,11 @@ using Android.Support.V7.Widget;
 using Android.Views;
 using PewBibleKjv.ViewModels;
 
-namespace FastStartupTest
+namespace PewBibleKjv
 {
-    [Activity(Label = "FastStartupTest", MainLauncher = true, Icon = "@mipmap/icon")]
+    [Activity(Label = "PewBibleKjv", MainLauncher = true, Icon = "@mipmap/icon")]
     public class MainActivity : Activity
     {
-        int count = 1;
-
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -24,6 +22,7 @@ namespace FastStartupTest
             recyclerView.SetAdapter(new TestAdapter(new TestData()));
             recyclerView.ScrollToPosition(1000);
         }
+
         public class TestViewHolder : RecyclerView.ViewHolder
         {
             public TextView View { get; }

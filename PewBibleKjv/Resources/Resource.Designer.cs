@@ -9,9 +9,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: global::Android.Runtime.ResourceDesignerAttribute("FastStartupTest.Resource", IsApplication=true)]
+[assembly: global::Android.Runtime.ResourceDesignerAttribute("PewBibleKjv.Resource", IsApplication=true)]
 
-namespace FastStartupTest
+namespace PewBibleKjv
 {
 	
 	
