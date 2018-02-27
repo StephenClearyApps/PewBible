@@ -22,6 +22,7 @@ namespace PewBibleKjv
         private readonly Func<int, Location> _positionToLocation;
         private readonly ScrollListener _scrollListener;
         private int _lastPosition = -1;
+        private int _jumpTarget = -1;
 
         public RecyclerViewVerseViewAdapter(RecyclerView recyclerView, LinearLayoutManager layoutManager,
             Func<int, Location> positionToLocation)
@@ -38,15 +39,27 @@ namespace PewBibleKjv
                     return;
                 _lastPosition = firstIndex;
                 var location = _positionToLocation(firstIndex);
-                // TODO: distinguish between scrolls and jumps.
-                OnScroll?.Invoke(location);
+                if (firstIndex == _jumpTarget)
+                {
+                    _jumpTarget = -1;
+                    OnJump?.Invoke(location);
+                }
+                else
+                {
+                    OnScroll?.Invoke(location);
+                }
             };
             _recyclerView.AddOnScrollListener(_scrollListener);
         }
 
         public event Action<Location> OnScroll;
         public event Action<Location> OnJump;
-        public void Jump(int absoluteVerseNumber) => _recyclerView.ScrollToPosition(absoluteVerseNumber);
+
+        public void Jump(int absoluteVerseNumber)
+        {
+            _jumpTarget = absoluteVerseNumber;
+            _recyclerView.ScrollToPosition(absoluteVerseNumber);
+        }
 
         public class ScrollListener : RecyclerView.OnScrollListener
         {
