@@ -5,13 +5,16 @@ namespace PewBibleKjv.Text
 {
     public sealed class Book
     {
-        public Book(string name, int beginVerse, int endVerse, IReadOnlyList<Chapter> chapters)
+        public Book(int index, string name, int beginVerse, int endVerse, IReadOnlyList<Chapter> chapters)
         {
+            Index = index;
             Name = name;
             BeginVerse = beginVerse;
             EndVerse = endVerse;
             Chapters = chapters;
         }
+
+        public int Index { get; }
 
         public string Name { get; }
 

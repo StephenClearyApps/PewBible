@@ -6,11 +6,14 @@ namespace PewBibleKjv.Text
 {
     public sealed class Chapter
     {
-        public Chapter(int beginVerse, int endVerse)
+        public Chapter(int index, int beginVerse, int endVerse)
         {
+            Index = index;
             BeginVerse = beginVerse;
             EndVerse = endVerse;
         }
+
+        public int Index { get; }
 
         public int BeginVerse { get; }
 

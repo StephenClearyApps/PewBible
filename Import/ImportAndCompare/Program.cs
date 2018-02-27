@@ -198,15 +198,15 @@ namespace ImportAndCompare
             }
             if (obj is Structure structure)
             {
-                return $"new Book[] {CSharpSerialize(structure.Books)}";
+                return $"{CSharpSerialize(structure.Books)}";
             }
             if (obj is Book book)
             {
-                return $"new Book({CSharpSerialize(book.Name)}, {book.BeginVerse}, {book.EndVerse}, new Chapter[] {CSharpSerialize(book.Chapters)})";
+                return $"new Book({book.Index}, {CSharpSerialize(book.Name)}, {book.BeginVerse}, {book.EndVerse}, new[] {CSharpSerialize(book.Chapters)})";
             }
             if (obj is Chapter chapter)
             {
-                return $"new Chapter({chapter.BeginVerse}, {chapter.EndVerse})";
+                return $"new Chapter({chapter.Index}, {chapter.BeginVerse}, {chapter.EndVerse})";
             }
             throw new InvalidOperationException($"Can't serialize type {obj.GetType().Name} to C#");
         }
