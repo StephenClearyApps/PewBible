@@ -23,7 +23,7 @@ namespace PewBibleKjv
             var recyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView);
             var layoutManager = new LinearLayoutManager(this);
             recyclerView.SetLayoutManager(layoutManager);
-            recyclerView.SetAdapter(new TestAdapter(TextService.Instance));
+            recyclerView.SetAdapter(new VerseAdapter(TextService.Instance));
             recyclerView.AddOnScrollListener(new ScrollListener(layoutManager));
             recyclerView.ScrollToPosition(1000);
         }
@@ -40,42 +40,41 @@ namespace PewBibleKjv
             public override void OnScrolled(RecyclerView recyclerView, int dx, int dy)
             {
                 var firstIndex = _layoutManager.FindFirstVisibleItemPosition();
-                Debug.WriteLine("Scrolled to position: " + firstIndex);
-                var view = (TestViewHolder)recyclerView.FindViewHolderForLayoutPosition(firstIndex);
+                var view = (VerseViewHolder)recyclerView.FindViewHolderForLayoutPosition(firstIndex);
                 Debug.WriteLine("Scrolled to verse: " + view.Location);
             }
         }
 
-        public class TestViewHolder : RecyclerView.ViewHolder
+        public class VerseViewHolder : RecyclerView.ViewHolder
         {
             public TextView View { get; }
             public Location Location { get; set; }
 
-            public TestViewHolder(TextView view) : base(view)
+            public VerseViewHolder(TextView view) : base(view)
             {
                 View = view;
             }
         }
 
-        public class TestAdapter : RecyclerView.Adapter
+        public class VerseAdapter : RecyclerView.Adapter
         {
             private readonly TextService _data;
 
-            public TestAdapter(TextService data)
+            public VerseAdapter(TextService data)
             {
                 _data = data;
             }
 
             public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
             {
-                var vh = (TestViewHolder)holder;
+                var vh = (VerseViewHolder)holder;
                 vh.Location = _data[position];
                 vh.View.Text = Bible.FormattedVerse(vh.Location.AbsoluteVerseNumber).Text;
             }
 
             public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
             {
-                return new TestViewHolder(new TextView(parent.Context));
+                return new VerseViewHolder(new TextView(parent.Context));
             }
 
             public override int ItemCount => _data.Count;
