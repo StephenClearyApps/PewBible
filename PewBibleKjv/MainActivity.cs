@@ -24,7 +24,7 @@ namespace PewBibleKjv
             var recyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView);
             var layoutManager = new LinearLayoutManager(this);
             recyclerView.SetLayoutManager(layoutManager);
-            recyclerView.SetAdapter(new VerseAdapter(TextService.Instance));
+            recyclerView.SetAdapter(new VerseAdapter(TextService.Instance, LayoutInflater));
             recyclerView.AddOnScrollListener(new ScrollListener(layoutManager, headingText));
             recyclerView.ScrollToPosition(1000);
         }
@@ -59,19 +59,21 @@ namespace PewBibleKjv
             public TextView View { get; }
             public Location Location { get; set; }
 
-            public VerseViewHolder(TextView view) : base(view)
+            public VerseViewHolder(View view) : base(view)
             {
-                View = view;
+                View = view.FindViewById<TextView>(Resource.Id.verseText);
             }
         }
 
         public class VerseAdapter : RecyclerView.Adapter
         {
             private readonly TextService _data;
+            private readonly LayoutInflater _layoutInflater;
 
-            public VerseAdapter(TextService data)
+            public VerseAdapter(TextService data, LayoutInflater layoutInflater)
             {
                 _data = data;
+                _layoutInflater = layoutInflater;
             }
 
             public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
@@ -83,7 +85,8 @@ namespace PewBibleKjv
 
             public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
             {
-                return new VerseViewHolder(new TextView(parent.Context));
+                var verseView = _layoutInflater.Inflate(Resource.Layout.VerseLayout, parent, attachToRoot: false);
+                return new VerseViewHolder(verseView);
             }
 
             public override int ItemCount => _data.Count;

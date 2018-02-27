@@ -2212,6 +2212,9 @@ namespace PewBibleKjv
 			// aapt resource value: 0x7f070018
 			public const int useLogo = 2131165208;
 			
+			// aapt resource value: 0x7f07007c
+			public const int verseText = 2131165308;
+			
 			// aapt resource value: 0x7f07002e
 			public const int withText = 2131165230;
 			
@@ -2402,6 +2405,9 @@ namespace PewBibleKjv
 			
 			// aapt resource value: 0x7f04002f
 			public const int tooltip = 2130968623;
+			
+			// aapt resource value: 0x7f040030
+			public const int VerseLayout = 2130968624;
 			
 			static Layout()
 			{
@@ -3035,9 +3041,6 @@ namespace PewBibleKjv
 			
 			// aapt resource value: 0x7f09007e
 			public const int Base_Widget_AppCompat_Toolbar_Button_Navigation = 2131296382;
-			
-			// aapt resource value: 0x7f09016d
-			public const int MyTextViewStyle = 2131296621;
 			
 			// aapt resource value: 0x7f09016c
 			public const int MyTheme = 2131296620;
