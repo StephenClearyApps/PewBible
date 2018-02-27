@@ -4,7 +4,8 @@ using Android.Widget;
 using Android.OS;
 using Android.Support.V7.Widget;
 using Android.Views;
-using PewBibleKjv.ViewModels;
+using PewBibleKjv.Services;
+using PewBibleKjv.Text;
 using Debug = System.Diagnostics.Debug;
 
 namespace PewBibleKjv
@@ -22,7 +23,7 @@ namespace PewBibleKjv
             var recyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView);
             var layoutManager = new LinearLayoutManager(this);
             recyclerView.SetLayoutManager(layoutManager);
-            recyclerView.SetAdapter(new TestAdapter(new TestData()));
+            recyclerView.SetAdapter(new TestAdapter(TextService.Instance));
             recyclerView.AddOnScrollListener(new ScrollListener(layoutManager));
             recyclerView.ScrollToPosition(1000);
         }
@@ -41,14 +42,14 @@ namespace PewBibleKjv
                 var firstIndex = _layoutManager.FindFirstVisibleItemPosition();
                 Debug.WriteLine("Scrolled to position: " + firstIndex);
                 var view = (TestViewHolder)recyclerView.FindViewHolderForLayoutPosition(firstIndex);
-                Debug.WriteLine("Scrolled to verse: " + view.Verse);
+                Debug.WriteLine("Scrolled to verse: " + view.Location);
             }
         }
 
         public class TestViewHolder : RecyclerView.ViewHolder
         {
             public TextView View { get; }
-            public int Verse { get; set; }
+            public Location Location { get; set; }
 
             public TestViewHolder(TextView view) : base(view)
             {
@@ -58,9 +59,9 @@ namespace PewBibleKjv
 
         public class TestAdapter : RecyclerView.Adapter
         {
-            private readonly TestData _data;
+            private readonly TextService _data;
 
-            public TestAdapter(TestData data)
+            public TestAdapter(TextService data)
             {
                 _data = data;
             }
@@ -68,8 +69,8 @@ namespace PewBibleKjv
             public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
             {
                 var vh = (TestViewHolder)holder;
-                vh.Verse = position;
-                vh.View.Text = _data[position];
+                vh.Location = _data[position];
+                vh.View.Text = Bible.FormattedVerse(vh.Location.AbsoluteVerseNumber).Text;
             }
 
             public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)

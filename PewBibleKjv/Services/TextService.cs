@@ -3,12 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using PewBibleKjv.Text;
 
-namespace PewBibleKjv.ViewModels
+namespace PewBibleKjv.Services
 {
-    public sealed class TestData: IReadOnlyList<string>
+    public sealed class TextService: IReadOnlyList<Location>
     {
-        public IEnumerator<string> GetEnumerator()
+        public static TextService Instance { get; } = new TextService();
+
+        public IEnumerator<Location> GetEnumerator()
         {
             for (var i = 0; i != Count; ++i)
             {
@@ -24,12 +27,12 @@ namespace PewBibleKjv.ViewModels
 
         public int Count => 31102;
 
-        public string this[int index]
+        public Location this[int index]
         {
             get
             {
                 Debug.WriteLine("Retrieving " + index);
-                return Text.Bible.FormattedVerse(index).Text;
+                return Location.Create(index);
             }
         }
     }
