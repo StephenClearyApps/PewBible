@@ -3036,6 +3036,9 @@ namespace PewBibleKjv
 			// aapt resource value: 0x7f09007e
 			public const int Base_Widget_AppCompat_Toolbar_Button_Navigation = 2131296382;
 			
+			// aapt resource value: 0x7f09016d
+			public const int MyTextViewStyle = 2131296621;
+			
 			// aapt resource value: 0x7f09016c
 			public const int MyTheme = 2131296620;
 			
