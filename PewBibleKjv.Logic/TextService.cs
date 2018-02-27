@@ -7,8 +7,6 @@ namespace PewBibleKjv.Logic
 {
     public sealed class TextService: IReadOnlyList<Location>
     {
-        public static TextService Instance { get; } = new TextService();
-
         public IEnumerator<Location> GetEnumerator()
         {
             for (var i = 0; i != Count; ++i)

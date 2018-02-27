@@ -1,0 +1,63 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+using Android.App;
+using Android.Content;
+using Android.OS;
+using Android.Runtime;
+using Android.Support.V7.Widget;
+using Android.Views;
+using Android.Widget;
+using PewBibleKjv.Logic;
+using PewBibleKjv.Logic.UI;
+
+namespace PewBibleKjv
+{
+    public sealed class RecyclerViewVerseViewAdapter: IVerseView
+    {
+        private readonly RecyclerView _recyclerView;
+        private readonly LinearLayoutManager _layoutManager;
+        private readonly Func<int, Location> _positionToLocation;
+        private readonly ScrollListener _scrollListener;
+        private int _lastPosition = -1;
+
+        public RecyclerViewVerseViewAdapter(RecyclerView recyclerView, LinearLayoutManager layoutManager,
+            Func<int, Location> positionToLocation)
+        {
+            _recyclerView = recyclerView;
+            _layoutManager = layoutManager;
+            _positionToLocation = positionToLocation;
+
+            _scrollListener = new ScrollListener();
+            _scrollListener.Scrolled += (_, __, ___) =>
+            {
+                var firstIndex = _layoutManager.FindFirstVisibleItemPosition();
+                if (firstIndex == _lastPosition)
+                    return;
+                _lastPosition = firstIndex;
+                var location = _positionToLocation(firstIndex);
+                // TODO: distinguish between scrolls and jumps.
+                OnScroll?.Invoke(location);
+            };
+            _recyclerView.AddOnScrollListener(_scrollListener);
+        }
+
+        public event Action<Location> OnScroll;
+        public event Action<Location> OnJump;
+        public void Jump(int absoluteVerseNumber) => _recyclerView.ScrollToPosition(absoluteVerseNumber);
+
+        public class ScrollListener : RecyclerView.OnScrollListener
+        {
+            public override void OnScrollStateChanged(RecyclerView recyclerView, int newState) =>
+                ScrollStateChanged?.Invoke(recyclerView, newState);
+
+            public override void OnScrolled(RecyclerView recyclerView, int dx, int dy) =>
+                Scrolled?.Invoke(recyclerView, dx, dy);
+
+            public event Action<RecyclerView, int> ScrollStateChanged;
+            public event Action<RecyclerView, int, int> Scrolled;
+        }
+    }
+}

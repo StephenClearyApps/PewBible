@@ -1,10 +1,13 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using Android.App;
 using Android.Widget;
 using Android.OS;
 using Android.Support.V7.Widget;
 using Android.Views;
 using PewBibleKjv.Logic;
+using PewBibleKjv.Logic.UI;
 using PewBibleKjv.Text;
 using Debug = System.Diagnostics.Debug;
 
@@ -13,6 +16,8 @@ namespace PewBibleKjv
     [Activity(Label = "PewBibleKjv", MainLauncher = true, Icon = "@mipmap/icon")]
     public class MainActivity : Activity
     {
+        private App _app;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -20,38 +25,18 @@ namespace PewBibleKjv
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
 
-            var headingText = FindViewById<TextView>(Resource.Id.headingText);
             var recyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView);
             var layoutManager = new LinearLayoutManager(this);
             recyclerView.SetLayoutManager(layoutManager);
-            recyclerView.SetAdapter(new VerseAdapter(TextService.Instance, LayoutInflater));
-            recyclerView.AddOnScrollListener(new ScrollListener(layoutManager, headingText));
-            recyclerView.ScrollToPosition(1000);
-        }
+            recyclerView.SetAdapter(new VerseAdapter(new TextService(), LayoutInflater));
 
-        public class ScrollListener : RecyclerView.OnScrollListener
-        {
-            private readonly LinearLayoutManager _layoutManager;
-            private readonly TextView _headingText;
-            private int _lastPosition = -1;
-
-            public ScrollListener(LinearLayoutManager layoutManager, TextView headingText)
+            var chapterHeadingAdapter = new TextViewChapterHeadingAdapter(FindViewById<TextView>(Resource.Id.headingText));
+            var verseViewAdapter = new RecyclerViewVerseViewAdapter(recyclerView, layoutManager, position =>
             {
-                _layoutManager = layoutManager;
-                _headingText = headingText;
-            }
-
-            public override void OnScrolled(RecyclerView recyclerView, int dx, int dy)
-            {
-                var firstIndex = _layoutManager.FindFirstVisibleItemPosition();
-                if (firstIndex == _lastPosition)
-                    return;
-                _lastPosition = firstIndex;
-                var view = (VerseViewHolder)recyclerView.FindViewHolderForLayoutPosition(firstIndex);
-                var chapterHeadingText = view.Location.ChapterHeadingText;
-                if (_headingText.Text != chapterHeadingText)
-                    _headingText.Text = chapterHeadingText;
-            }
+                var view = (VerseViewHolder)recyclerView.FindViewHolderForLayoutPosition(position);
+                return view.Location;
+            });
+            _app = new App(chapterHeadingAdapter, verseViewAdapter);
         }
 
         public class VerseViewHolder : RecyclerView.ViewHolder
