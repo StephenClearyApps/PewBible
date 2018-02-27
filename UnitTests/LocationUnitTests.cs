@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PewBibleKjv.Text;
+using PewBibleKjv.Logic;
 using Xunit;
 
 namespace UnitTests

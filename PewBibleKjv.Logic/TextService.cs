@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using PewBibleKjv.Text;
 
-namespace PewBibleKjv.Services
+namespace PewBibleKjv.Logic
 {
     public sealed class TextService: IReadOnlyList<Location>
     {
@@ -25,7 +23,15 @@ namespace PewBibleKjv.Services
             return GetEnumerator();
         }
 
-        public int Count => 31102;
+        public int Count
+        {
+            get
+            {
+                var lastBook = Structure.Books[Structure.Books.Length - 1];
+                var lastChapter = lastBook.Chapters[lastBook.Chapters.Length - 1];
+                return lastChapter.EndVerse;
+            }
+        }
 
         public Location this[int index]
         {

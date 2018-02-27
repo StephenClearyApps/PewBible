@@ -4,7 +4,7 @@ using Android.Widget;
 using Android.OS;
 using Android.Support.V7.Widget;
 using Android.Views;
-using PewBibleKjv.Services;
+using PewBibleKjv.Logic;
 using PewBibleKjv.Text;
 using Debug = System.Diagnostics.Debug;
 

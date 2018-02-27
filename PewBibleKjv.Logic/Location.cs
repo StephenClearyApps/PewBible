@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using PewBibleKjv.Text;
 
-namespace PewBibleKjv.Text
+namespace PewBibleKjv.Logic
 {
     public sealed class Location
     {

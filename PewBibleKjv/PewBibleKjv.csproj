@@ -101,7 +101,6 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\TextService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GettingStarted.Xamarin" />
@@ -128,6 +127,10 @@
     <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PewBibleKjv.Logic\PewBibleKjv.Logic.csproj">
+      <Project>{a6061cf3-7c3f-4f19-8915-8fc67727b22f}</Project>
+      <Name>PewBibleKjv.Logic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PewBibleKjv.Text\PewBibleKjv.Text.csproj">
       <Project>{4aa1929c-1cc9-4f67-a24b-8364732a2bd2}</Project>
       <Name>PewBibleKjv.Text</Name>

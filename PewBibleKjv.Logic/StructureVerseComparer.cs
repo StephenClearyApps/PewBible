@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections;
+using PewBibleKjv.Text;
 
-namespace PewBibleKjv.Text
+namespace PewBibleKjv.Logic
 {
     public sealed class StructureVerseComparer : IComparer
     {
