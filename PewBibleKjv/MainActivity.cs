@@ -20,22 +20,25 @@ namespace PewBibleKjv
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
 
+            var headingText = FindViewById<TextView>(Resource.Id.headingText);
             var recyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView);
             var layoutManager = new LinearLayoutManager(this);
             recyclerView.SetLayoutManager(layoutManager);
             recyclerView.SetAdapter(new VerseAdapter(TextService.Instance));
-            recyclerView.AddOnScrollListener(new ScrollListener(layoutManager));
+            recyclerView.AddOnScrollListener(new ScrollListener(layoutManager, headingText));
             recyclerView.ScrollToPosition(1000);
         }
 
         public class ScrollListener : RecyclerView.OnScrollListener
         {
             private readonly LinearLayoutManager _layoutManager;
+            private readonly TextView _headingText;
             private int _lastPosition = -1;
 
-            public ScrollListener(LinearLayoutManager layoutManager)
+            public ScrollListener(LinearLayoutManager layoutManager, TextView headingText)
             {
                 _layoutManager = layoutManager;
+                _headingText = headingText;
             }
 
             public override void OnScrolled(RecyclerView recyclerView, int dx, int dy)
@@ -45,7 +48,9 @@ namespace PewBibleKjv
                     return;
                 _lastPosition = firstIndex;
                 var view = (VerseViewHolder)recyclerView.FindViewHolderForLayoutPosition(firstIndex);
-                Debug.WriteLine("Scrolled to verse: " + view.Location);
+                var chapterHeadingText = view.Location.ChapterHeadingText;
+                if (_headingText.Text != chapterHeadingText)
+                    _headingText.Text = chapterHeadingText;
             }
         }
 

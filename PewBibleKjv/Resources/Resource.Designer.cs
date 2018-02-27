@@ -1864,8 +1864,8 @@ namespace PewBibleKjv
 			// aapt resource value: 0x7f070029
 			public const int SYM = 2131165225;
 			
-			// aapt resource value: 0x7f07006a
-			public const int action0 = 2131165290;
+			// aapt resource value: 0x7f07006b
+			public const int action0 = 2131165291;
 			
 			// aapt resource value: 0x7f070057
 			public const int action_bar = 2131165271;
@@ -1888,17 +1888,17 @@ namespace PewBibleKjv
 			// aapt resource value: 0x7f070035
 			public const int action_bar_title = 2131165237;
 			
-			// aapt resource value: 0x7f070067
-			public const int action_container = 2131165287;
+			// aapt resource value: 0x7f070068
+			public const int action_container = 2131165288;
 			
 			// aapt resource value: 0x7f070058
 			public const int action_context_bar = 2131165272;
 			
-			// aapt resource value: 0x7f07006e
-			public const int action_divider = 2131165294;
+			// aapt resource value: 0x7f07006f
+			public const int action_divider = 2131165295;
 			
-			// aapt resource value: 0x7f070068
-			public const int action_image = 2131165288;
+			// aapt resource value: 0x7f070069
+			public const int action_image = 2131165289;
 			
 			// aapt resource value: 0x7f070003
 			public const int action_menu_divider = 2131165187;
@@ -1915,11 +1915,11 @@ namespace PewBibleKjv
 			// aapt resource value: 0x7f070037
 			public const int action_mode_close_button = 2131165239;
 			
-			// aapt resource value: 0x7f070069
-			public const int action_text = 2131165289;
+			// aapt resource value: 0x7f07006a
+			public const int action_text = 2131165290;
 			
-			// aapt resource value: 0x7f070077
-			public const int actions = 2131165303;
+			// aapt resource value: 0x7f070078
+			public const int actions = 2131165304;
 			
 			// aapt resource value: 0x7f070038
 			public const int activity_chooser_view_content = 2131165240;
@@ -1948,14 +1948,14 @@ namespace PewBibleKjv
 			// aapt resource value: 0x7f07003e
 			public const int buttonPanel = 2131165246;
 			
-			// aapt resource value: 0x7f07006b
-			public const int cancel_action = 2131165291;
+			// aapt resource value: 0x7f07006c
+			public const int cancel_action = 2131165292;
 			
 			// aapt resource value: 0x7f07004e
 			public const int checkbox = 2131165262;
 			
-			// aapt resource value: 0x7f070073
-			public const int chronometer = 2131165299;
+			// aapt resource value: 0x7f070074
+			public const int chronometer = 2131165300;
 			
 			// aapt resource value: 0x7f07002b
 			public const int collapseActionView = 2131165227;
@@ -1984,8 +1984,8 @@ namespace PewBibleKjv
 			// aapt resource value: 0x7f070022
 			public const int end = 2131165218;
 			
-			// aapt resource value: 0x7f070079
-			public const int end_padder = 2131165305;
+			// aapt resource value: 0x7f07007a
+			public const int end_padder = 2131165306;
 			
 			// aapt resource value: 0x7f070039
 			public const int expand_activities_button = 2131165241;
@@ -1996,6 +1996,9 @@ namespace PewBibleKjv
 			// aapt resource value: 0x7f070033
 			public const int forever = 2131165235;
 			
+			// aapt resource value: 0x7f070066
+			public const int headingText = 2131165286;
+			
 			// aapt resource value: 0x7f070005
 			public const int home = 2131165189;
 			
@@ -2005,8 +2008,8 @@ namespace PewBibleKjv
 			// aapt resource value: 0x7f07003d
 			public const int icon = 2131165245;
 			
-			// aapt resource value: 0x7f070078
-			public const int icon_group = 2131165304;
+			// aapt resource value: 0x7f070079
+			public const int icon_group = 2131165305;
 			
 			// aapt resource value: 0x7f07002c
 			public const int ifRoom = 2131165228;
@@ -2014,8 +2017,8 @@ namespace PewBibleKjv
 			// aapt resource value: 0x7f07003a
 			public const int image = 2131165242;
 			
-			// aapt resource value: 0x7f070074
-			public const int info = 2131165300;
+			// aapt resource value: 0x7f070075
+			public const int info = 2131165301;
 			
 			// aapt resource value: 0x7f070034
 			public const int italic = 2131165236;
@@ -2035,11 +2038,11 @@ namespace PewBibleKjv
 			// aapt resource value: 0x7f07003c
 			public const int list_item = 2131165244;
 			
-			// aapt resource value: 0x7f07006d
-			public const int media_actions = 2131165293;
+			// aapt resource value: 0x7f07006e
+			public const int media_actions = 2131165294;
 			
-			// aapt resource value: 0x7f07007a
-			public const int message = 2131165306;
+			// aapt resource value: 0x7f07007b
+			public const int message = 2131165307;
 			
 			// aapt resource value: 0x7f070023
 			public const int middle = 2131165219;
@@ -2056,14 +2059,14 @@ namespace PewBibleKjv
 			// aapt resource value: 0x7f070010
 			public const int normal = 2131165200;
 			
-			// aapt resource value: 0x7f070076
-			public const int notification_background = 2131165302;
+			// aapt resource value: 0x7f070077
+			public const int notification_background = 2131165303;
+			
+			// aapt resource value: 0x7f070071
+			public const int notification_main_column = 2131165297;
 			
 			// aapt resource value: 0x7f070070
-			public const int notification_main_column = 2131165296;
-			
-			// aapt resource value: 0x7f07006f
-			public const int notification_main_column_container = 2131165295;
+			public const int notification_main_column_container = 2131165296;
 			
 			// aapt resource value: 0x7f070040
 			public const int parentPanel = 2131165248;
@@ -2077,14 +2080,14 @@ namespace PewBibleKjv
 			// aapt resource value: 0x7f070050
 			public const int radio = 2131165264;
 			
-			// aapt resource value: 0x7f070066
-			public const int recyclerView = 2131165286;
+			// aapt resource value: 0x7f070067
+			public const int recyclerView = 2131165287;
 			
-			// aapt resource value: 0x7f070075
-			public const int right_icon = 2131165301;
+			// aapt resource value: 0x7f070076
+			public const int right_icon = 2131165302;
 			
-			// aapt resource value: 0x7f070071
-			public const int right_side = 2131165297;
+			// aapt resource value: 0x7f070072
+			public const int right_side = 2131165298;
 			
 			// aapt resource value: 0x7f07001a
 			public const int screen = 2131165210;
@@ -2158,8 +2161,8 @@ namespace PewBibleKjv
 			// aapt resource value: 0x7f07001d
 			public const int src_over = 2131165213;
 			
-			// aapt resource value: 0x7f07006c
-			public const int status_bar_latest_event_content = 2131165292;
+			// aapt resource value: 0x7f07006d
+			public const int status_bar_latest_event_content = 2131165293;
 			
 			// aapt resource value: 0x7f070051
 			public const int submenuarrow = 2131165265;
@@ -2182,8 +2185,8 @@ namespace PewBibleKjv
 			// aapt resource value: 0x7f070044
 			public const int textSpacerNoTitle = 2131165252;
 			
-			// aapt resource value: 0x7f070072
-			public const int time = 2131165298;
+			// aapt resource value: 0x7f070073
+			public const int time = 2131165299;
 			
 			// aapt resource value: 0x7f07000e
 			public const int title = 2131165198;
