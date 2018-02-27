@@ -31,6 +31,7 @@ namespace PewBibleKjv
         public class ScrollListener : RecyclerView.OnScrollListener
         {
             private readonly LinearLayoutManager _layoutManager;
+            private int _lastPosition = -1;
 
             public ScrollListener(LinearLayoutManager layoutManager)
             {
@@ -40,6 +41,9 @@ namespace PewBibleKjv
             public override void OnScrolled(RecyclerView recyclerView, int dx, int dy)
             {
                 var firstIndex = _layoutManager.FindFirstVisibleItemPosition();
+                if (firstIndex == _lastPosition)
+                    return;
+                _lastPosition = firstIndex;
                 var view = (VerseViewHolder)recyclerView.FindViewHolderForLayoutPosition(firstIndex);
                 Debug.WriteLine("Scrolled to verse: " + view.Location);
             }
