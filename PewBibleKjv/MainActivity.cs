@@ -7,7 +7,6 @@ using Android.OS;
 using Android.Support.V7.Widget;
 using Android.Views;
 using PewBibleKjv.Logic;
-using PewBibleKjv.Logic.UI;
 using PewBibleKjv.Text;
 using Debug = System.Diagnostics.Debug;
 
@@ -36,7 +35,8 @@ namespace PewBibleKjv
                 var view = (VerseViewHolder)recyclerView.FindViewHolderForLayoutPosition(position);
                 return view.Location;
             });
-            _app = new App(chapterHeadingAdapter, verseViewAdapter);
+            var simpleStorageAdapter = new SharedPreferencesSimpleStorageAdapter();
+            _app = new App(chapterHeadingAdapter, verseViewAdapter, simpleStorageAdapter);
         }
 
         public class VerseViewHolder : RecyclerView.ViewHolder

@@ -9,7 +9,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using PewBibleKjv.Logic.UI;
+using PewBibleKjv.Logic.Adapters.UI;
 
 namespace PewBibleKjv
 {

@@ -11,7 +11,7 @@ using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
 using PewBibleKjv.Logic;
-using PewBibleKjv.Logic.UI;
+using PewBibleKjv.Logic.Adapters.UI;
 
 namespace PewBibleKjv
 {

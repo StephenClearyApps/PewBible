@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace PewBibleKjv.Logic.UI
+namespace PewBibleKjv.Logic.Adapters.UI
 {
     public interface IVerseView
     {

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PewBibleKjv.Logic.UI
+﻿namespace PewBibleKjv.Logic.Adapters.UI
 {
     public interface IChapterHeading
     {
