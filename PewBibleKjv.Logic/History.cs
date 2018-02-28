@@ -57,13 +57,17 @@ namespace PewBibleKjv.Logic
         public int MovePrevious(int currentAbsoluteVerseNumber)
         {
             _history[_currentIndex] = currentAbsoluteVerseNumber;
-            return _history[--_currentIndex];
+            var result = _history[--_currentIndex];
+            CanMoveChanged?.Invoke();
+            return result;
         }
 
         public int MoveNext(int currentAbsoluteVerseNumber)
         {
             _history[_currentIndex] = currentAbsoluteVerseNumber;
-            return _history[++_currentIndex];
+            var result = _history[++_currentIndex];
+            CanMoveChanged?.Invoke();
+            return result;
         }
 
         public void SaveJump(int currentAbsoluteVerseNumber, int jumpAbsoluteVerseNumber)
@@ -79,6 +83,7 @@ namespace PewBibleKjv.Logic
             if (next == jumpAbsoluteVerseNumber)
             {
                 ++_currentIndex;
+                CanMoveChanged?.Invoke();
                 return;
             }
 
@@ -96,6 +101,7 @@ namespace PewBibleKjv.Logic
                     --_currentIndex;
                 }
             }
+            CanMoveChanged?.Invoke();
         }
     }
 }
