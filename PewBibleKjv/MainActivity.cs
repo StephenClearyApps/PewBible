@@ -22,15 +22,19 @@ namespace PewBibleKjv
         {
             base.OnCreate(savedInstanceState);
 
-            // Set our view from the "main" layout resource
+            // Set up our view
             SetContentView(Resource.Layout.Main);
-
             var recyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView);
             var layoutManager = new LinearLayoutManager(this);
             recyclerView.SetLayoutManager(layoutManager);
             recyclerView.SetAdapter(new VerseAdapter(new TextService(), LayoutInflater));
 
-            var chapterHeadingAdapter = new TextViewChapterHeadingAdapter(FindViewById<TextView>(Resource.Id.headingText));
+            // Wire up events
+            var chapterHeading = FindViewById<Button>(Resource.Id.headingText);
+            chapterHeading.Click += (_, __) => StartActivity(typeof(ChooseBookActivity));
+
+            // Initialize the app
+            var chapterHeadingAdapter = new TextViewChapterHeadingAdapter(chapterHeading);
             var verseViewAdapter = new RecyclerViewVerseViewAdapter(recyclerView, layoutManager, position =>
             {
                 var view = (VerseViewHolder)recyclerView.FindViewHolderForLayoutPosition(position);
