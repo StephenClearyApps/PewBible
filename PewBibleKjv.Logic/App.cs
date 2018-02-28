@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using PewBibleKjv.Logic.Adapters.Services;
 using PewBibleKjv.Logic.Adapters.UI;
+using PewBibleKjv.Text;
 
 namespace PewBibleKjv.Logic
 {
@@ -12,7 +13,7 @@ namespace PewBibleKjv.Logic
         private readonly History _history;
         private Location _currentLocation;
 
-        public App(IChapterHeading chapterHeading, IVerseView verseView, ISimpleStorage simpleStorage)
+        public App(IChapterHeading chapterHeading, IVerseView verseView, ISimpleStorage simpleStorage, int initialJump)
         {
             _chapterHeading = chapterHeading;
 
@@ -22,6 +23,10 @@ namespace PewBibleKjv.Logic
 
             // Load history.
             _history = new History(simpleStorage);
+
+            // If the app has to jump to a verse, then insert it into the history.
+            if (initialJump != Bible.InvalidAbsoluteVerseNumber)
+                _history.SaveJump(_history.CurrentAbsoluteVerseNumber, initialJump);
 
             // Pick up where we left off.
             verseView.Jump(_history.CurrentAbsoluteVerseNumber);

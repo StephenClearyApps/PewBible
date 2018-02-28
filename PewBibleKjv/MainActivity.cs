@@ -37,7 +37,7 @@ namespace PewBibleKjv
                 return view.Location;
             });
             var simpleStorageAdapter = new SharedPreferencesSimpleStorageAdapter(ApplicationContext.GetSharedPreferences("global", FileCreationMode.Private));
-            _app = new App(chapterHeadingAdapter, verseViewAdapter, simpleStorageAdapter);
+            _app = new App(chapterHeadingAdapter, verseViewAdapter, simpleStorageAdapter, Bible.InvalidAbsoluteVerseNumber);
         }
 
         protected override void OnPause()
