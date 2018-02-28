@@ -15,13 +15,15 @@ namespace PewBibleKjv
 {
     public sealed class SharedPreferencesSimpleStorageAdapter : ISimpleStorage
     {
-        public string Load(string key)
+        private readonly ISharedPreferences _preferences;
+
+        public SharedPreferencesSimpleStorageAdapter(ISharedPreferences preferences)
         {
-            return null;
+            _preferences = preferences;
         }
 
-        public void Save(string key, string value)
-        {
-        }
+        public string Load(string key) => _preferences.GetString(key, null);
+
+        public void Save(string key, string value) => _preferences.Edit().PutString(key, value).Commit();
     }
 }

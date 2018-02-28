@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Android.App;
+using Android.Content;
 using Android.Widget;
 using Android.OS;
 using Android.Support.V7.Widget;
@@ -16,6 +17,7 @@ namespace PewBibleKjv
     public class MainActivity : Activity
     {
         private App _app;
+        private LinearLayoutManager _layoutManager;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -25,18 +27,25 @@ namespace PewBibleKjv
             SetContentView(Resource.Layout.Main);
 
             var recyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView);
-            var layoutManager = new LinearLayoutManager(this);
-            recyclerView.SetLayoutManager(layoutManager);
+            _layoutManager = new LinearLayoutManager(this);
+            recyclerView.SetLayoutManager(_layoutManager);
             recyclerView.SetAdapter(new VerseAdapter(new TextService(), LayoutInflater));
 
             var chapterHeadingAdapter = new TextViewChapterHeadingAdapter(FindViewById<TextView>(Resource.Id.headingText));
-            var verseViewAdapter = new RecyclerViewVerseViewAdapter(recyclerView, layoutManager, position =>
+            var verseViewAdapter = new RecyclerViewVerseViewAdapter(recyclerView, _layoutManager, position =>
             {
                 var view = (VerseViewHolder)recyclerView.FindViewHolderForLayoutPosition(position);
                 return view.Location;
             });
-            var simpleStorageAdapter = new SharedPreferencesSimpleStorageAdapter();
+            var simpleStorageAdapter = new SharedPreferencesSimpleStorageAdapter(ApplicationContext.GetSharedPreferences("global", FileCreationMode.Private));
             _app = new App(chapterHeadingAdapter, verseViewAdapter, simpleStorageAdapter);
+        }
+
+        protected override void OnPause()
+        {
+            base.OnPause();
+
+            _app.History.Save(_layoutManager.FindFirstVisibleItemPosition());
         }
 
         public class VerseViewHolder : RecyclerView.ViewHolder
