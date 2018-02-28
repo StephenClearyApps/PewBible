@@ -17,7 +17,6 @@ namespace PewBibleKjv
     public class MainActivity : Activity
     {
         private App _app;
-        private LinearLayoutManager _layoutManager;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -27,12 +26,12 @@ namespace PewBibleKjv
             SetContentView(Resource.Layout.Main);
 
             var recyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView);
-            _layoutManager = new LinearLayoutManager(this);
-            recyclerView.SetLayoutManager(_layoutManager);
+            var layoutManager = new LinearLayoutManager(this);
+            recyclerView.SetLayoutManager(layoutManager);
             recyclerView.SetAdapter(new VerseAdapter(new TextService(), LayoutInflater));
 
             var chapterHeadingAdapter = new TextViewChapterHeadingAdapter(FindViewById<TextView>(Resource.Id.headingText));
-            var verseViewAdapter = new RecyclerViewVerseViewAdapter(recyclerView, _layoutManager, position =>
+            var verseViewAdapter = new RecyclerViewVerseViewAdapter(recyclerView, layoutManager, position =>
             {
                 var view = (VerseViewHolder)recyclerView.FindViewHolderForLayoutPosition(position);
                 return view.Location;
@@ -44,8 +43,7 @@ namespace PewBibleKjv
         protected override void OnPause()
         {
             base.OnPause();
-
-            _app.History.Save(_layoutManager.FindFirstVisibleItemPosition());
+            _app.Pause();
         }
 
         public class VerseViewHolder : RecyclerView.ViewHolder
