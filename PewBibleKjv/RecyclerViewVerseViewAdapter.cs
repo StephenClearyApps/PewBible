@@ -12,6 +12,7 @@ using Android.Views;
 using Android.Widget;
 using PewBibleKjv.Logic;
 using PewBibleKjv.Logic.Adapters.UI;
+using PewBibleKjv.Text;
 
 namespace PewBibleKjv
 {
@@ -21,8 +22,8 @@ namespace PewBibleKjv
         private readonly LinearLayoutManager _layoutManager;
         private readonly Func<int, Location> _positionToLocation;
         private readonly ScrollListener _scrollListener;
-        private int _lastPosition = -1;
-        private int _jumpTarget = -1;
+        private int _lastPosition = Bible.InvalidAbsoluteVerseNumber;
+        private int _jumpTarget = Bible.InvalidAbsoluteVerseNumber;
 
         public RecyclerViewVerseViewAdapter(RecyclerView recyclerView, LinearLayoutManager layoutManager,
             Func<int, Location> positionToLocation)
@@ -41,7 +42,7 @@ namespace PewBibleKjv
                 var location = _positionToLocation(firstIndex);
                 if (firstIndex == _jumpTarget)
                 {
-                    _jumpTarget = -1;
+                    _jumpTarget = Bible.InvalidAbsoluteVerseNumber;
                     OnJump?.Invoke(location);
                 }
                 else

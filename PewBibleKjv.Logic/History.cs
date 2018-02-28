@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using PewBibleKjv.Logic.Adapters.Services;
+using PewBibleKjv.Text;
 
 namespace PewBibleKjv.Logic
 {
@@ -74,8 +75,8 @@ namespace PewBibleKjv.Logic
                 return;
 
             // If the user is jumping to the same location, don't insert a duplicate.
-            var next = (_currentIndex == _history.Count - 1) ? -1 : _history[_currentIndex + 1];
-            if (next != -1 && next == jumpAbsoluteVerseNumber)
+            var next = (_currentIndex == _history.Count - 1) ? Bible.InvalidAbsoluteVerseNumber : _history[_currentIndex + 1];
+            if (next == jumpAbsoluteVerseNumber)
             {
                 ++_currentIndex;
                 return;
