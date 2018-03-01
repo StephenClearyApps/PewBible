@@ -6,6 +6,7 @@ namespace PewBibleKjv.Logic.Adapters.UI
     {
         event Action<Location> OnScroll;
         event Action<Location> OnJump;
+        int CurrentAbsoluteVerseNumber { get; }
         void Jump(int absoluteVerseNumber);
     }
 }

@@ -10,12 +10,13 @@ namespace PewBibleKjv.Logic
     public sealed class App
     {
         private readonly IChapterHeading _chapterHeading;
+        private readonly IVerseView _verseView;
         private readonly History _history;
-        private Location _currentLocation;
 
         public App(IChapterHeading chapterHeading, IVerseView verseView, ISimpleStorage simpleStorage, int initialJump)
         {
             _chapterHeading = chapterHeading;
+            _verseView = verseView;
 
             // Keep track of changes to the verse view.
             verseView.OnJump += UpdateCurrentLocation;
@@ -32,15 +33,24 @@ namespace PewBibleKjv.Logic
             verseView.Jump(_history.CurrentAbsoluteVerseNumber);
         }
 
-        private void UpdateCurrentLocation(Location currentLocation)
-        {
-            _currentLocation = currentLocation;
-            _chapterHeading.Text = currentLocation.ChapterHeadingText;
-        }
-
         public void Pause()
         {
-            _history.Save(_currentLocation.AbsoluteVerseNumber);
+            _history.Save(_verseView.CurrentAbsoluteVerseNumber);
+        }
+
+        public void MoveForward()
+        {
+            _verseView.Jump(_history.MoveNext(_verseView.CurrentAbsoluteVerseNumber));
+        }
+
+        public void MoveBack()
+        {
+            _verseView.Jump(_history.MovePrevious(_verseView.CurrentAbsoluteVerseNumber));
+        }
+
+        private void UpdateCurrentLocation(Location currentLocation)
+        {
+            _chapterHeading.Text = currentLocation.ChapterHeadingText;
         }
     }
 }

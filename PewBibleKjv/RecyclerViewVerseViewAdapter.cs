@@ -56,6 +56,8 @@ namespace PewBibleKjv
         public event Action<Location> OnScroll;
         public event Action<Location> OnJump;
 
+        public int CurrentAbsoluteVerseNumber => _layoutManager.FindFirstVisibleItemPosition();
+
         public void Jump(int absoluteVerseNumber)
         {
             _jumpTarget = absoluteVerseNumber;
