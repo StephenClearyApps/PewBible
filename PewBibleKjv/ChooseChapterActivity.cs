@@ -37,8 +37,7 @@ namespace PewBibleKjv
 
             var grid = FindViewById<GridView>(Resource.Id.chooseChapterGrid);
             grid.SetColumnWidth(MaximumButtonWidth());
-            grid.Adapter = new ArrayAdapter<int>(this, Resource.Layout.ChooseChapterButton, Structure.Books[bookIndex].Chapters.Select((_, i) => i + 1).ToArray());
-            grid.ItemClick += (_, args) => { Debugger.Break(); };
+            grid.Adapter = new ChapterAdapter(this, bookIndex);
         }
 
         private int MaximumButtonWidth()
@@ -55,6 +54,34 @@ namespace PewBibleKjv
 
             buffer.RemoveAllViews();
             return width;
+        }
+
+        private sealed class ChapterAdapter : ArrayAdapter<int>
+        {
+            private readonly Context _context;
+            private readonly int _bookIndex;
+
+            public ChapterAdapter(Context context, int bookIndex)
+                : base(context, Resource.Layout.ChooseChapterButton, Structure.Books[bookIndex].Chapters.Select((_, i) => i + 1).ToArray())
+            {
+                _context = context;
+                _bookIndex = bookIndex;
+            }
+
+            public override View GetView(int position, View convertView, ViewGroup parent)
+            {
+                var result = base.GetView(position, convertView, parent);
+                var button = result.FindViewById<Button>(Resource.Id.chooseChapterButton);
+                button.Click += (_, __) =>
+                {
+                    var chapterIndex = position;
+                    var activity = new Intent(_context, typeof(MainActivity));
+                    activity.PutExtra("BookIndex", _bookIndex);
+                    activity.PutExtra("ChapterIndex", chapterIndex);
+                    _context.StartActivity(activity);
+                };
+                return result;
+            }
         }
     }
 }

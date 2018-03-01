@@ -21,6 +21,11 @@ namespace PewBibleKjv
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            var bookIndex = Intent.GetIntExtra("BookIndex", -1);
+            var chapterIndex = Intent.GetIntExtra("ChapterIndex", -1);
+            var startingVerse = Bible.InvalidAbsoluteVerseNumber;
+            if (bookIndex != -1 && chapterIndex != -1)
+                startingVerse = Structure.Books[bookIndex].Chapters[chapterIndex].BeginVerse;
 
             // Set up our view
             SetContentView(Resource.Layout.Main);
@@ -41,7 +46,7 @@ namespace PewBibleKjv
                 return view.Location;
             });
             var simpleStorageAdapter = new SharedPreferencesSimpleStorageAdapter(ApplicationContext.GetSharedPreferences("global", FileCreationMode.Private));
-            _app = new App(chapterHeadingAdapter, verseViewAdapter, simpleStorageAdapter, Bible.InvalidAbsoluteVerseNumber);
+            _app = new App(chapterHeadingAdapter, verseViewAdapter, simpleStorageAdapter, startingVerse);
         }
 
         protected override void OnPause()
