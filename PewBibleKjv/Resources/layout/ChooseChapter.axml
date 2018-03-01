@@ -8,4 +8,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"/>
+  <GridView
+    android:id="@+id/chooseChapterGrid"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:numColumns="auto_fit"
+    android:gravity="center"
+    android:stretchMode="columnWidth"/>
 </LinearLayout>
