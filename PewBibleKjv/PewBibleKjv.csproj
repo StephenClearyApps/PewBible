@@ -105,6 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChooseBookActivity.cs" />
+    <Compile Include="ChooseChapterActivity.cs" />
     <Compile Include="RecyclerViewVerseViewAdapter.cs" />
     <Compile Include="SharedPreferencesSimpleStorageAdapter.cs" />
     <Compile Include="TextViewChapterHeadingAdapter.cs" />
@@ -122,6 +123,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\ChooseBook.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\ChooseChapter.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
