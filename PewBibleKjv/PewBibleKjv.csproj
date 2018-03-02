@@ -104,6 +104,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ViewHistoryControlsAdapter.cs" />
     <Compile Include="ChooseBookActivity.cs" />
     <Compile Include="ChooseChapterActivity.cs" />
     <Compile Include="RecyclerViewVerseViewAdapter.cs" />

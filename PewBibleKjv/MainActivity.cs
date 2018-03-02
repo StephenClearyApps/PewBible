@@ -11,7 +11,6 @@ using Android.Support.V7.Widget;
 using Android.Views;
 using PewBibleKjv.Logic;
 using PewBibleKjv.Text;
-using Debug = System.Diagnostics.Debug;
 
 namespace PewBibleKjv
 {
@@ -25,6 +24,8 @@ namespace PewBibleKjv
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+
+            // Determine if we have an intent to go to a particular verse.
             var bookIndex = Intent.GetIntExtra("BookIndex", -1);
             var chapterIndex = Intent.GetIntExtra("ChapterIndex", -1);
             var startingVerse = Bible.InvalidAbsoluteVerseNumber;
@@ -50,21 +51,10 @@ namespace PewBibleKjv
                 return view.Location;
             });
             var simpleStorageAdapter = new SharedPreferencesSimpleStorageAdapter(ApplicationContext.GetSharedPreferences("global", FileCreationMode.Private));
-            _app = new App(chapterHeadingAdapter, verseViewAdapter, simpleStorageAdapter, startingVerse);
-
-            // Wire up app events
             _backButton = FindViewById<ImageButton>(Resource.Id.backButton);
-            _backButton.Click += (_, __) => _app.MoveBack();
             _forwardButton = FindViewById<ImageButton>(Resource.Id.forwardButton);
-            _forwardButton.Click += (_, __) => _app.MoveForward();
-            _app.CanMoveChanged += EnableDisableButtons;
-            EnableDisableButtons();
-        }
-
-        private void EnableDisableButtons()
-        {
-            _backButton.Enabled = _app.CanMovePrevious;
-            _forwardButton.Enabled = _app.CanMoveNext;
+            var historyControlsAdapter = new ViewHistoryControlsAdapter(_backButton, _forwardButton);
+            _app = new App(chapterHeadingAdapter, verseViewAdapter, simpleStorageAdapter, historyControlsAdapter, startingVerse);
         }
 
         protected override void OnPause()
