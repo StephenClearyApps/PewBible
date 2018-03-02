@@ -61,7 +61,7 @@ namespace PewBibleKjv
         public void Jump(int absoluteVerseNumber)
         {
             _jumpTarget = absoluteVerseNumber;
-            _recyclerView.ScrollToPosition(absoluteVerseNumber);
+            _layoutManager.ScrollToPositionWithOffset(absoluteVerseNumber, 0);
         }
 
         public class ScrollListener : RecyclerView.OnScrollListener

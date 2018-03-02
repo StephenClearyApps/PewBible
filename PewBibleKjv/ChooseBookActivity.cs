@@ -8,6 +8,7 @@ using Android.Content;
 using Android.Content.Res;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
 using PewBibleKjv.Text;
@@ -15,7 +16,7 @@ using PewBibleKjv.Text;
 namespace PewBibleKjv
 {
     [Activity(Label = "Choose Book")]
-    public class ChooseBookActivity : Activity
+    public class ChooseBookActivity : AppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {

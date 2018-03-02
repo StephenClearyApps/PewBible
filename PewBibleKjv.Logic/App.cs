@@ -33,6 +33,14 @@ namespace PewBibleKjv.Logic
             verseView.Jump(_history.CurrentAbsoluteVerseNumber);
         }
 
+        public bool CanMovePrevious => _history.CanMovePrevious;
+        public bool CanMoveNext => _history.CanMoveNext;
+        public event Action CanMoveChanged
+        {
+            add => _history.CanMoveChanged += value;
+            remove => _history.CanMoveChanged -= value;
+        }
+        
         public void Pause()
         {
             _history.Save(_verseView.CurrentAbsoluteVerseNumber);

@@ -5,6 +5,8 @@ using Android.App;
 using Android.Content;
 using Android.Widget;
 using Android.OS;
+using Android.Support.V4.Content;
+using Android.Support.V7.App;
 using Android.Support.V7.Widget;
 using Android.Views;
 using PewBibleKjv.Logic;
@@ -14,9 +16,11 @@ using Debug = System.Diagnostics.Debug;
 namespace PewBibleKjv
 {
     [Activity(Label = "PewBibleKjv", MainLauncher = true, Icon = "@mipmap/icon")]
-    public class MainActivity : Activity
+    public class MainActivity : AppCompatActivity
     {
         private App _app;
+        private ImageButton _backButton;
+        private ImageButton _forwardButton;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -34,7 +38,7 @@ namespace PewBibleKjv
             recyclerView.SetLayoutManager(layoutManager);
             recyclerView.SetAdapter(new VerseAdapter(new TextService(), LayoutInflater));
 
-            // Wire up events
+            // Wire up Android-side events
             var chapterHeading = FindViewById<Button>(Resource.Id.headingText);
             chapterHeading.Click += (_, __) => StartActivity(typeof(ChooseBookActivity));
 
@@ -47,6 +51,20 @@ namespace PewBibleKjv
             });
             var simpleStorageAdapter = new SharedPreferencesSimpleStorageAdapter(ApplicationContext.GetSharedPreferences("global", FileCreationMode.Private));
             _app = new App(chapterHeadingAdapter, verseViewAdapter, simpleStorageAdapter, startingVerse);
+
+            // Wire up app events
+            _backButton = FindViewById<ImageButton>(Resource.Id.backButton);
+            _backButton.Click += (_, __) => _app.MoveBack();
+            _forwardButton = FindViewById<ImageButton>(Resource.Id.forwardButton);
+            _forwardButton.Click += (_, __) => _app.MoveForward();
+            _app.CanMoveChanged += EnableDisableButtons;
+            EnableDisableButtons();
+        }
+
+        private void EnableDisableButtons()
+        {
+            _backButton.Enabled = _app.CanMovePrevious;
+            _forwardButton.Enabled = _app.CanMoveNext;
         }
 
         protected override void OnPause()
