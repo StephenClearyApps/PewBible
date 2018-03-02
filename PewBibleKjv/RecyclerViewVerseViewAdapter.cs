@@ -35,7 +35,7 @@ namespace PewBibleKjv
             _scrollListener = new ScrollListener();
             _scrollListener.Scrolled += (_, __, ___) =>
             {
-                var firstIndex = _layoutManager.FindFirstVisibleItemPosition();
+                var firstIndex = CurrentAbsoluteVerseNumber;
                 if (firstIndex == _lastPosition)
                     return;
                 _lastPosition = firstIndex;
