@@ -23,7 +23,6 @@ namespace PewBibleKjv
         private readonly Func<int, Location> _positionToLocation;
         private readonly ScrollListener _scrollListener;
         private int _lastPosition = Bible.InvalidAbsoluteVerseNumber;
-        private int _jumpTarget = Bible.InvalidAbsoluteVerseNumber;
 
         public RecyclerViewVerseViewAdapter(RecyclerView recyclerView, LinearLayoutManager layoutManager,
             Func<int, Location> positionToLocation)
@@ -40,27 +39,17 @@ namespace PewBibleKjv
                     return;
                 _lastPosition = firstIndex;
                 var location = _positionToLocation(firstIndex);
-                if (firstIndex == _jumpTarget)
-                {
-                    _jumpTarget = Bible.InvalidAbsoluteVerseNumber;
-                    OnJump?.Invoke(location);
-                }
-                else
-                {
-                    OnScroll?.Invoke(location);
-                }
+                OnScroll?.Invoke(location);
             };
             _recyclerView.AddOnScrollListener(_scrollListener);
         }
 
         public event Action<Location> OnScroll;
-        public event Action<Location> OnJump;
 
         public int CurrentAbsoluteVerseNumber => _layoutManager.FindFirstVisibleItemPosition();
 
         public void Jump(int absoluteVerseNumber)
         {
-            _jumpTarget = absoluteVerseNumber;
             _layoutManager.ScrollToPositionWithOffset(absoluteVerseNumber, 0);
         }
 

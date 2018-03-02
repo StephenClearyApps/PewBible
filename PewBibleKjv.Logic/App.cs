@@ -19,7 +19,6 @@ namespace PewBibleKjv.Logic
             _verseView = verseView;
 
             // Keep track of changes to the verse view.
-            verseView.OnJump += UpdateCurrentLocation;
             verseView.OnScroll += UpdateCurrentLocation;
 
             // Load history.
