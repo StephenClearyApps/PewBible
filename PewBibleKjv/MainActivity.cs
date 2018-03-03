@@ -3,11 +3,14 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.Widget;
 using Android.OS;
 using Android.Support.V4.Content;
 using Android.Support.V7.App;
 using Android.Support.V7.Widget;
+using Android.Text;
+using Android.Text.Style;
 using Android.Views;
 using PewBibleKjv.Logic;
 using PewBibleKjv.Text;
@@ -89,7 +92,21 @@ namespace PewBibleKjv
             {
                 var vh = (VerseViewHolder)holder;
                 vh.Location = _data[position];
-                vh.View.Text = Bible.FormattedVerse(vh.Location.AbsoluteVerseNumber).Text;
+                var formattedVerse = Bible.FormattedVerse(vh.Location.AbsoluteVerseNumber);
+                var verseText = vh.Location.Verse + " ";
+                var formattedText = new SpannableString(verseText + formattedVerse.Text);
+                formattedText.SetSpan(new StyleSpan(TypefaceStyle.Bold), 0, verseText.Length, SpanTypes.InclusiveExclusive);
+                formattedText.SetSpan(new TypefaceSpan("sans-serif"), 0, verseText.Length, SpanTypes.InclusiveExclusive);
+                foreach (var textSpan in formattedVerse.Spans)
+                {
+                    var span =
+                        textSpan.Type == FormattedVerse.SpanType.Italics ? new StyleSpan(TypefaceStyle.Italic) as Java.Lang.Object : 
+                        textSpan.Type == FormattedVerse.SpanType.Colophon ? new RelativeSizeSpan(0.8f) :
+                        throw new InvalidOperationException($"Unknown span type {textSpan.Type}");
+                    formattedText.SetSpan(span, textSpan.Begin + verseText.Length,
+                        textSpan.End + verseText.Length, SpanTypes.InclusiveExclusive);
+                }
+                vh.View.TextFormatted = formattedText;
             }
 
             public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
