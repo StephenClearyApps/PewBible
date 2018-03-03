@@ -2077,8 +2077,8 @@ namespace PewBibleKjv
 			// aapt resource value: 0x7f070039
 			public const int async = 2131165241;
 			
-			// aapt resource value: 0x7f0700b5
-			public const int backButton = 2131165365;
+			// aapt resource value: 0x7f0700b4
+			public const int backButton = 2131165364;
 			
 			// aapt resource value: 0x7f070037
 			public const int basic = 2131165239;
@@ -2359,8 +2359,8 @@ namespace PewBibleKjv
 			// aapt resource value: 0x7f07006e
 			public const int guideline = 2131165294;
 			
-			// aapt resource value: 0x7f0700b4
-			public const int headingText = 2131165364;
+			// aapt resource value: 0x7f0700b5
+			public const int headingText = 2131165365;
 			
 			// aapt resource value: 0x7f070005
 			public const int home = 2131165189;

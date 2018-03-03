@@ -4,26 +4,31 @@
               android:orientation="vertical" 
               android:layout_width="match_parent" 
               android:layout_height="match_parent">
-  <LinearLayout
-    android:orientation="horizontal"
+  <android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <Button
-      android:id="@+id/headingText"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="Chapter heading" />
-    <ImageButton
-      android:id="@+id/backButton"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      app:srcCompat="@drawable/ic_arrow_back_black_36dp"/>
-    <ImageButton
-      android:id="@+id/forwardButton"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      app:srcCompat="@drawable/ic_arrow_forward_black_36dp"/>
-  </LinearLayout>
+      <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_arrow_back_black_36dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/headingText"/>
+      <Button
+        android:id="@+id/headingText"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="Chapter heading"
+        app:layout_constraintLeft_toRightOf="@+id/backButton"
+        app:layout_constraintRight_toLeftOf="@+id/forwardButton"/>
+      <ImageButton
+        android:id="@+id/forwardButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_arrow_forward_black_36dp"
+        app:layout_constraintLeft_toRightOf="@+id/headingText"
+        app:layout_constraintRight_toRightOf="parent"/>
+  </android.support.constraint.ConstraintLayout>
   <android.support.v7.widget.RecyclerView
     android:id="@+id/recyclerView"
     android:layout_width="match_parent"
