@@ -38,6 +38,8 @@ namespace PewBibleKjv.Logic
 
             // Pick up where we left off.
             verseView.Jump(_history.CurrentAbsoluteVerseNumber);
+
+            EnableDisableHistoryButtons();
         }
 
         public void Pause()
