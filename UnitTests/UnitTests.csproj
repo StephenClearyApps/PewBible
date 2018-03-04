@@ -81,6 +81,10 @@
     <Compile Include="Util\Comparers.cs" />
     <Compile Include="TextUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\StubChapterHeading.cs" />
+    <Compile Include="Util\StubHistoryControls.cs" />
+    <Compile Include="Util\StubSimpleStorage.cs" />
+    <Compile Include="Util\StubVerseView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
