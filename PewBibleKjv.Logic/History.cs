@@ -43,8 +43,8 @@ namespace PewBibleKjv.Logic
         }
 
         public int CurrentAbsoluteVerseNumber => _history[_currentIndex];
-        public bool CanMovePrevious => _currentIndex != 0;
-        public bool CanMoveNext => _currentIndex != _history.Count - 1;
+        public bool CanMoveBack => _currentIndex != 0;
+        public bool CanMoveForward => _currentIndex != _history.Count - 1;
         public event Action CanMoveChanged;
 
         public void Save(int currentAbsoluteVerseNumber)
@@ -54,7 +54,7 @@ namespace PewBibleKjv.Logic
             _simpleStorage.Save("history-history", string.Join(",", _history.Select(x => x.ToString(CultureInfo.InvariantCulture))));
         }
 
-        public int MovePrevious(int currentAbsoluteVerseNumber)
+        public int MoveBack(int currentAbsoluteVerseNumber)
         {
             _history[_currentIndex] = currentAbsoluteVerseNumber;
             var result = _history[--_currentIndex];
@@ -62,7 +62,7 @@ namespace PewBibleKjv.Logic
             return result;
         }
 
-        public int MoveNext(int currentAbsoluteVerseNumber)
+        public int MoveForward(int currentAbsoluteVerseNumber)
         {
             _history[_currentIndex] = currentAbsoluteVerseNumber;
             var result = _history[++_currentIndex];

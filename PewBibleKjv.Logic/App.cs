@@ -49,18 +49,18 @@ namespace PewBibleKjv.Logic
 
         private void EnableDisableHistoryButtons()
         {
-            _historyControls.BackEnabled = _history.CanMovePrevious;
-            _historyControls.ForwardEnabled = _history.CanMoveNext;
+            _historyControls.BackEnabled = _history.CanMoveBack;
+            _historyControls.ForwardEnabled = _history.CanMoveForward;
         }
 
         private void MoveForward()
         {
-            _verseView.Jump(_history.MoveNext(_verseView.CurrentAbsoluteVerseNumber));
+            _verseView.Jump(_history.MoveForward(_verseView.CurrentAbsoluteVerseNumber));
         }
 
         private void MoveBack()
         {
-            _verseView.Jump(_history.MovePrevious(_verseView.CurrentAbsoluteVerseNumber));
+            _verseView.Jump(_history.MoveBack(_verseView.CurrentAbsoluteVerseNumber));
         }
 
         private void UpdateCurrentLocation(Location currentLocation)
