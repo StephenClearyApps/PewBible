@@ -13,13 +13,14 @@ using Xunit;
 
 namespace UnitTests
 {
-    public class AppUnitTests
+    public class AppHistoryUnitTests
     {
         [Fact]
-        public void InitialStartup_StartsAtJohn_1_1()
+        public void InitialStartup_HistoryButtonsDisabled()
         {
             var app = new StubbedApp();
-            Assert.Equal(26045, app.StubVerseView.CurrentAbsoluteVerseNumber);
+            Assert.False(app.StubHistoryControls.BackEnabled);
+            Assert.False(app.StubHistoryControls.ForwardEnabled);
         }
     }
 }
