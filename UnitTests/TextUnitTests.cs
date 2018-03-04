@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PewBibleKjv.Text;
+using UnitTests.Util;
 using Xunit;
 
 namespace UnitTests
@@ -45,7 +46,7 @@ namespace UnitTests
                     Begin = 36,
                     End = 38,
                 }
-            }, verse.Spans, Utility.SpanComparer);
+            }, verse.Spans, Comparers.SpanComparer);
         }
     }
 }

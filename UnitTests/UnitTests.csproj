@@ -78,7 +78,7 @@
   <ItemGroup>
     <Compile Include="LocationUnitTests.cs" />
     <Compile Include="AppUnitTests.cs" />
-    <Compile Include="Utility.cs" />
+    <Compile Include="Util\Comparers.cs" />
     <Compile Include="TextUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
