@@ -18,18 +18,16 @@ namespace UnitTests
         [Fact]
         public void InitialStartup_StartsAtJohn_1_1()
         {
-            var verseView = new StubVerseView();
-            var app = AppFactory.Create(verseView: verseView);
-            Assert.Equal(26045, verseView.CurrentAbsoluteVerseNumber);
+            var app = new StubbedApp();
+            Assert.Equal(26045, app.StubVerseView.CurrentAbsoluteVerseNumber);
         }
 
         [Fact]
         public void InitialStartup_HistoryButtonsDisabled()
         {
-            var historyControls = new StubHistoryControls();
-            var app = AppFactory.Create(historyControls: historyControls);
-            Assert.False(historyControls.BackEnabled);
-            Assert.False(historyControls.ForwardEnabled);
+            var app = new StubbedApp();
+            Assert.False(app.StubHistoryControls.BackEnabled);
+            Assert.False(app.StubHistoryControls.ForwardEnabled);
         }
     }
 }
