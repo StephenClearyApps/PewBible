@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using PewBibleKjv.Text;
 
 namespace PewBibleKjv.Logic
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public sealed class Location
     {
         public Location(Book book, Chapter chapter, int absoluteVerseNumber)
@@ -20,7 +23,8 @@ namespace PewBibleKjv.Logic
         public int ChapterNumber => Chapter.Index + 1;
         public string ChapterHeadingText => Book.Name + " " + ChapterNumber;
 
-        public override string ToString() => Book.Name + " " + ChapterNumber + ":" + Verse;
+        [ExcludeFromCodeCoverage]
+        private string DebuggerDisplay => Book.Name + " " + ChapterNumber + ":" + Verse;
 
         public static Location Create(int absoluteVerseNumber)
         {
