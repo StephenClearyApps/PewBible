@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PewBibleKjv.Text;
 using UnitTests.Util;
 using Xunit;
 
@@ -19,78 +20,86 @@ namespace UnitTests
         }
 
         [Fact]
-        public void HistoryButtons_TwoItems()
+        public void History_TwoItems()
         {
             var app = new StubbedApp();
-            app.Recreate(VerseHelper.Find("Luke", 3, 13).AbsoluteVerseNumber);
+            var verse1 = VerseHelper.Find("Luke", 3, 13).AbsoluteVerseNumber;
+            app.Recreate(verse1);
             Assert.True(app.StubHistoryControls.BackEnabled);
             Assert.False(app.StubHistoryControls.ForwardEnabled);
+            Assert.Equal(verse1, app.StubVerseView.CurrentAbsoluteVerseNumber);
 
             app.StubHistoryControls.RaiseBackClick();
-
             Assert.False(app.StubHistoryControls.BackEnabled);
             Assert.True(app.StubHistoryControls.ForwardEnabled);
+            Assert.Equal(Bible.John_1_1, app.StubVerseView.CurrentAbsoluteVerseNumber);
 
             app.StubHistoryControls.RaiseForwardClick();
-
             Assert.True(app.StubHistoryControls.BackEnabled);
             Assert.False(app.StubHistoryControls.ForwardEnabled);
+            Assert.Equal(verse1, app.StubVerseView.CurrentAbsoluteVerseNumber);
         }
 
         [Fact]
-        public void HistoryButtons_ThreeItems()
+        public void History_ThreeItems()
         {
             var app = new StubbedApp();
-            app.Recreate(VerseHelper.Find("Luke", 3, 13).AbsoluteVerseNumber);
-            app.Recreate(VerseHelper.Find("Psalms", 23).AbsoluteVerseNumber);
+            var verse1 = VerseHelper.Find("Luke", 3, 13).AbsoluteVerseNumber;
+            var verse2 = VerseHelper.Find("Psalms", 23).AbsoluteVerseNumber;
+            app.Recreate(verse1);
+            app.Recreate(verse2);
             Assert.True(app.StubHistoryControls.BackEnabled);
             Assert.False(app.StubHistoryControls.ForwardEnabled);
+            Assert.Equal(verse2, app.StubVerseView.CurrentAbsoluteVerseNumber);
 
             app.StubHistoryControls.RaiseBackClick();
-
             Assert.True(app.StubHistoryControls.BackEnabled);
             Assert.True(app.StubHistoryControls.ForwardEnabled);
+            Assert.Equal(verse1, app.StubVerseView.CurrentAbsoluteVerseNumber);
 
             app.StubHistoryControls.RaiseBackClick();
-
             Assert.False(app.StubHistoryControls.BackEnabled);
             Assert.True(app.StubHistoryControls.ForwardEnabled);
+            Assert.Equal(Bible.John_1_1, app.StubVerseView.CurrentAbsoluteVerseNumber);
 
             app.StubHistoryControls.RaiseForwardClick();
-
             Assert.True(app.StubHistoryControls.BackEnabled);
             Assert.True(app.StubHistoryControls.ForwardEnabled);
+            Assert.Equal(verse1, app.StubVerseView.CurrentAbsoluteVerseNumber);
 
             app.StubHistoryControls.RaiseForwardClick();
-
             Assert.True(app.StubHistoryControls.BackEnabled);
             Assert.False(app.StubHistoryControls.ForwardEnabled);
+            Assert.Equal(verse2, app.StubVerseView.CurrentAbsoluteVerseNumber);
         }
 
         [Fact]
-        public void HistoryButtons_ThreeItems_JumpInMiddle()
+        public void History_ThreeItems_JumpInMiddle()
         {
             var app = new StubbedApp();
-            app.Recreate(VerseHelper.Find("Luke", 3, 13).AbsoluteVerseNumber);
+            var verse1 = VerseHelper.Find("Luke", 3, 13).AbsoluteVerseNumber;
+            var verse2 = VerseHelper.Find("Psalms", 23).AbsoluteVerseNumber;
+            app.Recreate(verse1);
             app.StubHistoryControls.RaiseBackClick();
-            app.Recreate(VerseHelper.Find("Psalms", 23).AbsoluteVerseNumber);
+            app.Recreate(verse2);
             Assert.True(app.StubHistoryControls.BackEnabled);
             Assert.True(app.StubHistoryControls.ForwardEnabled);
+            Assert.Equal(verse2, app.StubVerseView.CurrentAbsoluteVerseNumber);
 
             app.StubHistoryControls.RaiseBackClick();
-
             Assert.False(app.StubHistoryControls.BackEnabled);
             Assert.True(app.StubHistoryControls.ForwardEnabled);
+            Assert.Equal(Bible.John_1_1, app.StubVerseView.CurrentAbsoluteVerseNumber);
 
             app.StubHistoryControls.RaiseForwardClick();
-
             Assert.True(app.StubHistoryControls.BackEnabled);
             Assert.True(app.StubHistoryControls.ForwardEnabled);
+            Assert.Equal(verse2, app.StubVerseView.CurrentAbsoluteVerseNumber);
 
             app.StubHistoryControls.RaiseForwardClick();
-
             Assert.True(app.StubHistoryControls.BackEnabled);
             Assert.False(app.StubHistoryControls.ForwardEnabled);
+            Assert.Equal(verse1, app.StubVerseView.CurrentAbsoluteVerseNumber);
         }
     }
 }
