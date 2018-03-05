@@ -20,16 +20,13 @@ namespace PewBibleKjv
     {
         private readonly RecyclerView _recyclerView;
         private readonly LinearLayoutManager _layoutManager;
-        private readonly Func<int, Location> _positionToLocation;
         private readonly ScrollListener _scrollListener;
         private int _lastPosition = Bible.InvalidAbsoluteVerseNumber;
 
-        public RecyclerViewVerseViewAdapter(RecyclerView recyclerView, LinearLayoutManager layoutManager,
-            Func<int, Location> positionToLocation)
+        public RecyclerViewVerseViewAdapter(RecyclerView recyclerView, LinearLayoutManager layoutManager)
         {
             _recyclerView = recyclerView;
             _layoutManager = layoutManager;
-            _positionToLocation = positionToLocation;
 
             _scrollListener = new ScrollListener();
             _scrollListener.Scrolled += (_, __, ___) =>
@@ -38,19 +35,24 @@ namespace PewBibleKjv
                 if (firstIndex == _lastPosition)
                     return;
                 _lastPosition = firstIndex;
-                var location = _positionToLocation(firstIndex);
-                OnScroll?.Invoke(location);
+                OnScroll?.Invoke();
             };
             _recyclerView.AddOnScrollListener(_scrollListener);
         }
 
-        public event Action<Location> OnScroll;
+        public event Action OnScroll;
 
         public int CurrentAbsoluteVerseNumber => _layoutManager.FindFirstVisibleItemPosition();
 
         public void Jump(int absoluteVerseNumber)
         {
             _layoutManager.ScrollToPositionWithOffset(absoluteVerseNumber, 0);
+        }
+
+        public Location FindLocation(int absoluteVerseNumber)
+        {
+            var view = (MainActivity.VerseViewHolder)_recyclerView.FindViewHolderForLayoutPosition(absoluteVerseNumber);
+            return view.Location;
         }
 
         public class ScrollListener : RecyclerView.OnScrollListener

@@ -4,8 +4,9 @@ namespace PewBibleKjv.Logic.Adapters.UI
 {
     public interface IVerseView
     {
-        event Action<Location> OnScroll;
+        event Action OnScroll;
         int CurrentAbsoluteVerseNumber { get; }
         void Jump(int absoluteVerseNumber);
+        Location FindLocation(int absoluteVerseNumber);
     }
 }

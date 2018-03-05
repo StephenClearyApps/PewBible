@@ -48,11 +48,7 @@ namespace PewBibleKjv
 
             // Initialize the app
             var chapterHeadingAdapter = new TextViewChapterHeadingAdapter(chapterHeading);
-            var verseViewAdapter = new RecyclerViewVerseViewAdapter(recyclerView, layoutManager, position =>
-            {
-                var view = (VerseViewHolder)recyclerView.FindViewHolderForLayoutPosition(position);
-                return view.Location;
-            });
+            var verseViewAdapter = new RecyclerViewVerseViewAdapter(recyclerView, layoutManager);
             var simpleStorageAdapter = new SharedPreferencesSimpleStorageAdapter(ApplicationContext.GetSharedPreferences("global", FileCreationMode.Private));
             _backButton = FindViewById<ImageButton>(Resource.Id.backButton);
             _forwardButton = FindViewById<ImageButton>(Resource.Id.forwardButton);

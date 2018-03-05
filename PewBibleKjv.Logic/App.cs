@@ -67,9 +67,9 @@ namespace PewBibleKjv.Logic
             _verseView.Jump(_history.MoveBack(_verseView.CurrentAbsoluteVerseNumber));
         }
 
-        private void UpdateCurrentLocation(Location currentLocation)
+        private void UpdateCurrentLocation()
         {
-            _chapterHeading.Text = currentLocation.ChapterHeadingText;
+            _chapterHeading.Text = Location.Create(_verseView.CurrentAbsoluteVerseNumber).ChapterHeadingText;
         }
     }
 }

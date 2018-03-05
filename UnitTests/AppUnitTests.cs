@@ -23,15 +23,15 @@ namespace UnitTests
         public void Scrolling_UpdatesHistory()
         {
             var app = new StubbedApp();
-            var verse1 = Location.Create(Bible.John_1_1 + 13);
-            var verse2 = VerseHelper.Find("Psalms", 23);
+            var verse1 = Location.Create(Bible.John_1_1 + 13).AbsoluteVerseNumber;
+            var verse2 = VerseHelper.Find("Psalms", 23).AbsoluteVerseNumber;
             app.StubVerseView.RaiseOnScroll(verse1);
-            app.Recreate(verse2.AbsoluteVerseNumber);
+            app.Recreate(verse2);
             app.StubHistoryControls.RaiseBackClick();
-            Assert.Equal(verse1.AbsoluteVerseNumber, app.StubVerseView.CurrentAbsoluteVerseNumber);
+            Assert.Equal(verse1, app.StubVerseView.CurrentAbsoluteVerseNumber);
 
             app.StubHistoryControls.RaiseForwardClick();
-            Assert.Equal(verse2.AbsoluteVerseNumber, app.StubVerseView.CurrentAbsoluteVerseNumber);
+            Assert.Equal(verse2, app.StubVerseView.CurrentAbsoluteVerseNumber);
         }
     }
 }
