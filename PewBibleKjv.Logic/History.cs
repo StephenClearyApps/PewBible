@@ -25,6 +25,10 @@ namespace PewBibleKjv.Logic
         /// </summary>
         private readonly List<int> _history;
 
+        /// <summary>
+        /// Initializes the history, loading any saved history from <paramref name="simpleStorage"/>.
+        /// </summary>
+        /// <param name="simpleStorage">The underlying storage.</param>
         public History(ISimpleStorage simpleStorage)
         {
             _simpleStorage = simpleStorage;
@@ -42,11 +46,30 @@ namespace PewBibleKjv.Logic
             }
         }
 
+        /// <summary>
+        /// Gets the verse number at the current position in the history stack.
+        /// </summary>
         public int CurrentAbsoluteVerseNumber => _history[_currentIndex];
+
+        /// <summary>
+        /// Whether the history can be moved back.
+        /// </summary>
         public bool CanMoveBack => _currentIndex != 0;
+
+        /// <summary>
+        /// Whether the history can be moved forward.
+        /// </summary>
         public bool CanMoveForward => _currentIndex != _history.Count - 1;
+
+        /// <summary>
+        /// Notification that <see cref="CanMoveBack"/> and/or <see cref="CanMoveForward"/> may have changed.
+        /// </summary>
         public event Action CanMoveChanged;
 
+        /// <summary>
+        /// Sets the verse number for the current position in the history stack, and saves the history to storage.
+        /// </summary>
+        /// <param name="currentAbsoluteVerseNumber">The absolute verse number.</param>
         public void Save(int currentAbsoluteVerseNumber)
         {
             _history[_currentIndex] = currentAbsoluteVerseNumber;
@@ -54,6 +77,11 @@ namespace PewBibleKjv.Logic
             _simpleStorage.Save("history-history", string.Join(",", _history.Select(x => x.ToString(CultureInfo.InvariantCulture))));
         }
 
+        /// <summary>
+        /// Saves a new verse number for the current position, moves back one position, and returns the verse number for the new position.
+        /// This method may only be called when <see cref="CanMoveBack"/> is <c>true</c>.
+        /// </summary>
+        /// <param name="currentAbsoluteVerseNumber">The new verse number for the current position.</param>
         public int MoveBack(int currentAbsoluteVerseNumber)
         {
             _history[_currentIndex] = currentAbsoluteVerseNumber;
@@ -62,6 +90,11 @@ namespace PewBibleKjv.Logic
             return result;
         }
 
+        /// <summary>
+        /// Saves a new verse number for the current position, moves forward one position, and returns the verse number for the new position.
+        /// This method may only be called when <see cref="CanMoveForward"/> is <c>true</c>.
+        /// </summary>
+        /// <param name="currentAbsoluteVerseNumber">The new verse number for the current position.</param>
         public int MoveForward(int currentAbsoluteVerseNumber)
         {
             _history[_currentIndex] = currentAbsoluteVerseNumber;
