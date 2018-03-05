@@ -53,9 +53,13 @@ namespace PewBibleKjv.Text
                     Begin = text.Length
                 });
             }
-            else if (word == ">" || word == "]")
+            else if (word == ">")
             {
-                result.Spans[result.Spans.Count - 1].End = text.Length;
+                result.Spans.Last(x => x.Type == Text.FormattedVerse.SpanType.Colophon).End = text.Length;
+            }
+            else if (word == "]")
+            {
+                result.Spans.Last(x => x.Type == Text.FormattedVerse.SpanType.Italics).End = text.Length;
             }
             else if (word == "-")
             {
