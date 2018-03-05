@@ -103,7 +103,14 @@ namespace PewBibleKjv.Logic
             return result;
         }
 
-        public void SaveJump(int currentAbsoluteVerseNumber, int jumpAbsoluteVerseNumber)
+        /// <summary>
+        /// Notifies the history stack of a jump.
+        /// Saves a new verse number for the current position, inserts a new position in the stack, and moves forward to that position.
+        /// After this method is called, <see cref="CurrentAbsoluteVerseNumber"/> is equal to <paramref name="jumpAbsoluteVerseNumber"/>.
+        /// </summary>
+        /// <param name="currentAbsoluteVerseNumber">The new verse number for the current position.</param>
+        /// <param name="jumpAbsoluteVerseNumber">The verse number for the new position.</param>
+        public void AddJump(int currentAbsoluteVerseNumber, int jumpAbsoluteVerseNumber)
         {
             _history[_currentIndex] = currentAbsoluteVerseNumber;
 

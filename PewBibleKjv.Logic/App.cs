@@ -34,7 +34,7 @@ namespace PewBibleKjv.Logic
 
             // If the app has to jump to a verse, then insert it into the history.
             if (initialJump != Bible.InvalidAbsoluteVerseNumber)
-                _history.SaveJump(_history.CurrentAbsoluteVerseNumber, initialJump);
+                _history.AddJump(_history.CurrentAbsoluteVerseNumber, initialJump);
 
             // Pick up where we left off.
             verseView.Jump(_history.CurrentAbsoluteVerseNumber);
