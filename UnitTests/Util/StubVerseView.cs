@@ -21,8 +21,8 @@ namespace UnitTests.Util
         }
 
         public int CurrentAbsoluteVerseNumber { get; set; }
+        public Location CurrentVerseLocation => Location.Create(CurrentAbsoluteVerseNumber);
 
         public void Jump(int absoluteVerseNumber) => RaiseOnScroll(absoluteVerseNumber);
-        public Location FindLocation(int absoluteVerseNumber) => Location.Create(absoluteVerseNumber);
     }
 }

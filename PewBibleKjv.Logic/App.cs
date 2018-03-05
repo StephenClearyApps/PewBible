@@ -69,7 +69,7 @@ namespace PewBibleKjv.Logic
 
         private void UpdateCurrentLocation()
         {
-            _chapterHeading.Text = Location.Create(_verseView.CurrentAbsoluteVerseNumber).ChapterHeadingText;
+            _chapterHeading.Text = _verseView.CurrentVerseLocation.ChapterHeadingText;
         }
     }
 }

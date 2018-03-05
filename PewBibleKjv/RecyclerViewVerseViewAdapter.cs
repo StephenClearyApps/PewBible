@@ -44,15 +44,18 @@ namespace PewBibleKjv
 
         public int CurrentAbsoluteVerseNumber => _layoutManager.FindFirstVisibleItemPosition();
 
+        public Location CurrentVerseLocation
+        {
+            get
+            {
+                var viewHolder = _recyclerView.FindViewHolderForLayoutPosition(CurrentAbsoluteVerseNumber);
+                return ((MainActivity.VerseViewHolder)viewHolder).Location;
+            }
+        }
+
         public void Jump(int absoluteVerseNumber)
         {
             _layoutManager.ScrollToPositionWithOffset(absoluteVerseNumber, 0);
-        }
-
-        public Location FindLocation(int absoluteVerseNumber)
-        {
-            var view = (MainActivity.VerseViewHolder)_recyclerView.FindViewHolderForLayoutPosition(absoluteVerseNumber);
-            return view.Location;
         }
 
         public class ScrollListener : RecyclerView.OnScrollListener
