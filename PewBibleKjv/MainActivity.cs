@@ -4,7 +4,6 @@ using Android.App;
 using Android.Content;
 using Android.Widget;
 using Android.OS;
-using Android.Support.V4.Content;
 using Android.Support.V7.App;
 using Android.Support.V7.Widget;
 using PewBibleKjv.Logic;
@@ -19,6 +18,10 @@ namespace PewBibleKjv
         private App _app;
         private ImageButton _backButton;
         private ImageButton _forwardButton;
+        private TextViewChapterHeadingAdapter _chapterHeadingAdapter;
+        private RecyclerViewVerseViewAdapter _verseViewAdapter;
+        private SharedPreferencesSimpleStorageAdapter _simpleStorageAdapter;
+        private ViewHistoryControlsAdapter _historyControlsAdapter;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -43,19 +46,34 @@ namespace PewBibleKjv
             chapterHeading.Click += (_, __) => StartActivity(typeof(ChooseBookActivity));
 
             // Initialize the app
-            var chapterHeadingAdapter = new TextViewChapterHeadingAdapter(chapterHeading);
-            var verseViewAdapter = new RecyclerViewVerseViewAdapter(recyclerView, layoutManager);
-            var simpleStorageAdapter = new SharedPreferencesSimpleStorageAdapter(ApplicationContext.GetSharedPreferences("global", FileCreationMode.Private));
+            _chapterHeadingAdapter = new TextViewChapterHeadingAdapter(chapterHeading);
+            _verseViewAdapter = new RecyclerViewVerseViewAdapter(recyclerView, layoutManager);
+            _simpleStorageAdapter = new SharedPreferencesSimpleStorageAdapter(ApplicationContext.GetSharedPreferences("global", FileCreationMode.Private));
             _backButton = FindViewById<ImageButton>(Resource.Id.backButton);
             _forwardButton = FindViewById<ImageButton>(Resource.Id.forwardButton);
-            var historyControlsAdapter = new ViewHistoryControlsAdapter(_backButton, _forwardButton);
-            _app = new App(chapterHeadingAdapter, verseViewAdapter, simpleStorageAdapter, historyControlsAdapter, startingVerse);
+            _historyControlsAdapter = new ViewHistoryControlsAdapter(_backButton, _forwardButton);
+
+            CreateApp(startingVerse);
         }
 
         protected override void OnPause()
         {
             base.OnPause();
             _app.Dispose();
+            _app = null;
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+            CreateApp(Bible.InvalidAbsoluteVerseNumber);
+        }
+
+        private void CreateApp(int startingVerse)
+        {
+            if (_app != null)
+                return;
+            _app = new App(_chapterHeadingAdapter, _verseViewAdapter, _simpleStorageAdapter, _historyControlsAdapter, startingVerse);
         }
     }
 }
