@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using PewBibleKjv.Text;
 
 namespace PewBibleKjv.Logic
@@ -10,16 +9,10 @@ namespace PewBibleKjv.Logic
         public IEnumerator<Location> GetEnumerator()
         {
             for (var i = 0; i != Count; ++i)
-            {
-                Debug.WriteLine("Enumerating " + i);
                 yield return this[i];
-            }
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         public int Count
         {
@@ -31,13 +24,6 @@ namespace PewBibleKjv.Logic
             }
         }
 
-        public Location this[int index]
-        {
-            get
-            {
-                Debug.WriteLine("Retrieving " + index);
-                return Location.Create(index);
-            }
-        }
+        public Location this[int index] => Location.Create(index);
     }
 }
