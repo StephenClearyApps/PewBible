@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Android.App;
 using Android.Content;
@@ -6,6 +7,7 @@ using Android.Widget;
 using Android.OS;
 using Android.Support.V7.App;
 using Android.Support.V7.Widget;
+using Android.Views;
 using PewBibleKjv.Logic;
 using PewBibleKjv.Text;
 using PewBibleKjv.VerseView;
@@ -47,7 +49,7 @@ namespace PewBibleKjv
 
             // Initialize the app
             _chapterHeadingAdapter = new TextViewChapterHeadingAdapter(chapterHeading);
-            _verseViewAdapter = new RecyclerViewVerseViewAdapter(recyclerView, layoutManager);
+            _verseViewAdapter = new RecyclerViewVerseViewAdapter(this, recyclerView, layoutManager);
             _simpleStorageAdapter = new SharedPreferencesSimpleStorageAdapter(ApplicationContext.GetSharedPreferences("global", FileCreationMode.Private));
             _backButton = FindViewById<ImageButton>(Resource.Id.backButton);
             _forwardButton = FindViewById<ImageButton>(Resource.Id.forwardButton);

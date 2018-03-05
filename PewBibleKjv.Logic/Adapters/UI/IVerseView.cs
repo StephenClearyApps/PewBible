@@ -13,6 +13,16 @@ namespace PewBibleKjv.Logic.Adapters.UI
         event Action OnScroll;
 
         /// <summary>
+        /// Notification that the user has swiped left. <see cref="CurrentAbsoluteVerseNumber"/> has not been updated yet.
+        /// </summary>
+        event Action OnSwipeLeft;
+
+        /// <summary>
+        /// Notification that the user has swiped left. <see cref="CurrentAbsoluteVerseNumber"/> has not been updated yet.
+        /// </summary>
+        event Action OnSwipeRight;
+
+        /// <summary>
         /// Returns the current verse number at the top of the view.
         /// </summary>
         int CurrentAbsoluteVerseNumber { get; }

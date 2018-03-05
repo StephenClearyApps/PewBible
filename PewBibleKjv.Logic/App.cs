@@ -21,11 +21,13 @@ namespace PewBibleKjv.Logic
             _verseView = verseView;
             _historyControls = historyControls;
 
-            // Keep track of changes to the verse view.
-            verseView.OnScroll += UpdateCurrentLocation;
-
             // Load history.
             _history = new History(simpleStorage);
+
+            // Keep track of changes to the verse view.
+            verseView.OnScroll += UpdateCurrentLocation;
+            verseView.OnSwipeLeft += MoveNextChapter;
+            verseView.OnSwipeRight += MovePreviousChapter;
 
             // Wire up history to the history controls.
             historyControls.BackClick += MoveBack;
@@ -46,6 +48,8 @@ namespace PewBibleKjv.Logic
         {
             _history.Save(_verseView.CurrentAbsoluteVerseNumber);
             _verseView.OnScroll -= UpdateCurrentLocation;
+            _verseView.OnSwipeLeft -= MoveNextChapter;
+            _verseView.OnSwipeRight -= MovePreviousChapter;
             _historyControls.BackClick -= MoveBack;
             _historyControls.ForwardClick -= MoveForward;
             _history.CanMoveChanged -= EnableDisableHistoryButtons;
@@ -65,6 +69,16 @@ namespace PewBibleKjv.Logic
         private void MoveBack()
         {
             _verseView.Jump(_history.MoveBack(_verseView.CurrentAbsoluteVerseNumber));
+        }
+
+        private void MovePreviousChapter()
+        {
+            _verseView.Jump(_verseView.CurrentVerseLocation.PreviousChapter().AbsoluteVerseNumber);
+        }
+
+        private void MoveNextChapter()
+        {
+            _verseView.Jump(_verseView.CurrentVerseLocation.NextChapter().AbsoluteVerseNumber);
         }
 
         private void UpdateCurrentLocation()
