@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using Xunit;
 
 namespace UnitTests
 {
+    [ExcludeFromCodeCoverage]
     public class AppHistoryUnitTests
     {
         [Fact]
@@ -35,6 +37,67 @@ namespace UnitTests
 
             Assert.False(app.StubHistoryControls.BackEnabled);
             Assert.True(app.StubHistoryControls.ForwardEnabled);
+
+            app.StubHistoryControls.RaiseForwardClick();
+
+            Assert.True(app.StubHistoryControls.BackEnabled);
+            Assert.False(app.StubHistoryControls.ForwardEnabled);
+        }
+
+        [Fact]
+        public void HistoryButtons_ThreeItems()
+        {
+            var app = new StubbedApp();
+            app.Recreate(VerseHelper.Find("Luke", 3, 13).AbsoluteVerseNumber);
+            app.Recreate(VerseHelper.Find("Psalms", 23).AbsoluteVerseNumber);
+            Assert.True(app.StubHistoryControls.BackEnabled);
+            Assert.False(app.StubHistoryControls.ForwardEnabled);
+
+            app.StubHistoryControls.RaiseBackClick();
+
+            Assert.True(app.StubHistoryControls.BackEnabled);
+            Assert.True(app.StubHistoryControls.ForwardEnabled);
+
+            app.StubHistoryControls.RaiseBackClick();
+
+            Assert.False(app.StubHistoryControls.BackEnabled);
+            Assert.True(app.StubHistoryControls.ForwardEnabled);
+
+            app.StubHistoryControls.RaiseForwardClick();
+
+            Assert.True(app.StubHistoryControls.BackEnabled);
+            Assert.True(app.StubHistoryControls.ForwardEnabled);
+
+            app.StubHistoryControls.RaiseForwardClick();
+
+            Assert.True(app.StubHistoryControls.BackEnabled);
+            Assert.False(app.StubHistoryControls.ForwardEnabled);
+        }
+
+        [Fact]
+        public void HistoryButtons_ThreeItems_JumpInMiddle()
+        {
+            var app = new StubbedApp();
+            app.Recreate(VerseHelper.Find("Luke", 3, 13).AbsoluteVerseNumber);
+            app.StubHistoryControls.RaiseBackClick();
+            app.Recreate(VerseHelper.Find("Psalms", 23).AbsoluteVerseNumber);
+            Assert.True(app.StubHistoryControls.BackEnabled);
+            Assert.True(app.StubHistoryControls.ForwardEnabled);
+
+            app.StubHistoryControls.RaiseBackClick();
+
+            Assert.False(app.StubHistoryControls.BackEnabled);
+            Assert.True(app.StubHistoryControls.ForwardEnabled);
+
+            app.StubHistoryControls.RaiseForwardClick();
+
+            Assert.True(app.StubHistoryControls.BackEnabled);
+            Assert.True(app.StubHistoryControls.ForwardEnabled);
+
+            app.StubHistoryControls.RaiseForwardClick();
+
+            Assert.True(app.StubHistoryControls.BackEnabled);
+            Assert.False(app.StubHistoryControls.ForwardEnabled);
         }
     }
 }
