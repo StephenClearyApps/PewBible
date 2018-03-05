@@ -101,5 +101,32 @@ namespace UnitTests
             Assert.False(app.StubHistoryControls.ForwardEnabled);
             Assert.Equal(verse1, app.StubVerseView.CurrentAbsoluteVerseNumber);
         }
+
+        [Fact]
+        public void History_JumpToNextLocation_DoesNotAddDuplicate()
+        {
+            var app = new StubbedApp();
+            var verse1 = VerseHelper.Find("Luke", 3, 13).AbsoluteVerseNumber;
+            app.Recreate(verse1);
+            app.StubHistoryControls.RaiseBackClick();
+            app.Recreate(verse1);
+
+            Assert.False(app.StubHistoryControls.ForwardEnabled);
+            Assert.Equal(verse1, app.StubVerseView.CurrentAbsoluteVerseNumber);
+
+            app.StubHistoryControls.RaiseBackClick();
+            Assert.False(app.StubHistoryControls.BackEnabled);
+            Assert.Equal(Bible.John_1_1, app.StubVerseView.CurrentAbsoluteVerseNumber);
+        }
+
+        [Fact]
+        public void History_JumpToSameLocation_DoesNotAddDuplicate()
+        {
+            var app = new StubbedApp();
+            app.Recreate(Bible.John_1_1);
+            
+            Assert.False(app.StubHistoryControls.BackEnabled);
+            Assert.False(app.StubHistoryControls.ForwardEnabled);
+        }
     }
 }

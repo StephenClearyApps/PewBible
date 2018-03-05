@@ -13,13 +13,15 @@ namespace UnitTests.Util
     public sealed class StubVerseView: IVerseView
     {
         public event Action<Location> OnScroll;
-        public void RaiseOnScroll(Location location) => OnScroll?.Invoke(location);
+
+        public void RaiseOnScroll(Location location)
+        {
+            CurrentAbsoluteVerseNumber = location.AbsoluteVerseNumber;
+            OnScroll?.Invoke(location);
+        }
+
         public int CurrentAbsoluteVerseNumber { get; set; }
 
-        public void Jump(int absoluteVerseNumber)
-        {
-            CurrentAbsoluteVerseNumber = absoluteVerseNumber;
-            RaiseOnScroll(Location.Create(absoluteVerseNumber));
-        }
+        public void Jump(int absoluteVerseNumber) => RaiseOnScroll(Location.Create(absoluteVerseNumber));
     }
 }
