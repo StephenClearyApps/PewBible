@@ -113,7 +113,7 @@ namespace PewBibleKjv.Text
                     else if (wordFlags == 2)
                         word = char.ToUpperInvariant(word[0]) + word.Substring(1);
                     else if (wordFlags == 3)
-                        word = char.ToUpperInvariant(word[0]) + char.ToUpperInvariant(word[1]) + word.Substring(2);
+                        word = char.ToUpperInvariant(word[0]).ToString() + char.ToUpperInvariant(word[1]) + word.Substring(2);
                     yield return word;
                 }
             }

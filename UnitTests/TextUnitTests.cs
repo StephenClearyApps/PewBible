@@ -169,6 +169,15 @@ namespace UnitTests
         }
 
         [Fact]
+        public void DoubleCapitalization()
+        {
+            // A few words in the text have the first *two* letters capitalized.
+            var location = VerseHelper.Find("John", 3, 23);
+            var verse = Bible.FormattedVerse(location.AbsoluteVerseNumber);
+            Assert.Equal(" And John also was baptizing in AEnon near to Salim, because there was much water there: and they came, and were baptized.", verse.Text);
+        }
+
+        [Fact]
         public void AllVerses_PassBasicChecks()
         {
             for (var i = 0; i != VerseHelper.Find("Revelation", 22).Chapter.EndVerse; ++i)
