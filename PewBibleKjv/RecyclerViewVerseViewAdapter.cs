@@ -13,6 +13,7 @@ using Android.Widget;
 using PewBibleKjv.Logic;
 using PewBibleKjv.Logic.Adapters.UI;
 using PewBibleKjv.Text;
+using PewBibleKjv.VerseView;
 
 namespace PewBibleKjv
 {
@@ -49,7 +50,7 @@ namespace PewBibleKjv
             get
             {
                 var viewHolder = _recyclerView.FindViewHolderForLayoutPosition(CurrentAbsoluteVerseNumber);
-                return ((MainActivity.VerseViewHolder)viewHolder).Location;
+                return ((VerseViewHolder)viewHolder).Location;
             }
         }
 

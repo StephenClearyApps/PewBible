@@ -114,6 +114,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="VerseView\VerseAdapter.cs" />
+    <Compile Include="VerseView\VerseViewHolder.cs" />
     <Compile Include="ViewHistoryControlsAdapter.cs" />
     <Compile Include="ChooseBookActivity.cs" />
     <Compile Include="ChooseChapterActivity.cs" />
