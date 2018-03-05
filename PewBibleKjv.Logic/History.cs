@@ -33,7 +33,7 @@ namespace PewBibleKjv.Logic
             if (currentIndexString == null)
             {
                 _currentIndex = 0;
-                _history = new List<int> { 26045 };
+                _history = new List<int> { Bible.John_1_1 };
             }
             else
             {

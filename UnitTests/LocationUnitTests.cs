@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PewBibleKjv.Logic;
+using PewBibleKjv.Text;
 using Xunit;
 
 namespace UnitTests
@@ -15,7 +16,7 @@ namespace UnitTests
         [Fact]
         public void Verse_26045_is_John_1_1()
         {
-            var location = Location.Create(26045);
+            var location = Location.Create(Bible.John_1_1);
             Assert.Equal("John", location.Book.Name);
             Assert.Equal(1, location.ChapterNumber);
             Assert.Equal(1, location.Verse);

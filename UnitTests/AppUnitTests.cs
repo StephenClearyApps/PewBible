@@ -21,7 +21,7 @@ namespace UnitTests
         public void InitialStartup_StartsAtJohn_1_1()
         {
             var app = new StubbedApp();
-            Assert.Equal(26045, app.StubVerseView.CurrentAbsoluteVerseNumber);
+            Assert.Equal(Bible.John_1_1, app.StubVerseView.CurrentAbsoluteVerseNumber);
         }
     }
 }

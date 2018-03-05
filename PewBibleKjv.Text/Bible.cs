@@ -8,6 +8,7 @@ namespace PewBibleKjv.Text
     public static class Bible
     {
         public const int InvalidAbsoluteVerseNumber = -1;
+        public const int John_1_1 = 26045;
 
         public static FormattedVerse FormattedVerse(int verseNumber)
         {
