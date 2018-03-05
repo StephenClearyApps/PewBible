@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using PewBibleKjv.Text;
 
 namespace UnitTests.Util
 {
+    [ExcludeFromCodeCoverage]
     public sealed class StubbedApp
     {
         public StubbedApp(IChapterHeading chapterHeading = null, IVerseView verseView = null,
@@ -38,6 +40,7 @@ namespace UnitTests.Util
 
         public void Recreate(int initialJump = Bible.InvalidAbsoluteVerseNumber)
         {
+            App.Dispose();
             InitialJump = initialJump;
             App = new App(ChapterHeading, VerseView, SimpleStorage, HistoryControls, InitialJump);
         }

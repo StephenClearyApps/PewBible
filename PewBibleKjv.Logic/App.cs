@@ -7,7 +7,7 @@ using PewBibleKjv.Text;
 
 namespace PewBibleKjv.Logic
 {
-    public sealed class App
+    public sealed class App : IDisposable
     {
         private readonly IChapterHeading _chapterHeading;
         private readonly IVerseView _verseView;
@@ -42,9 +42,13 @@ namespace PewBibleKjv.Logic
             EnableDisableHistoryButtons();
         }
 
-        public void Pause()
+        public void Dispose()
         {
             _history.Save(_verseView.CurrentAbsoluteVerseNumber);
+            _verseView.OnScroll -= UpdateCurrentLocation;
+            _historyControls.BackClick -= MoveBack;
+            _historyControls.ForwardClick -= MoveForward;
+            _history.CanMoveChanged -= EnableDisableHistoryButtons;
         }
 
         private void EnableDisableHistoryButtons()

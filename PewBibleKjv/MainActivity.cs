@@ -63,7 +63,7 @@ namespace PewBibleKjv
         protected override void OnPause()
         {
             base.OnPause();
-            _app.Pause();
+            _app.Dispose();
         }
 
         public class VerseViewHolder : RecyclerView.ViewHolder

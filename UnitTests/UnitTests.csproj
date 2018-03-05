@@ -96,6 +96,7 @@
     <Compile Include="Util\StubHistoryControls.cs" />
     <Compile Include="Util\StubSimpleStorage.cs" />
     <Compile Include="Util\StubVerseView.cs" />
+    <Compile Include="Util\VerseHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

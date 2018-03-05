@@ -22,5 +22,19 @@ namespace UnitTests
             Assert.False(app.StubHistoryControls.BackEnabled);
             Assert.False(app.StubHistoryControls.ForwardEnabled);
         }
+
+        [Fact]
+        public void HistoryButtons_TwoItems()
+        {
+            var app = new StubbedApp();
+            app.Recreate(VerseHelper.Find("Luke", 3, 13).AbsoluteVerseNumber);
+            Assert.True(app.StubHistoryControls.BackEnabled);
+            Assert.False(app.StubHistoryControls.ForwardEnabled);
+
+            app.StubHistoryControls.RaiseBackClick();
+
+            Assert.False(app.StubHistoryControls.BackEnabled);
+            Assert.True(app.StubHistoryControls.ForwardEnabled);
+        }
     }
 }
