@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Util", "Util", "{09D76D4C-E243-4AC2-91E4-7643BA55B431}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{D58FEC62-07E8-4A8E-8C35-204CC96196C9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImportAndCompare", "Import\ImportAndCompare\ImportAndCompare.csproj", "{45D13C0C-8348-4770-B532-E82975BF4849}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PewBibleKjv", "PewBibleKjv\PewBibleKjv.csproj", "{F95DBC7F-78D5-4012-AC86-50128B37D551}"
@@ -15,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PewBibleKjv.Text", "PewBibl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PewBibleKjv.Logic", "PewBibleKjv.Logic\PewBibleKjv.Logic.csproj", "{A6061CF3-7C3F-4F19-8915-8FC67727B22F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{47AA8CD1-178B-4C64-956B-4397CC2D7514}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,12 +22,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D58FEC62-07E8-4A8E-8C35-204CC96196C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D58FEC62-07E8-4A8E-8C35-204CC96196C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D58FEC62-07E8-4A8E-8C35-204CC96196C9}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
-		{D58FEC62-07E8-4A8E-8C35-204CC96196C9}.Dev|Any CPU.Build.0 = Dev|Any CPU
-		{D58FEC62-07E8-4A8E-8C35-204CC96196C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D58FEC62-07E8-4A8E-8C35-204CC96196C9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{45D13C0C-8348-4770-B532-E82975BF4849}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{45D13C0C-8348-4770-B532-E82975BF4849}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45D13C0C-8348-4770-B532-E82975BF4849}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
@@ -53,6 +47,12 @@ Global
 		{A6061CF3-7C3F-4F19-8915-8FC67727B22F}.Dev|Any CPU.Build.0 = Dev|Any CPU
 		{A6061CF3-7C3F-4F19-8915-8FC67727B22F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6061CF3-7C3F-4F19-8915-8FC67727B22F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47AA8CD1-178B-4C64-956B-4397CC2D7514}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47AA8CD1-178B-4C64-956B-4397CC2D7514}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47AA8CD1-178B-4C64-956B-4397CC2D7514}.Dev|Any CPU.ActiveCfg = Debug|Any CPU
+		{47AA8CD1-178B-4C64-956B-4397CC2D7514}.Dev|Any CPU.Build.0 = Debug|Any CPU
+		{47AA8CD1-178B-4C64-956B-4397CC2D7514}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47AA8CD1-178B-4C64-956B-4397CC2D7514}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
