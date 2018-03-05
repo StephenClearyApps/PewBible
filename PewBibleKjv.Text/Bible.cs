@@ -67,7 +67,7 @@ namespace PewBibleKjv.Text
             }
             else if (word == "—")
             {
-                text.Append("—\u200B");
+                text.Append("—");
             }
             else
             {
