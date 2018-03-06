@@ -1,7 +1,9 @@
 ﻿using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
+using Java.Lang;
 using PewBibleKjv.Logic;
+using System.Collections.Generic;
 
 namespace PewBibleKjv.VerseView
 {
@@ -9,6 +11,7 @@ namespace PewBibleKjv.VerseView
     {
         public TextView View { get; }
         public Location Location { get; set; }
+        public List<Object> SpanObjects { get; } = new List<Object>();
 
         public VerseViewHolder(View view) : base(view)
         {
