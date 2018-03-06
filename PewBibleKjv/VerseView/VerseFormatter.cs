@@ -27,7 +27,7 @@ namespace PewBibleKjv.VerseView
         private static readonly SimpleCache<StyleSpan> ItalicsStyleSpanCache = new SimpleCache<StyleSpan>(() => new StyleSpan(TypefaceStyle.Italic));
         private static readonly SimpleCache<RelativeSizeSpan> SmallerRelativeSizeSpanCache = new SimpleCache<RelativeSizeSpan>(() => new RelativeSizeSpan(0.8f));
 
-        public static SpannableString FormattedText(Location location, List<Object> spans)
+        public static SpannableString FormattedText(Location location, List<ISimpleCacheItem<Object>> spans)
         {
             var formattedVerse = Bible.FormattedVerse(location.AbsoluteVerseNumber);
             var chapterPrefix = "";
@@ -46,8 +46,8 @@ namespace PewBibleKjv.VerseView
             foreach (var textSpan in formattedVerse.Spans)
             {
                 var span =
-                    textSpan.Type == FormattedVerse.SpanType.Italics ? ItalicsStyleSpanCache.Alloc() as Java.Lang.Object :
-                    textSpan.Type == FormattedVerse.SpanType.Colophon ? SmallerRelativeSizeSpanCache.Alloc() :
+                    textSpan.Type == FormattedVerse.SpanType.Italics ? ItalicsStyleSpanCache.Alloc().AddTo(spans) :
+                    textSpan.Type == FormattedVerse.SpanType.Colophon ? SmallerRelativeSizeSpanCache.Alloc().AddTo(spans) :
                     throw new InvalidOperationException($"Unknown span type {textSpan.Type}");
                 formattedText.SetSpan(span, textSpan.Begin + prefix.Length,
                     textSpan.End + prefix.Length, SpanTypes.InclusiveExclusive);
@@ -56,40 +56,17 @@ namespace PewBibleKjv.VerseView
             return formattedText;
         }
 
-        public static void Free(List<Object> spans)
+        public static void Free(List<ISimpleCacheItem<Object>> spans)
         {
             foreach (var span in spans)
-            {
-                switch (span)
-                {
-                    case TypefaceSpan sansSerifTypefaceSpan:
-                        SansSerifTypespaceSpanCache.Free(sansSerifTypefaceSpan);
-                        break;
-                    case UnderlineSpan underlineSpan:
-                        UnderlineSpanCache.Free(underlineSpan);
-                        break;
-                    case AlignmentSpanStandard alignCenterSpan:
-                        AlignCenterSpanCache.Free(alignCenterSpan);
-                        break;
-                    case RelativeSizeSpan smallerRelativeSizeSpan:
-                        SmallerRelativeSizeSpanCache.Free(smallerRelativeSizeSpan);
-                        break;
-                    case StyleSpan styleSpan:
-                        if (styleSpan.Style == TypefaceStyle.Bold)
-                            BoldStyleSpanCache.Free(styleSpan);
-                        else
-                            ItalicsStyleSpanCache.Free(styleSpan);
-                        break;
-                }
-            }
-
+                span.Free();
             spans.Clear();
         }
 
-        private static Object AddTo(this Object @this, List<Object> collection)
+        private static Object AddTo(this ISimpleCacheItem<Object> @this, List<ISimpleCacheItem<Object>> collection)
         {
             collection.Add(@this);
-            return @this;
+            return @this.Instance;
         }
     }
 }

@@ -19,15 +19,15 @@ namespace PewBibleKjv.VerseView
     public sealed class SimpleCache<T>
     {
         private readonly Func<T> _create;
-        private readonly List<T> _cache;
+        private readonly List<Item> _cache;
 
         public SimpleCache(Func<T> create)
         {
             _create = create;
-            _cache = new List<T>();
+            _cache = new List<Item>();
         }
 
-        public T Alloc()
+        public ISimpleCacheItem<T> Alloc()
         {
             if (_cache.Count != 0)
             {
@@ -36,9 +36,22 @@ namespace PewBibleKjv.VerseView
                 return result;
             }
 
-            return _create();
+            return new Item(this, _create());
         }
 
-        public void Free(T instance) => _cache.Add(instance);
+        private sealed class Item : ISimpleCacheItem<T>
+        {
+            private readonly SimpleCache<T> _cache;
+
+            public Item(SimpleCache<T> cache, T instance)
+            {
+                _cache = cache;
+                Instance = instance;
+            }
+
+            public T Instance { get; }
+
+            public void Free() => _cache._cache.Add(this);
+        }
     }
 }

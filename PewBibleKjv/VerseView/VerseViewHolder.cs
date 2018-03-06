@@ -11,7 +11,7 @@ namespace PewBibleKjv.VerseView
     {
         public TextView View { get; }
         public Location Location { get; set; }
-        public List<Object> SpanObjects { get; } = new List<Object>();
+        public List<ISimpleCacheItem<Object>> SpanObjects { get; } = new List<ISimpleCacheItem<Object>>();
 
         public VerseViewHolder(View view) : base(view)
         {
