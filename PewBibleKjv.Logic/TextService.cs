@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using PewBibleKjv.Text;
 
 namespace PewBibleKjv.Logic
@@ -14,15 +15,7 @@ namespace PewBibleKjv.Logic
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public int Count
-        {
-            get
-            {
-                var lastBook = Structure.Books[Structure.Books.Length - 1];
-                var lastChapter = lastBook.Chapters[lastBook.Chapters.Length - 1];
-                return lastChapter.EndVerse;
-            }
-        }
+        public int Count => Structure.Books.Last().Chapters.Last().EndVerse;
 
         public Location this[int index] => Location.Create(index);
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using PewBibleKjv.Text;
 
 namespace PewBibleKjv.Logic
@@ -44,7 +45,7 @@ namespace PewBibleKjv.Logic
                 if (book.Index != 0)
                 {
                     book = Structure.Books[book.Index - 1];
-                    chapter = book.Chapters[book.Chapters.Length - 1];
+                    chapter = book.Chapters.Last();
                 }
             }
             else
@@ -63,7 +64,7 @@ namespace PewBibleKjv.Logic
                 if (book.Index != Structure.Books.Length - 1)
                 {
                     book = Structure.Books[book.Index + 1];
-                    chapter = book.Chapters[0];
+                    chapter = book.Chapters.First();
                 }
             }
             else
