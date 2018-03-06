@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using Android.Graphics;
 using Android.Support.V7.Widget;
 using Android.Text;
@@ -13,12 +14,10 @@ namespace PewBibleKjv.VerseView
 {
     public class VerseAdapter : RecyclerView.Adapter
     {
-        private readonly TextService _data;
         private readonly LayoutInflater _layoutInflater;
 
-        public VerseAdapter(TextService data, LayoutInflater layoutInflater)
+        public VerseAdapter(LayoutInflater layoutInflater)
         {
-            _data = data;
             _layoutInflater = layoutInflater;
         }
 
@@ -33,7 +32,7 @@ namespace PewBibleKjv.VerseView
         public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
         {
             var vh = (VerseViewHolder)holder;
-            vh.Location = _data[position];
+            vh.Location = Location.Create(position);
             if (vh.SpanObjects.Count != 0)
                 VerseFormatter.Free(vh.SpanObjects);
             vh.View.TextFormatted = VerseFormatter.FormattedText(vh.Location, vh.SpanObjects);
@@ -45,6 +44,6 @@ namespace PewBibleKjv.VerseView
             return new VerseViewHolder(verseView);
         }
 
-        public override int ItemCount => _data.Count;
+        public override int ItemCount { get; } = Structure.Books.Last().Chapters.Last().EndVerse;
     }
 }

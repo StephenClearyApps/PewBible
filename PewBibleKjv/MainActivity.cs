@@ -41,7 +41,7 @@ namespace PewBibleKjv
             var recyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView);
             var layoutManager = new LinearLayoutManager(this);
             recyclerView.SetLayoutManager(layoutManager);
-            recyclerView.SetAdapter(new VerseAdapter(new TextService(), LayoutInflater));
+            recyclerView.SetAdapter(new VerseAdapter(LayoutInflater));
 
             // Wire up Android-side events
             var chapterHeading = FindViewById<Button>(Resource.Id.headingText);
