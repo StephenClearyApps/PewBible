@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>PewBibleKjv.Text</RootNamespace>
     <AssemblyName>PewBibleKjv.Text</AssemblyName>
-    <Configurations>Debug;Release;Dev</Configurations>
+    <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
