@@ -10,6 +10,11 @@
       android:textSize="18sp"
       android:textStyle="bold"
       android:gravity="center"/>
+  <View
+      android:id="@+id/verseHorizontalLine"
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:background="#000000"/>
   <TextView
       android:id="@+id/verseText"
       android:layout_width="match_parent"

@@ -50,17 +50,14 @@ namespace PewBibleKjv.VerseView
 
         private static void ApplyChapterText(this VerseViewHolder @this)
         {
-            SpannableString chapterText = null;
+            string chapterText = null;
             if (@this.Location.Verse == 1)
-            {
-                var text = @this.Location.ChapterHeadingText;
-                chapterText = new SpannableString(text);
-                chapterText.SetSpan(UnderlineSpanCache.Alloc().AddTo(@this.SpanObjects), 0, text.Length, SpanTypes.InclusiveExclusive);
-            }
+                chapterText = @this.Location.ChapterHeadingText;
 
             @this.ChapterHeaderView.Visibility = chapterText == null ? ViewStates.Gone : ViewStates.Visible;
+            @this.HorizontalLine.Visibility = chapterText == null ? ViewStates.Gone : ViewStates.Visible;
             if (chapterText != null)
-                @this.ChapterHeaderView.TextFormatted = chapterText;
+                @this.ChapterHeaderView.Text = chapterText;
         }
 
         public static void Free(List<ISimpleCacheItem<Object>> spans)

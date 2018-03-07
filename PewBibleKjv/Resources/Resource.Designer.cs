@@ -2591,7 +2591,10 @@ namespace PewBibleKjv
 			public const int verseChapterHeaderText = 2131165388;
 			
 			// aapt resource value: 0x7f0700cd
-			public const int verseText = 2131165389;
+			public const int verseHorizontalLine = 2131165389;
+			
+			// aapt resource value: 0x7f0700ce
+			public const int verseText = 2131165390;
 			
 			// aapt resource value: 0x7f07002e
 			public const int withText = 2131165230;
