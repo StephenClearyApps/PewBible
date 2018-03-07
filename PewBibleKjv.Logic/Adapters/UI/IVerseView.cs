@@ -14,13 +14,15 @@ namespace PewBibleKjv.Logic.Adapters.UI
 
         /// <summary>
         /// Notification that the user has swiped left. <see cref="CurrentAbsoluteVerseNumber"/> has not been updated yet.
+        /// The parameter is the verse location that was current at the time the swipe was started.
         /// </summary>
-        event Action OnSwipeLeft;
+        event Action<Location> OnSwipeLeft;
 
         /// <summary>
         /// Notification that the user has swiped left. <see cref="CurrentAbsoluteVerseNumber"/> has not been updated yet.
+        /// The parameter is the verse location that was current at the time the swipe was started.
         /// </summary>
-        event Action OnSwipeRight;
+        event Action<Location> OnSwipeRight;
 
         /// <summary>
         /// Returns the current verse number at the top of the view.

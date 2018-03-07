@@ -13,6 +13,7 @@ namespace PewBibleKjv.Util
             _gestureDetector = new GestureDetector(context, new SwipeGestureListener(this));
         }
 
+        public event Action OnDown;
         public event Action OnSwipeLeft;
         public event Action OnSwipeRight;
 
@@ -30,7 +31,11 @@ namespace PewBibleKjv.Util
             private const int SwipeDistanceThreshold = 120;
             private const int SwipeVelocityThreshold = 200;
 
-            public override bool OnDown(MotionEvent e) => true;
+            public override bool OnDown(MotionEvent e)
+            {
+                _swipeTouchListener.OnDown.Invoke();
+                return true;
+            }
 
             public override bool OnFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY)
             {

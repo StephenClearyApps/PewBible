@@ -25,6 +25,7 @@ namespace PewBibleKjv
         private readonly ScrollListener _scrollListener;
         private readonly SwipeTouchListener _swipeTouchListener;
         private int _lastPosition = Bible.InvalidAbsoluteVerseNumber;
+        private Location _startSwipeLocation;
 
         public RecyclerViewVerseViewAdapter(Context context, RecyclerView recyclerView, LinearLayoutManager layoutManager)
         {
@@ -32,32 +33,20 @@ namespace PewBibleKjv
             _layoutManager = layoutManager;
 
             _scrollListener = new ScrollListener();
-            _scrollListener.Scrolled += (_, __, ___) =>
-            {
-                var firstIndex = CurrentAbsoluteVerseNumber;
-                if (firstIndex == _lastPosition)
-                    return;
-                _lastPosition = firstIndex;
-                OnScroll?.Invoke();
-            };
+            _scrollListener.Scrolled += ScrollListenerOnScrolled;
             _recyclerView.AddOnScrollListener(_scrollListener);
 
             _swipeTouchListener = new SwipeTouchListener(context);
+            _swipeTouchListener.OnDown += SwipeTouchListenerOnOnDown;
+            _swipeTouchListener.OnSwipeLeft += SwipeTouchListenerOnOnSwipeLeft;
+            _swipeTouchListener.OnSwipeRight += SwipeTouchListenerOnOnSwipeRight;
             _recyclerView.SetOnTouchListener(_swipeTouchListener);
         }
 
         public event Action OnScroll;
-        public event Action OnSwipeLeft
-        {
-            add => _swipeTouchListener.OnSwipeLeft += value;
-            remove => _swipeTouchListener.OnSwipeLeft -= value;
-        }
-        public event Action OnSwipeRight
-        {
-            add => _swipeTouchListener.OnSwipeRight += value;
-            remove => _swipeTouchListener.OnSwipeRight -= value;
-        }
-        
+        public event Action<Location> OnSwipeLeft;
+        public event Action<Location> OnSwipeRight;
+
         public int CurrentAbsoluteVerseNumber => _layoutManager.FindFirstVisibleItemPosition();
 
         public Location CurrentVerseLocation
@@ -69,9 +58,21 @@ namespace PewBibleKjv
             }
         }
 
-        public void Jump(int absoluteVerseNumber)
+        public void Jump(int absoluteVerseNumber) => _layoutManager.ScrollToPositionWithOffset(absoluteVerseNumber, 0);
+
+        private void SwipeTouchListenerOnOnDown() => _startSwipeLocation = CurrentVerseLocation;
+
+        private void SwipeTouchListenerOnOnSwipeRight() => OnSwipeRight?.Invoke(_startSwipeLocation);
+
+        private void SwipeTouchListenerOnOnSwipeLeft() => OnSwipeLeft?.Invoke(_startSwipeLocation);
+
+        private void ScrollListenerOnScrolled(RecyclerView recyclerView, int i, int arg3)
         {
-            _layoutManager.ScrollToPositionWithOffset(absoluteVerseNumber, 0);
+            var firstIndex = CurrentAbsoluteVerseNumber;
+            if (firstIndex == _lastPosition)
+                return;
+            _lastPosition = firstIndex;
+            OnScroll?.Invoke();
         }
 
         public class ScrollListener : RecyclerView.OnScrollListener

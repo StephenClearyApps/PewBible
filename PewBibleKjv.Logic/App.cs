@@ -71,14 +71,14 @@ namespace PewBibleKjv.Logic
             _verseView.Jump(_history.MoveBack(_verseView.CurrentAbsoluteVerseNumber));
         }
 
-        private void MovePreviousChapter()
+        private void MovePreviousChapter(Location startSwipeLocation)
         {
-            _verseView.Jump(_verseView.CurrentVerseLocation.PreviousChapter().AbsoluteVerseNumber);
+            _verseView.Jump(startSwipeLocation.PreviousChapter().AbsoluteVerseNumber);
         }
 
-        private void MoveNextChapter()
+        private void MoveNextChapter(Location startSwipeLocation)
         {
-            _verseView.Jump(_verseView.CurrentVerseLocation.NextChapter().AbsoluteVerseNumber);
+            _verseView.Jump(startSwipeLocation.NextChapter().AbsoluteVerseNumber);
         }
 
         private void UpdateCurrentLocation()

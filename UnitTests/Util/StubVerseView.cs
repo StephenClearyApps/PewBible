@@ -13,8 +13,8 @@ namespace UnitTests.Util
     public sealed class StubVerseView: IVerseView
     {
         public event Action OnScroll;
-        public event Action OnSwipeLeft;
-        public event Action OnSwipeRight;
+        public event Action<Location> OnSwipeLeft;
+        public event Action<Location> OnSwipeRight;
 
         public void RaiseOnScroll(int absoluteVerseNumber)
         {
@@ -22,8 +22,8 @@ namespace UnitTests.Util
             OnScroll?.Invoke();
         }
 
-        public void RaiseOnSwipeLeft() => OnSwipeLeft?.Invoke();
-        public void RaiseOnSwipeRight() => OnSwipeRight?.Invoke();
+        public void RaiseOnSwipeLeft(Location startSwipeLocation = null) => OnSwipeLeft?.Invoke(startSwipeLocation ?? CurrentVerseLocation);
+        public void RaiseOnSwipeRight(Location startSwipeLocation = null) => OnSwipeRight?.Invoke(startSwipeLocation ?? CurrentVerseLocation);
 
         public int CurrentAbsoluteVerseNumber { get; set; }
         public Location CurrentVerseLocation => Location.Create(CurrentAbsoluteVerseNumber);
