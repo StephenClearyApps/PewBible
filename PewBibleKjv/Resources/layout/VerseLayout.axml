@@ -2,14 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+              android:layout_height="wrap_content"
+              android:paddingLeft="16dp"
+              android:paddingRight="16dp">
   <TextView
       android:id="@+id/verseChapterHeaderText"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:textSize="18sp"
       android:textStyle="bold"
-      android:gravity="center"/>
+      android:gravity="center"
+      android:paddingTop="16dp"/>
   <View
       android:id="@+id/verseHorizontalLine"
       android:layout_width="match_parent"
