@@ -104,9 +104,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Util\AndroidUtils.cs" />
     <Compile Include="VerseView\ISimpleCacheItem.cs" />
     <Compile Include="VerseView\SimpleCache.cs" />
-    <Compile Include="VerseView\SwipeTouchListener.cs" />
+    <Compile Include="Util\SwipeTouchListener.cs" />
     <Compile Include="VerseView\VerseAdapter.cs" />
     <Compile Include="VerseView\VerseFormatter.cs" />
     <Compile Include="VerseView\VerseViewHolder.cs" />

@@ -13,6 +13,7 @@ using Android.Widget;
 using PewBibleKjv.Logic;
 using PewBibleKjv.Logic.Adapters.UI;
 using PewBibleKjv.Text;
+using PewBibleKjv.Util;
 using PewBibleKjv.VerseView;
 
 namespace PewBibleKjv

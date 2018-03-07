@@ -13,6 +13,7 @@ using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
 using PewBibleKjv.Text;
+using PewBibleKjv.Util;
 using Object = Java.Lang.Object;
 
 namespace PewBibleKjv
@@ -44,18 +45,13 @@ namespace PewBibleKjv
         private const int MeasureSpecUnspecified = 0;
         private int MaximumButtonWidth()
         {
-            var buffer = new FrameLayout(this);
-            var view = LayoutInflater.Inflate(Resource.Layout.ChooseChapterButton, buffer, false);
-            var button = view.FindViewById<Button>(Resource.Id.chooseChapterButton);
-            button.Text = (Structure.Books.Max(x => x.Chapters.Length) + 1).ToString();
-            buffer.AddView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WrapContent, ViewGroup.LayoutParams.WrapContent));
-
-            view.ForceLayout();
-            view.Measure(MeasureSpecUnspecified, MeasureSpecUnspecified);
-            var width = view.MeasuredWidth;
-
-            buffer.RemoveAllViews();
-            return width;
+            var size = AndroidUtils.MeasureLayout(this, LayoutInflater, Resource.Layout.ChooseChapterButton,
+                setupView: view =>
+                {
+                    var button = view.FindViewById<Button>(Resource.Id.chooseChapterButton);
+                    button.Text = (Structure.Books.Max(x => x.Chapters.Length) + 1).ToString();
+                });
+            return size.Width;
         }
 
         private sealed class ChapterAdapter : ArrayAdapter<int>
