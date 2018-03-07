@@ -9,19 +9,22 @@
       android:id="@+id/verseChapterHeaderText"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:textColor="#333333"
       android:textSize="18sp"
-      android:textStyle="bold"
       android:gravity="center"
       android:paddingTop="16dp"/>
   <View
       android:id="@+id/verseHorizontalLine"
       android:layout_width="match_parent"
       android:layout_height="1dp"
-      android:background="#000000"/>
+      android:background="#333333"/>
   <TextView
       android:id="@+id/verseText"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:textSize="18sp"
-      android:fontFamily="serif"/>
+      android:layout_marginBottom="1sp"
+      android:textColor="#333333"
+      android:textSize="16sp"
+      android:fontFamily="serif"
+      android:lineSpacingExtra="1sp"/>
 </LinearLayout>
