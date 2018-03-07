@@ -23,37 +23,44 @@ namespace PewBibleKjv.VerseView
         private static readonly SimpleCache<StyleSpan> BoldStyleSpanCache = new SimpleCache<StyleSpan>(() => new StyleSpan(TypefaceStyle.Bold));
         private static readonly SimpleCache<TypefaceSpan> SansSerifTypespaceSpanCache = new SimpleCache<TypefaceSpan>(() => new TypefaceSpan("sans-serif"));
         private static readonly SimpleCache<UnderlineSpan> UnderlineSpanCache = new SimpleCache<UnderlineSpan>(() => new UnderlineSpan());
-        private static readonly SimpleCache<AlignmentSpanStandard> AlignCenterSpanCache = new SimpleCache<AlignmentSpanStandard>(() => new AlignmentSpanStandard(Layout.Alignment.AlignCenter));
         private static readonly SimpleCache<StyleSpan> ItalicsStyleSpanCache = new SimpleCache<StyleSpan>(() => new StyleSpan(TypefaceStyle.Italic));
         private static readonly SimpleCache<RelativeSizeSpan> SmallerRelativeSizeSpanCache = new SimpleCache<RelativeSizeSpan>(() => new RelativeSizeSpan(0.8f));
 
-        public static SpannableString FormattedText(Location location, List<ISimpleCacheItem<Object>> spans)
+        public static void ApplyFormattedText(this VerseViewHolder @this)
         {
-            var formattedVerse = Bible.FormattedVerse(location.AbsoluteVerseNumber);
-            var chapterPrefix = "";
-            if (location.Verse == 1)
-                chapterPrefix = "\n" + location.ChapterHeadingText + "\n\n";
-            var prefix = chapterPrefix + location.Verse + " ";
+            @this.ApplyChapterText();
+
+            var prefix = @this.Location.Verse + " ";
+            var formattedVerse = Bible.FormattedVerse(@this.Location.AbsoluteVerseNumber);
             var formattedText = new SpannableString(prefix + formattedVerse.Text);
-            formattedText.SetSpan(BoldStyleSpanCache.Alloc().AddTo(spans), 0, prefix.Length, SpanTypes.InclusiveExclusive);
-            formattedText.SetSpan(SansSerifTypespaceSpanCache.Alloc().AddTo(spans), 0, prefix.Length, SpanTypes.InclusiveExclusive);
-            if (chapterPrefix != "")
-            {
-                formattedText.SetSpan(UnderlineSpanCache.Alloc().AddTo(spans), 0, chapterPrefix.Length, SpanTypes.InclusiveExclusive);
-                formattedText.SetSpan(AlignCenterSpanCache.Alloc().AddTo(spans), 0, chapterPrefix.Length, SpanTypes.InclusiveExclusive);
-            }
+            formattedText.SetSpan(BoldStyleSpanCache.Alloc().AddTo(@this.SpanObjects), 0, prefix.Length, SpanTypes.InclusiveExclusive);
+            formattedText.SetSpan(SansSerifTypespaceSpanCache.Alloc().AddTo(@this.SpanObjects), 0, prefix.Length, SpanTypes.InclusiveExclusive);
 
             foreach (var textSpan in formattedVerse.Spans)
             {
                 var span =
-                    textSpan.Type == FormattedVerse.SpanType.Italics ? ItalicsStyleSpanCache.Alloc().AddTo(spans) :
-                    textSpan.Type == FormattedVerse.SpanType.Colophon ? SmallerRelativeSizeSpanCache.Alloc().AddTo(spans) :
+                    textSpan.Type == FormattedVerse.SpanType.Italics ? ItalicsStyleSpanCache.Alloc().AddTo(@this.SpanObjects) :
+                    textSpan.Type == FormattedVerse.SpanType.Colophon ? SmallerRelativeSizeSpanCache.Alloc().AddTo(@this.SpanObjects) :
                     throw new InvalidOperationException($"Unknown span type {textSpan.Type}");
-                formattedText.SetSpan(span, textSpan.Begin + prefix.Length,
-                    textSpan.End + prefix.Length, SpanTypes.InclusiveExclusive);
+                formattedText.SetSpan(span, textSpan.Begin + prefix.Length, textSpan.End + prefix.Length, SpanTypes.InclusiveExclusive);
             }
 
-            return formattedText;
+            @this.View.TextFormatted = formattedText;
+        }
+
+        private static void ApplyChapterText(this VerseViewHolder @this)
+        {
+            SpannableString chapterText = null;
+            if (@this.Location.Verse == 1)
+            {
+                var text = @this.Location.ChapterHeadingText;
+                chapterText = new SpannableString(text);
+                chapterText.SetSpan(UnderlineSpanCache.Alloc().AddTo(@this.SpanObjects), 0, text.Length, SpanTypes.InclusiveExclusive);
+            }
+
+            @this.ChapterHeaderView.Visibility = chapterText == null ? ViewStates.Gone : ViewStates.Visible;
+            if (chapterText != null)
+                @this.ChapterHeaderView.TextFormatted = chapterText;
         }
 
         public static void Free(List<ISimpleCacheItem<Object>> spans)

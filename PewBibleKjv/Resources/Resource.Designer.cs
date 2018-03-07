@@ -2588,7 +2588,10 @@ namespace PewBibleKjv
 			public const int useLogo = 2131165208;
 			
 			// aapt resource value: 0x7f0700cc
-			public const int verseText = 2131165388;
+			public const int verseChapterHeaderText = 2131165388;
+			
+			// aapt resource value: 0x7f0700cd
+			public const int verseText = 2131165389;
 			
 			// aapt resource value: 0x7f07002e
 			public const int withText = 2131165230;

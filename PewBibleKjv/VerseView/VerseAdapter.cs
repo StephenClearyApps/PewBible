@@ -35,7 +35,7 @@ namespace PewBibleKjv.VerseView
             vh.Location = Location.Create(position);
             if (vh.SpanObjects.Count != 0)
                 VerseFormatter.Free(vh.SpanObjects);
-            vh.View.TextFormatted = VerseFormatter.FormattedText(vh.Location, vh.SpanObjects);
+            vh.ApplyFormattedText();
         }
 
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
