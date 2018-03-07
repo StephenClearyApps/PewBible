@@ -39,7 +39,7 @@ namespace PewBibleKjv.Logic
                 _history.AddJump(_history.CurrentAbsoluteVerseNumber, initialJump);
 
             // Pick up where we left off.
-            verseView.Jump(_history.CurrentAbsoluteVerseNumber);
+            verseView.Jump(Location.Create(_history.CurrentAbsoluteVerseNumber));
 
             EnableDisableHistoryButtons();
         }
@@ -63,22 +63,22 @@ namespace PewBibleKjv.Logic
 
         private void MoveForward()
         {
-            _verseView.Jump(_history.MoveForward(_verseView.CurrentAbsoluteVerseNumber));
+            _verseView.Jump(Location.Create(_history.MoveForward(_verseView.CurrentAbsoluteVerseNumber)));
         }
 
         private void MoveBack()
         {
-            _verseView.Jump(_history.MoveBack(_verseView.CurrentAbsoluteVerseNumber));
+            _verseView.Jump(Location.Create(_history.MoveBack(_verseView.CurrentAbsoluteVerseNumber)));
         }
 
         private void MovePreviousChapter(Location startSwipeLocation)
         {
-            _verseView.Jump(startSwipeLocation.PreviousChapter().AbsoluteVerseNumber);
+            _verseView.Jump(startSwipeLocation.PreviousChapter());
         }
 
         private void MoveNextChapter(Location startSwipeLocation)
         {
-            _verseView.Jump(startSwipeLocation.NextChapter().AbsoluteVerseNumber);
+            _verseView.Jump(startSwipeLocation.NextChapter());
         }
 
         private void UpdateCurrentLocation()

@@ -58,7 +58,7 @@ namespace PewBibleKjv
             }
         }
 
-        public void Jump(int absoluteVerseNumber) => _layoutManager.ScrollToPositionWithOffset(absoluteVerseNumber, 0);
+        public void Jump(Location location) => _layoutManager.ScrollToPositionWithOffset(location.AbsoluteVerseNumber, 0);
 
         private void SwipeTouchListenerOnOnDown() => _startSwipeLocation = CurrentVerseLocation;
 

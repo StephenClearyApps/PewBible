@@ -35,9 +35,9 @@ namespace PewBibleKjv.Logic.Adapters.UI
         Location CurrentVerseLocation { get; }
 
         /// <summary>
-        /// Skips the view to the specified verse number. Eventually raises <see cref="OnScroll"/> (not necessarily synchronously).
+        /// Skips the view to the specified verse. Eventually raises <see cref="OnScroll"/> (not necessarily synchronously).
         /// </summary>
-        /// <param name="absoluteVerseNumber">The verse number to scroll to.</param>
-        void Jump(int absoluteVerseNumber);
+        /// <param name="location">The verse location to scroll to.</param>
+        void Jump(Location location);
     }
 }
