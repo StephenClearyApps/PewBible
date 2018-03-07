@@ -105,6 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Util\AndroidUtils.cs" />
+    <Compile Include="Util\RecyclerViewScrollListener.cs" />
     <Compile Include="VerseView\ISimpleCacheItem.cs" />
     <Compile Include="VerseView\SimpleCache.cs" />
     <Compile Include="Util\SwipeTouchListener.cs" />
