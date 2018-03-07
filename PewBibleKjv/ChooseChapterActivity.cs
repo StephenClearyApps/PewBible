@@ -14,7 +14,6 @@ using Android.Views;
 using Android.Widget;
 using PewBibleKjv.Text;
 using PewBibleKjv.Util;
-using Object = Java.Lang.Object;
 
 namespace PewBibleKjv
 {
@@ -38,8 +37,9 @@ namespace PewBibleKjv
             heading.Text = Structure.Books[bookIndex].Name;
 
             var grid = FindViewById<GridView>(Resource.Id.chooseChapterGrid);
-            grid.SetColumnWidth(MaximumButtonWidth());
-            grid.Adapter = new ChapterAdapter(this, bookIndex);
+            var buttonWidth = MaximumButtonWidth();
+            grid.SetColumnWidth(buttonWidth);
+            grid.Adapter = new ChapterAdapter(this, bookIndex, buttonWidth);
         }
 
         private int MaximumButtonWidth()
@@ -53,22 +53,26 @@ namespace PewBibleKjv
             return size.Width;
         }
 
-        private sealed class ChapterAdapter : ArrayAdapter<int>
+        private sealed class ChapterAdapter : ArrayAdapter<string>
         {
             private readonly Context _context;
             private readonly int _bookIndex;
+            private readonly int _buttonWidth;
 
-            public ChapterAdapter(Context context, int bookIndex)
-                : base(context, Resource.Layout.ChooseChapterButton, Structure.Books[bookIndex].Chapters.Select((_, i) => i + 1).ToArray())
+            public ChapterAdapter(Context context, int bookIndex, int buttonWidth)
+                : base(context, Resource.Layout.ChooseChapterButton,
+                    Structure.Books[bookIndex].Chapters.Select(c => (c.Index + 1).ToString()).ToArray())
             {
                 _context = context;
                 _bookIndex = bookIndex;
+                _buttonWidth = buttonWidth;
             }
 
             public override View GetView(int position, View convertView, ViewGroup parent)
             {
                 var result = base.GetView(position, convertView, parent);
                 var button = result.FindViewById<Button>(Resource.Id.chooseChapterButton);
+                button.SetMinWidth(_buttonWidth);
                 button.Click += (_, __) =>
                 {
                     var chapterIndex = position;
