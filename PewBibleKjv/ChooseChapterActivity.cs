@@ -42,7 +42,6 @@ namespace PewBibleKjv
             grid.Adapter = new ChapterAdapter(this, bookIndex);
         }
 
-        private const int MeasureSpecUnspecified = 0;
         private int MaximumButtonWidth()
         {
             var size = AndroidUtils.MeasureLayout(this, LayoutInflater, Resource.Layout.ChooseChapterButton,

@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Android.App;
@@ -10,6 +11,7 @@ using Android.Support.V7.Widget;
 using Android.Views;
 using PewBibleKjv.Logic;
 using PewBibleKjv.Text;
+using PewBibleKjv.Util;
 using PewBibleKjv.VerseView;
 
 namespace PewBibleKjv
@@ -49,13 +51,26 @@ namespace PewBibleKjv
 
             // Initialize the app
             _chapterHeadingAdapter = new TextViewChapterHeadingAdapter(chapterHeading);
-            _verseViewAdapter = new RecyclerViewVerseViewAdapter(this, recyclerView, layoutManager);
+            _verseViewAdapter = new RecyclerViewVerseViewAdapter(this, recyclerView, layoutManager, ChapterHeadingHeight());
             _simpleStorageAdapter = new SharedPreferencesSimpleStorageAdapter(ApplicationContext.GetSharedPreferences("global", FileCreationMode.Private));
             _backButton = FindViewById<ImageButton>(Resource.Id.backButton);
             _forwardButton = FindViewById<ImageButton>(Resource.Id.forwardButton);
             _historyControlsAdapter = new ViewHistoryControlsAdapter(_backButton, _forwardButton);
 
             CreateApp(startingVerse);
+        }
+
+        private int ChapterHeadingHeight()
+        {
+            var size = AndroidUtils.MeasureLayout(this, LayoutInflater, Resource.Layout.VerseLayout,
+                setupView: view =>
+                {
+                    var chapterHeaderView = view.FindViewById<TextView>(Resource.Id.verseChapterHeaderText);
+                    var verseView = view.FindViewById<TextView>(Resource.Id.verseText);
+                    verseView.Visibility = ViewStates.Gone;
+                    chapterHeaderView.Text = "Chapter 150";
+                });
+            return size.Height;
         }
 
         protected override void OnPause()

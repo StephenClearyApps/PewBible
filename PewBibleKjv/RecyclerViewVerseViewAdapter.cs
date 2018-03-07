@@ -20,6 +20,7 @@ namespace PewBibleKjv
 {
     public sealed class RecyclerViewVerseViewAdapter: IVerseView
     {
+        private readonly int _chapterHeadingVerseOffset;
         private readonly RecyclerView _recyclerView;
         private readonly LinearLayoutManager _layoutManager;
         private readonly RecyclerViewScrollListener _scrollListener;
@@ -27,10 +28,11 @@ namespace PewBibleKjv
         private int _lastPosition = Bible.InvalidAbsoluteVerseNumber;
         private Location _startSwipeLocation;
 
-        public RecyclerViewVerseViewAdapter(Context context, RecyclerView recyclerView, LinearLayoutManager layoutManager)
+        public RecyclerViewVerseViewAdapter(Context context, RecyclerView recyclerView, LinearLayoutManager layoutManager, int chapterHeadingVerseOffset)
         {
             _recyclerView = recyclerView;
             _layoutManager = layoutManager;
+            _chapterHeadingVerseOffset = chapterHeadingVerseOffset;
 
             _scrollListener = new RecyclerViewScrollListener();
             _scrollListener.Scrolled += ScrollListenerOnScrolled;
@@ -58,7 +60,7 @@ namespace PewBibleKjv
             }
         }
 
-        public void Jump(Location location) => _layoutManager.ScrollToPositionWithOffset(location.AbsoluteVerseNumber, 0);
+        public void Jump(Location location) => _layoutManager.ScrollToPositionWithOffset(location.AbsoluteVerseNumber, location.Verse == 1 ? -_chapterHeadingVerseOffset : 0);
 
         private void SwipeTouchListenerOnOnDown() => _startSwipeLocation = CurrentVerseLocation;
 
