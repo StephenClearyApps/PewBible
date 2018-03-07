@@ -41,6 +41,7 @@ namespace PewBibleKjv
             grid.Adapter = new ChapterAdapter(this, bookIndex);
         }
 
+        private const int MeasureSpecUnspecified = 0;
         private int MaximumButtonWidth()
         {
             var buffer = new FrameLayout(this);
@@ -50,7 +51,7 @@ namespace PewBibleKjv
             buffer.AddView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WrapContent, ViewGroup.LayoutParams.WrapContent));
 
             view.ForceLayout();
-            view.Measure(1000, 1000);
+            view.Measure(MeasureSpecUnspecified, MeasureSpecUnspecified);
             var width = view.MeasuredWidth;
 
             buffer.RemoveAllViews();
