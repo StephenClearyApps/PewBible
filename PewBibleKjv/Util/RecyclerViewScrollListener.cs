@@ -13,7 +13,7 @@ using Android.Widget;
 
 namespace PewBibleKjv.Util
 {
-    class RecyclerViewScrollListener: RecyclerView.OnScrollListener
+    public sealed class RecyclerViewScrollListener: RecyclerView.OnScrollListener
     {
         public override void OnScrollStateChanged(RecyclerView recyclerView, int newState) =>
             ScrollStateChanged?.Invoke(recyclerView, newState);
