@@ -2,13 +2,19 @@
 <resources>
   <style name="MyTheme" parent="Theme.AppCompat.Light.NoActionBar">
   </style>
-  <style name="book_button">
+  <style name="book_button" parent="Widget.AppCompat.Light.ActionButton">
     <item name="android:layout_width">0dp</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:text">BookName</item>
     <item name="android:minHeight">40dp</item>
   </style>
   <style name="first_book_button" parent="book_button">
-    <item name="android:layout_marginTop">20dp</item>
+    <item name="android:layout_marginTop">10dp</item>
+  </style>
+  <style name="book_button_divider">
+    <item name="android:layout_width">0dp</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginTop">10dp</item>
+    <item name="android:background">#333333</item>
   </style>
 </resources>
