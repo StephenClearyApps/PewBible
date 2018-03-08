@@ -12,6 +12,30 @@
         android:layout_height="0dp"
         android:orientation="vertical"
         app:layout_constraintGuide_percent=".5" />
+    <android.support.constraint.Guideline
+      android:id="@+id/guidelineLeftLeft"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:orientation="vertical"
+      app:layout_constraintGuide_percent=".05" />
+    <android.support.constraint.Guideline
+      android:id="@+id/guidelineLeftRight"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:orientation="vertical"
+      app:layout_constraintGuide_percent=".45" />
+    <android.support.constraint.Guideline
+      android:id="@+id/guidelineRightLeft"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:orientation="vertical"
+      app:layout_constraintGuide_percent=".55" />
+    <android.support.constraint.Guideline
+      android:id="@+id/guidelineRightRight"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:orientation="vertical"
+      app:layout_constraintGuide_percent=".95" />
     <Button
         android:id="@+id/button0"
         style="@style/book_button"
@@ -45,8 +69,8 @@
     <View
         android:id="@+id/divider4"
         android:layout_height="1dp"
-        app:layout_constraintLeft_toLeftOf="@id/button0"
-        app:layout_constraintRight_toRightOf="@id/button0"
+        app:layout_constraintLeft_toLeftOf="@id/guidelineLeftLeft"
+        app:layout_constraintRight_toRightOf="@id/guidelineLeftRight"
         app:layout_constraintTop_toBottomOf="@id/button4"
         style="@style/book_button_divider"/>
     <Button
@@ -124,8 +148,8 @@
     <View
       android:id="@+id/divider16"
       android:layout_height="1dp"
-      app:layout_constraintLeft_toLeftOf="@id/button0"
-      app:layout_constraintRight_toRightOf="@id/button0"
+      app:layout_constraintLeft_toLeftOf="@id/guidelineLeftLeft"
+      app:layout_constraintRight_toRightOf="@id/guidelineLeftRight"
       app:layout_constraintTop_toBottomOf="@id/button16"
       style="@style/book_button_divider"/>
     <Button
@@ -161,8 +185,8 @@
     <View
       android:id="@+id/divider21"
       android:layout_height="1dp"
-      app:layout_constraintLeft_toLeftOf="@id/button0"
-      app:layout_constraintRight_toRightOf="@id/button0"
+      app:layout_constraintLeft_toLeftOf="@id/guidelineLeftLeft"
+      app:layout_constraintRight_toRightOf="@id/guidelineLeftRight"
       app:layout_constraintTop_toBottomOf="@id/button21"
       style="@style/book_button_divider"/>
     <Button
@@ -198,8 +222,8 @@
     <View
       android:id="@+id/divider26"
       android:layout_height="1dp"
-      app:layout_constraintLeft_toLeftOf="@id/button0"
-      app:layout_constraintRight_toRightOf="@id/button0"
+      app:layout_constraintLeft_toLeftOf="@id/guidelineLeftLeft"
+      app:layout_constraintRight_toRightOf="@id/guidelineLeftRight"
       app:layout_constraintTop_toBottomOf="@id/button26"
       style="@style/book_button_divider"/>
     <Button
@@ -301,8 +325,8 @@
     <View
       android:id="@+id/divider42"
       android:layout_height="1dp"
-      app:layout_constraintLeft_toLeftOf="@id/button39"
-      app:layout_constraintRight_toRightOf="@id/button39"
+      app:layout_constraintLeft_toLeftOf="@id/guidelineRightLeft"
+      app:layout_constraintRight_toRightOf="@id/guidelineRightRight"
       app:layout_constraintTop_toBottomOf="@id/button42"
       style="@style/book_button_divider"/>
     <Button
@@ -314,8 +338,8 @@
     <View
       android:id="@+id/divider43"
       android:layout_height="1dp"
-      app:layout_constraintLeft_toLeftOf="@id/button39"
-      app:layout_constraintRight_toRightOf="@id/button39"
+      app:layout_constraintLeft_toLeftOf="@id/guidelineRightLeft"
+      app:layout_constraintRight_toRightOf="@id/guidelineRightRight"
       app:layout_constraintTop_toBottomOf="@id/button43"
       style="@style/book_button_divider"/>
     <Button
@@ -399,8 +423,8 @@
     <View
       android:id="@+id/divider56"
       android:layout_height="1dp"
-      app:layout_constraintLeft_toLeftOf="@id/button39"
-      app:layout_constraintRight_toRightOf="@id/button39"
+      app:layout_constraintLeft_toLeftOf="@id/guidelineRightLeft"
+      app:layout_constraintRight_toRightOf="@id/guidelineRightRight"
       app:layout_constraintTop_toBottomOf="@id/button56"
       style="@style/book_button_divider"/>
     <Button
@@ -454,8 +478,8 @@
     <View
       android:id="@+id/divider64"
       android:layout_height="1dp"
-      app:layout_constraintLeft_toLeftOf="@id/button39"
-      app:layout_constraintRight_toRightOf="@id/button39"
+      app:layout_constraintLeft_toLeftOf="@id/guidelineRightLeft"
+      app:layout_constraintRight_toRightOf="@id/guidelineRightRight"
       app:layout_constraintTop_toBottomOf="@id/button64"
       style="@style/book_button_divider"/>
     <Button
