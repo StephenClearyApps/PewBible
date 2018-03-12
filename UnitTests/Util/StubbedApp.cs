@@ -23,7 +23,7 @@ namespace UnitTests.Util
             SimpleStorage = simpleStorage ?? new StubSimpleStorage();
             HistoryControls = historyControls ?? new StubHistoryControls();
             InitialJump = initialJump;
-            App = new App(ChapterHeading, VerseView, SimpleStorage, HistoryControls, InitialJump);
+            App = new CoreApp(ChapterHeading, VerseView, SimpleStorage, HistoryControls, InitialJump);
         }
 
         public IChapterHeading ChapterHeading { get; }
@@ -36,13 +36,13 @@ namespace UnitTests.Util
         public StubHistoryControls StubHistoryControls => HistoryControls as StubHistoryControls;
         public int InitialJump { get; private set; }
 
-        public App App { get; private set; }
+        public CoreApp App { get; private set; }
 
         public void Recreate(int initialJump = Bible.InvalidAbsoluteVerseNumber)
         {
             App.Dispose();
             InitialJump = initialJump;
-            App = new App(ChapterHeading, VerseView, SimpleStorage, HistoryControls, InitialJump);
+            App = new CoreApp(ChapterHeading, VerseView, SimpleStorage, HistoryControls, InitialJump);
         }
     }
 }

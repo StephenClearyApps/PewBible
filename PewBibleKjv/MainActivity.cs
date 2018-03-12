@@ -19,7 +19,7 @@ namespace PewBibleKjv
     [Activity(Label = "PewBibleKjv", MainLauncher = true, Icon = "@mipmap/icon")]
     public class MainActivity : AppCompatActivity
     {
-        private App _app;
+        private CoreApp _app;
         private ImageButton _backButton;
         private ImageButton _forwardButton;
         private TextViewChapterHeadingAdapter _chapterHeadingAdapter;
@@ -90,7 +90,7 @@ namespace PewBibleKjv
         {
             if (_app != null)
                 return;
-            _app = new App(_chapterHeadingAdapter, _verseViewAdapter, _simpleStorageAdapter, _historyControlsAdapter, startingVerse);
+            _app = new CoreApp(_chapterHeadingAdapter, _verseViewAdapter, _simpleStorageAdapter, _historyControlsAdapter, startingVerse);
         }
     }
 }

@@ -7,14 +7,14 @@ using PewBibleKjv.Text;
 
 namespace PewBibleKjv.Logic
 {
-    public sealed class App : IDisposable
+    public sealed class CoreApp : IDisposable
     {
         private readonly IChapterHeading _chapterHeading;
         private readonly IVerseView _verseView;
         private readonly IHistoryControls _historyControls;
         private readonly History _history;
 
-        public App(IChapterHeading chapterHeading, IVerseView verseView, ISimpleStorage simpleStorage,
+        public CoreApp(IChapterHeading chapterHeading, IVerseView verseView, ISimpleStorage simpleStorage,
             IHistoryControls historyControls, int initialJump)
         {
             _chapterHeading = chapterHeading;
