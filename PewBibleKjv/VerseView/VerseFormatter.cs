@@ -26,7 +26,7 @@ namespace PewBibleKjv.VerseView
         private static readonly SimpleCache<StyleSpan> ItalicsStyleSpanCache = new SimpleCache<StyleSpan>(() => new StyleSpan(TypefaceStyle.Italic));
         private static readonly SimpleCache<RelativeSizeSpan> SmallerRelativeSizeSpanCache = new SimpleCache<RelativeSizeSpan>(() => new RelativeSizeSpan(0.8f));
 
-        public static void ApplyFormattedText(this VerseViewHolder @this)
+        public static void ApplyFormattedText(VerseViewHolder @this)
         {
             @this.ApplyChapterText();
 
@@ -60,11 +60,11 @@ namespace PewBibleKjv.VerseView
                 @this.ChapterHeaderView.Text = chapterText;
         }
 
-        public static void Free(List<ISimpleCacheItem<Object>> spans)
+        public static void Free(VerseViewHolder @this)
         {
-            foreach (var span in spans)
+            foreach (var span in @this.SpanObjects)
                 span.Free();
-            spans.Clear();
+            @this.SpanObjects.Clear();
         }
 
         private static Object AddTo(this ISimpleCacheItem<Object> @this, List<ISimpleCacheItem<Object>> collection)

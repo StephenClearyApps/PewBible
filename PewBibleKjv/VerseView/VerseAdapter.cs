@@ -23,20 +23,11 @@ namespace PewBibleKjv.VerseView
 
         public override void OnViewRecycled(Object holder)
         {
-            var vh = (VerseViewHolder)holder;
-            VerseFormatter.Free(vh.SpanObjects);
-            vh.Location = null;
+            ((VerseViewHolder)holder).Unbind();
             base.OnViewRecycled(holder);
         }
 
-        public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
-        {
-            var vh = (VerseViewHolder)holder;
-            vh.Location = Location.Create(position);
-            if (vh.SpanObjects.Count != 0)
-                VerseFormatter.Free(vh.SpanObjects);
-            vh.ApplyFormattedText();
-        }
+        public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position) => ((VerseViewHolder)holder).Bind(position);
 
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
         {
