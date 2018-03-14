@@ -26,7 +26,7 @@ namespace PewBibleKjv
             var bookIndex = Intent.GetIntExtra("BookIndex", -1);
             if (bookIndex == -1)
             {
-                StartActivity(typeof(MainActivity));
+                StartActivity(MainActivityIntent(this));
                 return;
             }
 
@@ -40,6 +40,13 @@ namespace PewBibleKjv
             var buttonWidth = MaximumButtonWidth();
             grid.SetColumnWidth(buttonWidth);
             grid.Adapter = new ChapterAdapter(this, bookIndex, buttonWidth);
+        }
+
+        private static Intent MainActivityIntent(Context context)
+        {
+            var activity = new Intent(context, typeof(MainActivity));
+            activity.SetFlags(ActivityFlags.ClearTop);
+            return activity;
         }
 
         private int MaximumButtonWidth()
@@ -76,7 +83,7 @@ namespace PewBibleKjv
                 button.Click += (_, __) =>
                 {
                     var chapterIndex = position;
-                    var activity = new Intent(_context, typeof(MainActivity));
+                    var activity = MainActivityIntent(_context);
                     activity.PutExtra("BookIndex", _bookIndex);
                     activity.PutExtra("ChapterIndex", chapterIndex);
                     _context.StartActivity(activity);
