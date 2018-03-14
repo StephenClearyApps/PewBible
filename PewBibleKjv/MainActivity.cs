@@ -86,6 +86,14 @@ namespace PewBibleKjv
             base.OnResume();
         }
 
+        public override void OnBackPressed()
+        {
+            if (_backButton.Enabled)
+                _backButton.CallOnClick();
+            else
+                base.OnBackPressed();
+        }
+
         private void CreateApp()
         {
             if (_app != null)
