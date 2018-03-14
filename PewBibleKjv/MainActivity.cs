@@ -17,7 +17,7 @@ using PewBibleKjv.VerseView;
 
 namespace PewBibleKjv
 {
-    [Activity(Label = "PewBibleKjv", MainLauncher = true, Icon = "@mipmap/icon", LaunchMode = LaunchMode.SingleTop)]
+    [Activity(Label = "Pew Bible (KJV)", MainLauncher = true, Icon = "@mipmap/icon", LaunchMode = LaunchMode.SingleTop)]
     public class MainActivity : AppCompatActivity
     {
         private CoreApp _app;
