@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Android.App;
 using Android.Content;
+using Android.Content.PM;
 using Android.Widget;
 using Android.OS;
 using Android.Support.V7.App;
@@ -16,7 +17,7 @@ using PewBibleKjv.VerseView;
 
 namespace PewBibleKjv
 {
-    [Activity(Label = "PewBibleKjv", MainLauncher = true, Icon = "@mipmap/icon")]
+    [Activity(Label = "PewBibleKjv", MainLauncher = true, Icon = "@mipmap/icon", LaunchMode = LaunchMode.SingleTop)]
     public class MainActivity : AppCompatActivity
     {
         private CoreApp _app;
@@ -30,13 +31,6 @@ namespace PewBibleKjv
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
-            // Determine if we have an intent to go to a particular verse.
-            var bookIndex = Intent.GetIntExtra("BookIndex", -1);
-            var chapterIndex = Intent.GetIntExtra("ChapterIndex", -1);
-            var startingVerse = Bible.InvalidAbsoluteVerseNumber;
-            if (bookIndex != -1 && chapterIndex != -1)
-                startingVerse = Structure.Books[bookIndex].Chapters[chapterIndex].BeginVerse;
 
             // Set up our view
             SetContentView(Resource.Layout.Main);
@@ -57,7 +51,7 @@ namespace PewBibleKjv
             _forwardButton = FindViewById<ImageButton>(Resource.Id.forwardButton);
             _historyControlsAdapter = new ViewHistoryControlsAdapter(_backButton, _forwardButton);
 
-            CreateApp(startingVerse);
+            CreateApp();
         }
 
         private int ChapterHeadingHeight()
@@ -73,6 +67,12 @@ namespace PewBibleKjv
             return size.Height;
         }
 
+        protected override void OnNewIntent(Intent intent)
+        {
+            Intent = intent;
+            base.OnNewIntent(intent);
+        }
+
         protected override void OnPause()
         {
             base.OnPause();
@@ -82,15 +82,26 @@ namespace PewBibleKjv
 
         protected override void OnResume()
         {
+            CreateApp();
             base.OnResume();
-            CreateApp(Bible.InvalidAbsoluteVerseNumber);
         }
 
-        private void CreateApp(int startingVerse)
+        private void CreateApp()
         {
             if (_app != null)
                 return;
-            _app = new CoreApp(_chapterHeadingAdapter, _verseViewAdapter, _simpleStorageAdapter, _historyControlsAdapter, startingVerse);
+            _app = new CoreApp(_chapterHeadingAdapter, _verseViewAdapter, _simpleStorageAdapter, _historyControlsAdapter, IntentStartingVerse());
+        }
+
+        private int IntentStartingVerse()
+        {
+            // Determine if we have an intent to go to a particular verse.
+            var bookIndex = Intent.GetIntExtra("BookIndex", -1);
+            var chapterIndex = Intent.GetIntExtra("ChapterIndex", -1);
+            var startingVerse = Bible.InvalidAbsoluteVerseNumber;
+            if (bookIndex != -1 && chapterIndex != -1)
+                startingVerse = Structure.Books[bookIndex].Chapters[chapterIndex].BeginVerse;
+            return startingVerse;
         }
     }
 }
