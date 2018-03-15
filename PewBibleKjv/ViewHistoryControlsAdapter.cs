@@ -31,11 +31,20 @@ namespace PewBibleKjv
         public event Action ForwardClick;
         public bool BackEnabled
         {
-            set => _backButton.Enabled = value;
+            set
+            {
+                _backButton.Enabled = value;
+                _backButton.Alpha = value ? 1.0f : 0.5f;
+            }
         }
+
         public bool ForwardEnabled
         {
-            set => _forwardButton.Enabled = value;
+            set
+            {
+                _forwardButton.Enabled = value;
+                _forwardButton.Alpha = value ? 1.0f : 0.5f;
+            }
         }
     }
 }
