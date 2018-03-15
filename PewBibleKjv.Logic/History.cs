@@ -72,6 +72,8 @@ namespace PewBibleKjv.Logic
         /// <param name="currentAbsoluteVerseNumber">The absolute verse number.</param>
         public void Save(int currentAbsoluteVerseNumber)
         {
+            if (currentAbsoluteVerseNumber == Bible.InvalidAbsoluteVerseNumber)
+                throw new InvalidOperationException("Invalid verse number");
             _history[_currentIndex] = currentAbsoluteVerseNumber;
             _simpleStorage.Save("history-currentIndex", _currentIndex.ToString(CultureInfo.InvariantCulture));
             _simpleStorage.Save("history-history", string.Join(",", _history.Select(x => x.ToString(CultureInfo.InvariantCulture))));
@@ -84,6 +86,10 @@ namespace PewBibleKjv.Logic
         /// <param name="currentAbsoluteVerseNumber">The new verse number for the current position.</param>
         public int MoveBack(int currentAbsoluteVerseNumber)
         {
+            if (currentAbsoluteVerseNumber == Bible.InvalidAbsoluteVerseNumber)
+                throw new InvalidOperationException("Invalid verse number");
+            if (!CanMoveBack)
+                throw new InvalidOperationException("Invalid state");
             _history[_currentIndex] = currentAbsoluteVerseNumber;
             var result = _history[--_currentIndex];
             CanMoveChanged?.Invoke();
@@ -97,6 +103,10 @@ namespace PewBibleKjv.Logic
         /// <param name="currentAbsoluteVerseNumber">The new verse number for the current position.</param>
         public int MoveForward(int currentAbsoluteVerseNumber)
         {
+            if (currentAbsoluteVerseNumber == Bible.InvalidAbsoluteVerseNumber)
+                throw new InvalidOperationException("Invalid verse number");
+            if (!CanMoveForward)
+                throw new InvalidOperationException("Invalid state");
             _history[_currentIndex] = currentAbsoluteVerseNumber;
             var result = _history[++_currentIndex];
             CanMoveChanged?.Invoke();
@@ -112,6 +122,8 @@ namespace PewBibleKjv.Logic
         /// <param name="jumpAbsoluteVerseNumber">The verse number for the new position.</param>
         public void AddJump(int currentAbsoluteVerseNumber, int jumpAbsoluteVerseNumber)
         {
+            if (currentAbsoluteVerseNumber == Bible.InvalidAbsoluteVerseNumber || jumpAbsoluteVerseNumber == Bible.InvalidAbsoluteVerseNumber)
+                throw new InvalidOperationException("Invalid verse number");
             _history[_currentIndex] = currentAbsoluteVerseNumber;
 
             // If the user is jumping from the same location, don't insert a duplicate.
