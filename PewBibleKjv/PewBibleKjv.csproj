@@ -10,8 +10,7 @@
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
 	  <!--<Nullable>enable</Nullable>
-	  <ImplicitUsings>enable</ImplicitUsings>
-	  <TrimMode>full</TrimMode>-->
+	  <ImplicitUsings>enable</ImplicitUsings>-->
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
@@ -26,10 +25,9 @@
 	<AndroidLinkTool>r8</AndroidLinkTool>
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
     <EnableProguard>true</EnableProguard>
-    <AotAssemblies>true</AotAssemblies>
+	<RunAOTCompilation>true</RunAOTCompilation>
     <EnableLLVM>true</EnableLLVM>
-    <BundleAssemblies>true</BundleAssemblies>
-    <!--<AndroidLinkSkip>Xamarin.Android.Support.Constraint.Layout;Xamarin.Android.Support.v7.AppCompat</AndroidLinkSkip>-->
+    <TrimMode>full</TrimMode>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\PewBibleKjv.Logic\PewBibleKjv.Logic.csproj" />
