@@ -1,19 +1,20 @@
 ﻿using System.Diagnostics;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
 using Android.Widget;
 using Android.OS;
-using Android.Support.V7.App;
-using Android.Support.V7.Widget;
 using Android.Views;
 using PewBibleKjv.Logic;
 using PewBibleKjv.Text;
 using PewBibleKjv.Util;
 using PewBibleKjv.VerseView;
+using AndroidX.AppCompat.App;
+using AndroidX.RecyclerView.Widget;
+using Android.Window;
+using Java.Interop;
+using AndroidX.Activity;
+using System;
 
 namespace PewBibleKjv
 {
@@ -43,6 +44,14 @@ namespace PewBibleKjv
             var chapterHeading = FindViewById<Button>(Resource.Id.headingText);
             chapterHeading.Click += (_, __) => StartActivity(typeof(ChooseBookActivity));
 
+            OnBackPressedDispatcher.AddCallback(this, new CustomOnBackInvokedCallback(() =>
+            {
+				if (_backButton.Enabled)
+					_backButton.CallOnClick();
+				else
+					base.OnBackPressed();
+			}));
+            
             // Initialize the app
             _chapterHeadingAdapter = new TextViewChapterHeadingAdapter(chapterHeading);
             _verseViewAdapter = new RecyclerViewVerseViewAdapter(this, recyclerView, layoutManager, ChapterHeadingHeight());
@@ -86,14 +95,6 @@ namespace PewBibleKjv
             base.OnResume();
         }
 
-        public override void OnBackPressed()
-        {
-            if (_backButton.Enabled)
-                _backButton.CallOnClick();
-            else
-                base.OnBackPressed();
-        }
-
         private void CreateApp()
         {
             if (_app != null)
@@ -111,6 +112,11 @@ namespace PewBibleKjv
                 startingVerse = Structure.Books[bookIndex].Chapters[chapterIndex].BeginVerse;
             return startingVerse;
         }
-    }
+
+		private sealed class CustomOnBackInvokedCallback(Action action) : OnBackPressedCallback(enabled: true)
+		{
+			public override void HandleOnBackPressed() => action();
+		}
+	}
 }
 

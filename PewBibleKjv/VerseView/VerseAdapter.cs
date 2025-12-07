@@ -1,12 +1,6 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
-using Android.Graphics;
-using Android.Support.V7.Widget;
-using Android.Text;
-using Android.Text.Style;
+﻿using System.Linq;
 using Android.Views;
-using PewBibleKjv.Logic;
+using AndroidX.RecyclerView.Widget;
 using PewBibleKjv.Text;
 using Object = Java.Lang.Object;
 
