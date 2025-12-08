@@ -2,9 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
-    <RootNamespace>PewBibleKjv.Text</RootNamespace>
-    <AssemblyName>PewBibleKjv.Text</AssemblyName>
-    <Configurations>Debug;Release</Configurations>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
