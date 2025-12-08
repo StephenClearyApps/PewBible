@@ -19,6 +19,8 @@
     <AndroidLinkMode>None</AndroidLinkMode>
     <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
     <MandroidI18n />
+    <AndroidCreatePackagePerAbi>True</AndroidCreatePackagePerAbi>
+    <AndroidEnableProfiledAot>True</AndroidEnableProfiledAot>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <AndroidManagedSymbols>true</AndroidManagedSymbols>
@@ -34,6 +36,8 @@
 	<AndroidSigningKeyAlias>nito</AndroidSigningKeyAlias>
 	<AndroidSigningStorePass>env:AndroidSigningPassword</AndroidSigningStorePass>
 	<AndroidSigningKeyPass>env:AndroidSigningPassword</AndroidSigningKeyPass>
+	<RuntimeIdentifiers>android-arm;android-arm64;android-x86;android-x64</RuntimeIdentifiers>
+	<AndroidCreatePackagePerAbi>True</AndroidCreatePackagePerAbi>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\PewBibleKjv.Logic\PewBibleKjv.Logic.csproj" />
