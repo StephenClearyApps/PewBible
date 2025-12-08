@@ -19,8 +19,6 @@
     <AndroidLinkMode>None</AndroidLinkMode>
     <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
     <MandroidI18n />
-    <AndroidCreatePackagePerAbi>True</AndroidCreatePackagePerAbi>
-    <AndroidEnableProfiledAot>True</AndroidEnableProfiledAot>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <AndroidManagedSymbols>true</AndroidManagedSymbols>
@@ -30,6 +28,7 @@
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
     <EnableProguard>true</EnableProguard>
 	<RunAOTCompilation>true</RunAOTCompilation>
+	<AndroidEnableProfiledAot>True</AndroidEnableProfiledAot>
     <EnableLLVM>true</EnableLLVM>
     <TrimMode>full</TrimMode>
 	<AndroidSigningKeyStore>D:\android.keystore</AndroidSigningKeyStore>
