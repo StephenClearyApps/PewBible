@@ -11,6 +11,8 @@
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
 	<Nullable>enable</Nullable>
 	<ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationVersion>20000</ApplicationVersion>
+    <ApplicationDisplayVersion>2.0.0</ApplicationDisplayVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
@@ -28,6 +30,10 @@
 	<RunAOTCompilation>true</RunAOTCompilation>
     <EnableLLVM>true</EnableLLVM>
     <TrimMode>full</TrimMode>
+	<AndroidSigningKeyStore>D:\android.keystore</AndroidSigningKeyStore>
+	<AndroidSigningKeyAlias>nito</AndroidSigningKeyAlias>
+	<AndroidSigningStorePass>env:AndroidSigningPassword</AndroidSigningStorePass>
+	<AndroidSigningKeyPass>env:AndroidSigningPassword</AndroidSigningKeyPass>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\PewBibleKjv.Logic\PewBibleKjv.Logic.csproj" />
