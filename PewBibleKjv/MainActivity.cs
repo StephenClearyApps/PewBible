@@ -27,8 +27,18 @@ public class MainActivity : AppCompatActivity
     {
         base.OnCreate(savedInstanceState);
 
-        // Set up our view
+        AndroidX.Core.View.WindowCompat.SetDecorFitsSystemWindows(Window, true);
+
         SetContentView(Resource.Layout.Main);
+
+        // Make status bar icons dark for light backgrounds
+        var insetsController = AndroidX.Core.View.WindowCompat.GetInsetsController(Window, Window.DecorView);
+        if (insetsController != null)
+        {
+            insetsController.AppearanceLightStatusBars = true;
+        }
+
+        // Set up our view
         var recyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView)!;
         var layoutManager = new LinearLayoutManager(this);
         recyclerView.SetLayoutManager(layoutManager);
@@ -40,12 +50,12 @@ public class MainActivity : AppCompatActivity
 
         OnBackPressedDispatcher.AddCallback(this, new CustomOnBackInvokedCallback(() =>
         {
-				if (_backButton.Enabled)
-					_backButton.CallOnClick();
-				else
-					base.OnBackPressed();
-			}));
-        
+            if (_backButton.Enabled)
+                _backButton.CallOnClick();
+            else
+                base.OnBackPressed();
+        }));
+
         // Initialize the app
         _chapterHeadingAdapter = new TextViewChapterHeadingAdapter(chapterHeading);
         _verseViewAdapter = new RecyclerViewVerseViewAdapter(this, recyclerView, layoutManager, ChapterHeadingHeight());
