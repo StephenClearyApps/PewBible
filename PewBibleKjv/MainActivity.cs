@@ -28,12 +28,10 @@ public class MainActivity : AppCompatActivity
     {
         base.OnCreate(savedInstanceState);
 
-        AndroidX.Core.View.WindowCompat.SetDecorFitsSystemWindows(Window, true);
-
         SetContentView(Resource.Layout.Main);
 
         // Make status bar icons dark for light backgrounds
-        var insetsController = AndroidX.Core.View.WindowCompat.GetInsetsController(Window, Window.DecorView);
+        var insetsController = AndroidX.Core.View.WindowCompat.GetInsetsController(Window, Window!.DecorView);
         if (insetsController != null)
         {
             insetsController.AppearanceLightStatusBars = true;
