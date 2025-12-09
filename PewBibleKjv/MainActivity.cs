@@ -22,6 +22,7 @@ public class MainActivity : AppCompatActivity
     private RecyclerViewVerseViewAdapter _verseViewAdapter = null!;
     private SharedPreferencesSimpleStorageAdapter _simpleStorageAdapter = null!;
     private ViewHistoryControlsAdapter _historyControlsAdapter = null!;
+    private OnBackPressedCallback _customBackCallback = null!;
 
     protected override void OnCreate(Bundle? savedInstanceState)
     {
@@ -48,13 +49,21 @@ public class MainActivity : AppCompatActivity
         var chapterHeading = FindViewById<Button>(Resource.Id.headingText)!;
         chapterHeading.Click += (_, __) => StartActivity(typeof(ChooseBookActivity));
 
-        OnBackPressedDispatcher.AddCallback(this, new CustomOnBackInvokedCallback(() =>
+        _customBackCallback = new CustomOnBackInvokedCallback(() =>
         {
             if (_backButton.Enabled)
+            {
                 _backButton.CallOnClick();
+            }
             else
-                base.OnBackPressed();
-        }));
+            {
+                _customBackCallback.Enabled = false;
+                OnBackPressedDispatcher.OnBackPressed();
+                _customBackCallback.Enabled = true;
+            }
+        });
+
+        OnBackPressedDispatcher.AddCallback(this, _customBackCallback);
 
         // Initialize the app
         _chapterHeadingAdapter = new TextViewChapterHeadingAdapter(chapterHeading);
