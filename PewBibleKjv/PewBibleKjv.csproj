@@ -37,6 +37,8 @@
 	<AndroidSigningKeyPass>env:AndroidSigningPassword</AndroidSigningKeyPass>
 	<RuntimeIdentifiers>android-arm;android-arm64;android-x86;android-x64</RuntimeIdentifiers>
 	<AndroidCreatePackagePerAbi>True</AndroidCreatePackagePerAbi>
+	<DebugType>portable</DebugType>
+	<DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\PewBibleKjv.Logic\PewBibleKjv.Logic.csproj" />
