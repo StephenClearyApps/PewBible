@@ -11,8 +11,8 @@
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
 	<Nullable>enable</Nullable>
 	<ImplicitUsings>enable</ImplicitUsings>
-    <ApplicationVersion>20000</ApplicationVersion>
-    <ApplicationDisplayVersion>2.0.0</ApplicationDisplayVersion>
+    <ApplicationVersion>20100</ApplicationVersion>
+    <ApplicationDisplayVersion>2.1.0</ApplicationDisplayVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
