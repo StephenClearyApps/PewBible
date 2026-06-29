@@ -9,7 +9,7 @@
       android:id="@+id/verseChapterHeaderText"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:textColor="#333333"
+      android:textColor="?android:attr/textColorPrimary"
       android:textSize="18sp"
       android:gravity="center"
       android:paddingTop="16dp"/>
@@ -17,13 +17,13 @@
       android:id="@+id/verseHorizontalLine"
       android:layout_width="match_parent"
       android:layout_height="1dp"
-      android:background="#333333"/>
+      android:background="?android:attr/textColorPrimary"/>
   <TextView
       android:id="@+id/verseText"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginBottom="4sp"
-      android:textColor="#333333"
+      android:textColor="?android:attr/textColorPrimary"
       android:textSize="16sp"
       android:fontFamily="serif"
       android:lineSpacingExtra="3sp"/>

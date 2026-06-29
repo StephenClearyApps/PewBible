@@ -1,12 +1,14 @@
 ﻿using System.Diagnostics;
 using Android.Content;
 using Android.Content.PM;
+using Android.Content.Res;
 using Android.Views;
 using PewBibleKjv.Logic;
 using PewBibleKjv.Text;
 using PewBibleKjv.Util;
 using PewBibleKjv.VerseView;
 using AndroidX.AppCompat.App;
+using AndroidX.DrawerLayout.Widget;
 using AndroidX.RecyclerView.Widget;
 using AndroidX.Activity;
 
@@ -23,22 +25,28 @@ public class MainActivity : AppCompatActivity
     private SharedPreferencesSimpleStorageAdapter _simpleStorageAdapter = null!;
     private ViewHistoryControlsAdapter _historyControlsAdapter = null!;
     private OnBackPressedCallback _customBackCallback = null!;
+    private DrawerLayout _drawerLayout = null!;
 
     protected override void OnCreate(Bundle? savedInstanceState)
     {
         base.OnCreate(savedInstanceState);
+        ThemePreferences.ApplyFromPreferences(this);
 
         SetContentView(Resource.Layout.Main);
 
-        // Make status bar icons dark for light backgrounds
-        var insetsController = AndroidX.Core.View.WindowCompat.GetInsetsController(Window, Window!.DecorView);
-        if (insetsController != null)
-        {
-            insetsController.AppearanceLightStatusBars = true;
-        }
+        UpdateStatusBarAppearance();
 
         // Set up our view
         var recyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView)!;
+        _drawerLayout = FindViewById<DrawerLayout>(Resource.Id.drawerLayout)!;
+        var swipeMenuList = FindViewById<ListView>(Resource.Id.swipeMenuList)!;
+        swipeMenuList.Adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1,
+            [GetString(Resource.String.menu_settings)!]);
+        swipeMenuList.ItemClick += (_, _) =>
+        {
+            _drawerLayout.CloseDrawer((int)GravityFlags.Start);
+            StartActivity(typeof(SettingsActivity));
+        };
         var layoutManager = new LinearLayoutManager(this);
         recyclerView.SetLayoutManager(layoutManager);
         recyclerView.SetAdapter(new VerseAdapter(LayoutInflater));
@@ -49,6 +57,12 @@ public class MainActivity : AppCompatActivity
 
         _customBackCallback = new CustomOnBackInvokedCallback(() =>
         {
+            if (_drawerLayout.IsDrawerOpen((int)GravityFlags.Start))
+            {
+                _drawerLayout.CloseDrawer((int)GravityFlags.Start);
+                return;
+            }
+
             if (_backButton.Enabled)
             {
                 _backButton.CallOnClick();
@@ -103,7 +117,18 @@ public class MainActivity : AppCompatActivity
     protected override void OnResume()
     {
         CreateApp();
+        UpdateStatusBarAppearance();
         base.OnResume();
+    }
+
+    private void UpdateStatusBarAppearance()
+    {
+        var insetsController = AndroidX.Core.View.WindowCompat.GetInsetsController(Window, Window!.DecorView);
+        if (insetsController != null)
+        {
+            var isNightMode = (Resources!.Configuration!.UiMode & UiMode.NightMask) == UiMode.NightYes;
+            insetsController.AppearanceLightStatusBars = !isNightMode;
+        }
     }
 
     private void CreateApp()
@@ -129,4 +154,3 @@ public class MainActivity : AppCompatActivity
 			public override void HandleOnBackPressed() => action();
 		}
 	}
-

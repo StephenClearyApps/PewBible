@@ -11,6 +11,7 @@ public class ChooseBookActivity : AppCompatActivity
     protected override void OnCreate(Bundle? savedInstanceState)
     {
         base.OnCreate(savedInstanceState);
+        ThemePreferences.ApplyFromPreferences(this);
 
         // Set our view from our layout resource
         SetContentView(Resource.Layout.ChooseBook);

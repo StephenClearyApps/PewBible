@@ -13,6 +13,7 @@ public class ChooseChapterActivity : AppCompatActivity
     protected override void OnCreate(Bundle? savedInstanceState)
     {
         base.OnCreate(savedInstanceState);
+        ThemePreferences.ApplyFromPreferences(this);
         var bookIndex = Intent!.GetIntExtra("BookIndex", -1);
         if (bookIndex == -1)
         {
