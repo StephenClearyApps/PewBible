@@ -1,46 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿namespace ImportAndCompare;
 
-namespace ImportAndCompare
+public static class ProjectGutenbergB
 {
-    public static class ProjectGutenbergB
+    public static List<Verse> Import(IReadOnlyList<string> text)
     {
-        public static List<Verse> Import(IReadOnlyList<string> text)
+        var result = new List<Verse>();
+        foreach (var line in text.Verses())
         {
-            var result = new List<Verse>();
-            foreach (var line in text.Verses())
-            {
-                result.Add(new Verse(line.Substring(0, 2), int.Parse(line.Substring(3, 3)), int.Parse(line.Substring(7, 3)), line.Substring(11)));
-            }
-
-            return result;
+            result.Add(new Verse(line.Substring(0, 2), int.Parse(line.Substring(3, 3)), int.Parse(line.Substring(7, 3)), line.Substring(11)));
         }
 
-        private static IEnumerable<string> Verses(this IEnumerable<string> lines)
+        return result;
+    }
+
+    private static IEnumerable<string> Verses(this IEnumerable<string> lines)
+    {
+        string? text = null;
+        foreach (var line in lines.Where(x => !string.IsNullOrEmpty(x) && !x.StartsWith("Book")))
         {
-            string text = null;
-            foreach (var line in lines.Where(x => !string.IsNullOrEmpty(x) && !x.StartsWith("Book")))
+            if (char.IsDigit(line[0]))
             {
-                if (char.IsDigit(line[0]))
+                if (text != null)
                 {
-                    if (text != null)
-                    {
-                        yield return text;
-                    }
-                    text = line;
+                    yield return text;
                 }
-                else
-                {
-                    text += " " + line.Trim();
-                }
+                text = line;
             }
-            yield return text;
+            else
+            {
+                text += " " + line.Trim();
+            }
         }
+        yield return text ?? throw new InvalidOperationException("Line did not start with digit");
     }
 }

@@ -22,9 +22,9 @@
       android:id="@+id/verseText"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginBottom="1sp"
+      android:layout_marginBottom="4sp"
       android:textColor="#333333"
       android:textSize="16sp"
       android:fontFamily="serif"
-      android:lineSpacingExtra="1sp"/>
+      android:lineSpacingExtra="3sp"/>
 </LinearLayout>
