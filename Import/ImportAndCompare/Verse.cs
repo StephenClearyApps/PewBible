@@ -7,11 +7,11 @@ public sealed class Verse
     public Verse(string book, int chapter, int verseNumber, IList<string> words)
     {
         if (string.IsNullOrWhiteSpace(book))
-            throw new InvalidOperationException("Invalid book " + book);
+            throw new InvalidOperationException($"Invalid book {book}");
         if (chapter <= 0)
-            throw new InvalidOperationException("Invalid chapter " + chapter);
+            throw new InvalidOperationException($"Invalid chapter {chapter}");
         if (verseNumber <= 0)
-            throw new InvalidOperationException("Invalid verse number " + verseNumber);
+            throw new InvalidOperationException($"Invalid verse number {verseNumber}");
         if (words.Count == 0 || words.All(string.IsNullOrWhiteSpace))
             throw new InvalidOperationException("Invalid text");
         Book = book;
@@ -21,7 +21,7 @@ public sealed class Verse
         foreach (var word in Words)
         {
             if (word.Length != 1 && !word.All(char.IsLetter))
-                throw new InvalidOperationException("Unrecognized punctuation " + word);
+                throw new InvalidOperationException($"Unrecognized punctuation {word}");
         }
     }
 

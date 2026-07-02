@@ -41,7 +41,8 @@ public sealed class CoreApp : IDisposable
 
     public void Dispose()
     {
-        _history.Save(_verseView.CurrentAbsoluteVerseNumber);
+        if (_verseView.CurrentAbsoluteVerseNumber != Bible.InvalidAbsoluteVerseNumber)
+            _history.Save(_verseView.CurrentAbsoluteVerseNumber);
         _verseView.OnScroll -= UpdateCurrentLocation;
         _historyControls.BackClick -= MoveBack;
         _historyControls.ForwardClick -= MoveForward;
