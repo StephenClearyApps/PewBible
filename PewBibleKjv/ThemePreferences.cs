@@ -35,7 +35,7 @@ public static class ThemePreferences
         AppCompatDelegate.DefaultNightMode = ToNightMode(mode);
     }
 
-    private static AppCompatDelegate.ModeNight ToNightMode(ThemeMode mode)
+    private static int ToNightMode(ThemeMode mode)
     {
         return mode switch
         {
