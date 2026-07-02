@@ -23,8 +23,6 @@ public sealed class CoreApp : IDisposable
 
         // Keep track of changes to the verse view.
         verseView.OnScroll += UpdateCurrentLocation;
-        verseView.OnSwipeLeft += MoveNextChapter;
-        verseView.OnSwipeRight += MovePreviousChapter;
 
         // Wire up history to the history controls.
         historyControls.BackClick += MoveBack;
@@ -45,8 +43,6 @@ public sealed class CoreApp : IDisposable
     {
         _history.Save(_verseView.CurrentAbsoluteVerseNumber);
         _verseView.OnScroll -= UpdateCurrentLocation;
-        _verseView.OnSwipeLeft -= MoveNextChapter;
-        _verseView.OnSwipeRight -= MovePreviousChapter;
         _historyControls.BackClick -= MoveBack;
         _historyControls.ForwardClick -= MoveForward;
         _history.CanMoveChanged -= EnableDisableHistoryButtons;
@@ -66,16 +62,6 @@ public sealed class CoreApp : IDisposable
     private void MoveBack()
     {
         _verseView.Jump(Location.Create(_history.MoveBack(_verseView.CurrentAbsoluteVerseNumber)));
-    }
-
-    private void MovePreviousChapter(Location startSwipeLocation)
-    {
-        _verseView.Jump(startSwipeLocation.PreviousChapter());
-    }
-
-    private void MoveNextChapter(Location startSwipeLocation)
-    {
-        _verseView.Jump(startSwipeLocation.NextChapter());
     }
 
     private void UpdateCurrentLocation()
