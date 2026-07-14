@@ -50,20 +50,12 @@ public class ChooseChapterActivity : AppCompatActivity
         return size.Width;
     }
 
-    private sealed class ChapterAdapter : ArrayAdapter<string>
+    private sealed class ChapterAdapter(Context context, int bookIndex, int buttonWidth) : ArrayAdapter<string>(context, Resource.Layout.ChooseChapterButton,
+            [.. Structure.Books[bookIndex].Chapters.Select(c => (c.Index + 1).ToString())])
     {
-        private readonly Context _context;
-        private readonly int _bookIndex;
-        private readonly int _buttonWidth;
-
-        public ChapterAdapter(Context context, int bookIndex, int buttonWidth)
-            : base(context, Resource.Layout.ChooseChapterButton,
-                Structure.Books[bookIndex].Chapters.Select(c => (c.Index + 1).ToString()).ToArray())
-        {
-            _context = context;
-            _bookIndex = bookIndex;
-            _buttonWidth = buttonWidth;
-        }
+        private readonly Context _context = context;
+        private readonly int _bookIndex = bookIndex;
+        private readonly int _buttonWidth = buttonWidth;
 
         public override View GetView(int position, View? convertView, ViewGroup parent)
         {

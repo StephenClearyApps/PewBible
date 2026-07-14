@@ -76,22 +76,22 @@ public static class Bible
     }
 
     // Punctuation that prevents a space from being appended after them.
-    private static readonly string[] NoPostSpace = {"(", "[", "<", "-", "—"};
+    private static readonly string[] NoPostSpace = ["(", "[", "<", "-", "—"];
 
     // Punctuation that prevents a space from being prepended before them.
-    private static readonly string[] NoPreSpace = {"'", "-", "—", "!", ")", ",", ".", ":", ";", "?", "]", "'s", ">"};
+    private static readonly string[] NoPreSpace = ["'", "-", "—", "!", ")", ",", ".", ":", ";", "?", "]", "'s", ">"];
 
     public static IEnumerable<string> VerseWords(int verseNumber)
     {
         var beginEndBytes = new byte[sizeof(int) * 2];
         Data.VerseIndex.Position = verseNumber * sizeof(int);
-        Data.VerseIndex.Read(beginEndBytes, 0, sizeof(int) * 2);
+        Data.VerseIndex.ReadExactly(beginEndBytes, 0, sizeof(int) * 2);
         var begin = BitConverter.ToInt32(beginEndBytes, 0);
         var end = BitConverter.ToInt32(beginEndBytes, sizeof(int));
 
         var verseDataBytes = new byte[sizeof(ushort) * (end - begin)];
         Data.Verses.Position = sizeof(ushort) * begin;
-        Data.Verses.Read(verseDataBytes, 0, verseDataBytes.Length);
+        Data.Verses.ReadExactly(verseDataBytes);
         var verseData = new ushort[end - begin];
         Buffer.BlockCopy(verseDataBytes, 0, verseData, 0, verseDataBytes.Length);
 
@@ -111,9 +111,9 @@ public static class Bible
                 if (wordFlags == 1)
                     word = word.ToUpperInvariant();
                 else if (wordFlags == 2)
-                    word = char.ToUpperInvariant(word[0]) + word.Substring(1);
+                    word = char.ToUpperInvariant(word[0]) + word[1..];
                 else if (wordFlags == 3)
-                    word = char.ToUpperInvariant(word[0]).ToString() + char.ToUpperInvariant(word[1]) + word.Substring(2);
+                    word = char.ToUpperInvariant(word[0]).ToString() + char.ToUpperInvariant(word[1]) + word[2..];
                 yield return word;
             }
         }
