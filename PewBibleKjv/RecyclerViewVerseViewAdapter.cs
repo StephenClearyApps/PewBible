@@ -28,8 +28,6 @@ public sealed class RecyclerViewVerseViewAdapter: IVerseView
     }
 
     public event Action? OnScroll;
-    public event Action<Location>? OnSwipeLeft;
-    public event Action<Location>? OnSwipeRight;
 
     public int CurrentAbsoluteVerseNumber => _layoutManager.FindFirstVisibleItemPosition();
 
