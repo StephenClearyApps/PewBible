@@ -15,14 +15,13 @@ namespace PewBibleKjv;
 [Activity(Label = "Pew Bible (KJV)", MainLauncher = true, Icon = "@mipmap/icon", LaunchMode = LaunchMode.SingleTop)]
 public class MainActivity : AppCompatActivity
 {
-    private CoreApp _app = null!;
-    private ImageButton _backButton = null!;
-    private ImageButton _forwardButton = null!;
-    private TextViewChapterHeadingAdapter _chapterHeadingAdapter = null!;
-    private RecyclerViewVerseViewAdapter _verseViewAdapter = null!;
-    private SharedPreferencesSimpleStorageAdapter _simpleStorageAdapter = null!;
-    private ViewHistoryControlsAdapter _historyControlsAdapter = null!;
-    private OnBackPressedCallback _customBackCallback = null!;
+    private CoreApp? _app;
+    private ImageButton? _backButton;
+    private TextViewChapterHeadingAdapter? _chapterHeadingAdapter;
+    private RecyclerViewVerseViewAdapter? _verseViewAdapter;
+    private SharedPreferencesSimpleStorageAdapter? _simpleStorageAdapter;
+    private ViewHistoryControlsAdapter? _historyControlsAdapter;
+    private OnBackPressedCallback? _customBackCallback;
 
     protected override void OnCreate(Bundle? savedInstanceState)
     {
@@ -31,11 +30,8 @@ public class MainActivity : AppCompatActivity
         SetContentView(Resource.Layout.Main);
 
         // Make status bar icons dark for light backgrounds
-        var insetsController = AndroidX.Core.View.WindowCompat.GetInsetsController(Window, Window!.DecorView);
-        if (insetsController != null)
-        {
-            insetsController.AppearanceLightStatusBars = true;
-        }
+        var insetsController = AndroidX.Core.View.WindowCompat.GetInsetsController(Window, Window?.DecorView);
+        insetsController?.AppearanceLightStatusBars = true;
 
         // Set up our view
         var recyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView)!;
@@ -49,15 +45,15 @@ public class MainActivity : AppCompatActivity
 
         _customBackCallback = new CustomOnBackInvokedCallback(() =>
         {
-            if (_backButton.Enabled)
+            if (_backButton?.Enabled == true)
             {
                 _backButton.CallOnClick();
             }
             else
             {
-                _customBackCallback.Enabled = false;
+                _customBackCallback?.Enabled = false;
                 OnBackPressedDispatcher.OnBackPressed();
-                _customBackCallback.Enabled = true;
+                _customBackCallback?.Enabled = true;
             }
         });
 
@@ -67,9 +63,9 @@ public class MainActivity : AppCompatActivity
         _chapterHeadingAdapter = new TextViewChapterHeadingAdapter(chapterHeading);
         _verseViewAdapter = new RecyclerViewVerseViewAdapter(this, recyclerView, layoutManager, ChapterHeadingHeight());
         _simpleStorageAdapter = new SharedPreferencesSimpleStorageAdapter(ApplicationContext!.GetSharedPreferences("global", FileCreationMode.Private)!);
-        _backButton = FindViewById<ImageButton>(Resource.Id.backButton)!;
-        _forwardButton = FindViewById<ImageButton>(Resource.Id.forwardButton)!;
-        _historyControlsAdapter = new ViewHistoryControlsAdapter(_backButton, _forwardButton);
+        _backButton = FindViewById<ImageButton>(Resource.Id.backButton) ?? throw new InvalidOperationException("Back button not found");
+        var forwardButton = FindViewById<ImageButton>(Resource.Id.forwardButton) ?? throw new InvalidOperationException("Forward button not found");
+        _historyControlsAdapter = new ViewHistoryControlsAdapter(_backButton, forwardButton);
 
         CreateApp();
     }
@@ -96,8 +92,8 @@ public class MainActivity : AppCompatActivity
     protected override void OnPause()
     {
         base.OnPause();
-        _app.Dispose();
-        _app = null!;
+        _app?.Dispose();
+        _app = null;
     }
 
     protected override void OnResume()
@@ -110,7 +106,12 @@ public class MainActivity : AppCompatActivity
     {
         if (_app != null)
             return;
-        _app = new CoreApp(_chapterHeadingAdapter, _verseViewAdapter, _simpleStorageAdapter, _historyControlsAdapter, IntentStartingVerse());
+        _app = new CoreApp(
+            _chapterHeadingAdapter ?? throw new InvalidOperationException("Chapter heading adapter not found"),
+            _verseViewAdapter ?? throw new InvalidOperationException("Verse view adapter not found"),
+            _simpleStorageAdapter ?? throw new InvalidOperationException("Simple storage adapter not found"),
+            _historyControlsAdapter ?? throw new InvalidOperationException("History controls adapter not found"),
+            IntentStartingVerse());
     }
 
     private int IntentStartingVerse()
@@ -124,9 +125,8 @@ public class MainActivity : AppCompatActivity
         return startingVerse;
     }
 
-		private sealed class CustomOnBackInvokedCallback(Action action) : OnBackPressedCallback(enabled: true)
-		{
-			public override void HandleOnBackPressed() => action();
-		}
+	private sealed class CustomOnBackInvokedCallback(Action action) : OnBackPressedCallback(enabled: true)
+	{
+		public override void HandleOnBackPressed() => action();
 	}
-
+}

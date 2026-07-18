@@ -1,6 +1,7 @@
 ﻿using Android.Content;
 using Android.Content.Res;
 using AndroidX.AppCompat.App;
+using Java.Lang;
 using PewBibleKjv.Text;
 
 namespace PewBibleKjv;
@@ -15,17 +16,20 @@ public class ChooseBookActivity : AppCompatActivity
         // Set our view from our layout resource
         SetContentView(Resource.Layout.ChooseBook);
 
+        if (Resources == null)
+            throw new InvalidOperationException("Resources is null");
+
         for (var i = 0; i != Structure.Books.Length; ++i)
         {
-            var id = Resources!.GetIdentifier("button" + i, "id", PackageName);
+            var id = Resources.GetIdentifier("button" + i, "id", PackageName);
             var button = FindViewById<Button>(id);
             if (button != null)
             {
                 button.Tag = i;
                 button.Text = Structure.Books[i].Name;
-                button.Click += (sender, __) =>
+                button.Click += (_, _) =>
                 {
-                    var bookIndex = (int)((Button)sender!).Tag!;
+                    var bookIndex = (button.Tag as Integer)?.IntValue() ?? throw new InvalidOperationException("Book index not found");
                     var activity = new Intent(this, typeof(ChooseChapterActivity));
                     activity.PutExtra("BookIndex", bookIndex);
                     StartActivity(activity);

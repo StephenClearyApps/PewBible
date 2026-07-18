@@ -13,7 +13,7 @@ public class ChooseChapterActivity : AppCompatActivity
     protected override void OnCreate(Bundle? savedInstanceState)
     {
         base.OnCreate(savedInstanceState);
-        var bookIndex = Intent!.GetIntExtra("BookIndex", -1);
+        var bookIndex = Intent?.GetIntExtra("BookIndex", -1) ?? -1;
         if (bookIndex == -1)
         {
             StartActivity(MainActivityIntent(this));
