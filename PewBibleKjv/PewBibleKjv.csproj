@@ -27,9 +27,7 @@
 	<AndroidLinkTool>r8</AndroidLinkTool>
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
     <EnableProguard>true</EnableProguard>
-	<RunAOTCompilation>true</RunAOTCompilation>
 	<AndroidEnableProfiledAot>True</AndroidEnableProfiledAot>
-    <EnableLLVM>true</EnableLLVM>
     <TrimMode>full</TrimMode>
 	<AndroidSigningKeyStore>D:\android.keystore</AndroidSigningKeyStore>
 	<AndroidSigningKeyAlias>nito</AndroidSigningKeyAlias>
