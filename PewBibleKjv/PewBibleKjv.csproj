@@ -33,7 +33,7 @@
 	<AndroidSigningKeyAlias>nito</AndroidSigningKeyAlias>
 	<AndroidSigningStorePass>env:AndroidSigningPassword</AndroidSigningStorePass>
 	<AndroidSigningKeyPass>env:AndroidSigningPassword</AndroidSigningKeyPass>
-	<RuntimeIdentifiers>android-arm;android-arm64;android-x86;android-x64</RuntimeIdentifiers>
+	<RuntimeIdentifiers>android-arm;android-arm64;android-x64</RuntimeIdentifiers>
 	<AndroidCreatePackagePerAbi>True</AndroidCreatePackagePerAbi>
 	<DebugType>portable</DebugType>
 	<DebugSymbols>true</DebugSymbols>
