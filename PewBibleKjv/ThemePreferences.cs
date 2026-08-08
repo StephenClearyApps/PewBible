@@ -34,6 +34,8 @@ public static class ThemePreferences
         return savedOverride ?? GetSystemResolvedMode();
     }
 
+    public static bool IsFollowingSystem(Context context) => GetSavedOverride(context) == null;
+
     private static ThemeMode GetSystemResolvedMode()
     {
         var nightMode = Resources.System!.Configuration!.UiMode & UiMode.NightMask;

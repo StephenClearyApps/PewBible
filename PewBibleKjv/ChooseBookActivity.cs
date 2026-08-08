@@ -1,11 +1,12 @@
 ﻿using Android.Content;
+using Android.Content.PM;
 using Android.Content.Res;
 using AndroidX.AppCompat.App;
 using PewBibleKjv.Text;
 
 namespace PewBibleKjv;
 
-[Activity(Label = "Choose Book")]
+[Activity(Label = "Choose Book", ConfigurationChanges = ConfigChanges.UiMode)]
 public class ChooseBookActivity : AppCompatActivity
 {
     protected override void OnCreate(Bundle? savedInstanceState)
@@ -33,5 +34,14 @@ public class ChooseBookActivity : AppCompatActivity
                 };
             }
         }
+    }
+
+    public override void OnConfigurationChanged(Configuration newConfig)
+    {
+        base.OnConfigurationChanged(newConfig);
+        if (!ThemePreferences.IsFollowingSystem(this))
+            return;
+        ThemePreferences.ApplyFromPreferences(this);
+        Recreate();
     }
 }

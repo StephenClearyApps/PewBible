@@ -1,10 +1,12 @@
-﻿using AndroidX.AppCompat.App;
+﻿using Android.Content.PM;
+using Android.Content.Res;
+using AndroidX.AppCompat.App;
 using AndroidX.AppCompat.Widget;
 using Android.Views;
 
 namespace PewBibleKjv;
 
-[Activity(Label = "@string/settings_title")]
+[Activity(Label = "@string/settings_title", ConfigurationChanges = ConfigChanges.UiMode)]
 public class SettingsActivity : AppCompatActivity
 {
     private View _themeRow = null!;
@@ -40,6 +42,15 @@ public class SettingsActivity : AppCompatActivity
     {
         base.OnResume();
         RefreshThemeUi();
+    }
+
+    public override void OnConfigurationChanged(Configuration newConfig)
+    {
+        base.OnConfigurationChanged(newConfig);
+        if (!ThemePreferences.IsFollowingSystem(this))
+            return;
+        ThemePreferences.ApplyFromPreferences(this);
+        Recreate();
     }
 
     private void RefreshThemeUi()

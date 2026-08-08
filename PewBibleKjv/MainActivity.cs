@@ -14,7 +14,7 @@ using AndroidX.Activity;
 
 namespace PewBibleKjv;
 
-[Activity(Label = "Pew Bible (KJV)", MainLauncher = true, Icon = "@mipmap/icon", LaunchMode = LaunchMode.SingleTop)]
+[Activity(Label = "Pew Bible (KJV)", MainLauncher = true, Icon = "@mipmap/icon", LaunchMode = LaunchMode.SingleTop, ConfigurationChanges = ConfigChanges.UiMode)]
 public class MainActivity : AppCompatActivity
 {
     private CoreApp _app = null!;
@@ -119,6 +119,15 @@ public class MainActivity : AppCompatActivity
         CreateApp();
         UpdateStatusBarAppearance();
         base.OnResume();
+    }
+
+    public override void OnConfigurationChanged(Configuration newConfig)
+    {
+        base.OnConfigurationChanged(newConfig);
+        if (!ThemePreferences.IsFollowingSystem(this))
+            return;
+        ThemePreferences.ApplyFromPreferences(this);
+        Recreate();
     }
 
     private void UpdateStatusBarAppearance()
