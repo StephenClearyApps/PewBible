@@ -3,10 +3,7 @@
   <string name="app_name">Pew Bible (KJV)</string>
   <string name="settings_title">Settings</string>
   <string name="settings_theme_heading">Theme</string>
-  <string name="theme_system">System</string>
   <string name="theme_light">Light</string>
   <string name="theme_dark">Dark</string>
-  <string name="settings_theme_status_system">Following system: %1$s</string>
-  <string name="settings_theme_status_override">Override active: %1$s (System: %2$s)</string>
   <string name="menu_settings">Settings</string>
 </resources>

@@ -20,10 +20,4 @@
     android:background="?attr/selectableItemBackgroundBorderless"
     app:srcCompat="@drawable/ic_theme_light"
     app:tint="?attr/colorControlNormal" />
-  <TextView
-    android:id="@+id/settingsThemeStatus"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="12dp"
-    android:textAppearance="?android:attr/textAppearanceSmall" />
 </LinearLayout>
