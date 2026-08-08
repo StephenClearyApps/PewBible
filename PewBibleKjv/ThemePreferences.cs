@@ -50,7 +50,7 @@ public static class ThemePreferences
             mode = ThemeMode.System;
 
         SaveOverride(context, mode);
-        AppCompatDelegate.DefaultNightMode = AppCompatDelegate.ModeNightFollowSystem;
+        AppCompatDelegate.DefaultNightMode = ToNightMode(mode);
     }
 
     private static ThemeMode? GetSavedOverride(Context context)
