@@ -1,11 +1,13 @@
 ﻿using AndroidX.AppCompat.App;
 using AndroidX.AppCompat.Widget;
+using Android.Views;
 
 namespace PewBibleKjv;
 
 [Activity(Label = "@string/settings_title")]
 public class SettingsActivity : AppCompatActivity
 {
+    private View _themeRow = null!;
     private SwitchCompat _themeToggleSwitch = null!;
     private bool _refreshingThemeUi;
 
@@ -15,7 +17,12 @@ public class SettingsActivity : AppCompatActivity
         ThemePreferences.ApplyFromPreferences(this);
         SetContentView(Resource.Layout.Settings);
 
+        _themeRow = FindViewById<View>(Resource.Id.settingsThemeRow)!;
         _themeToggleSwitch = FindViewById<SwitchCompat>(Resource.Id.themeToggleButton)!;
+        _themeRow.Click += (_, __) =>
+        {
+            _themeToggleSwitch.Checked = !_themeToggleSwitch.Checked;
+        };
         _themeToggleSwitch.CheckedChange += (_, args) =>
         {
             if (_refreshingThemeUi)

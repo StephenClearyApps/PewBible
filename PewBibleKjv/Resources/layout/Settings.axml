@@ -5,17 +5,30 @@
               android:layout_height="match_parent"
               android:fitsSystemWindows="true"
               android:padding="16dp">
-  <TextView
-    android:id="@+id/settingsThemeLabel"
+  <LinearLayout
+    android:id="@+id/settingsThemeRow"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="@string/settings_theme_heading"
-    android:textAppearance="?android:attr/textAppearanceMedium" />
-  <androidx.appcompat.widget.SwitchCompat
-    android:id="@+id/themeToggleButton"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
     android:layout_marginTop="12dp"
-    android:textOff="@string/theme_light"
-    android:textOn="@string/theme_dark" />
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:minHeight="48dp"
+    android:orientation="horizontal"
+    android:paddingStart="8dp"
+    android:paddingTop="8dp"
+    android:paddingEnd="8dp"
+    android:paddingBottom="8dp">
+    <TextView
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:text="@string/settings_theme_heading"
+      android:textAppearance="?android:attr/textAppearanceMedium" />
+    <androidx.appcompat.widget.SwitchCompat
+      android:id="@+id/themeToggleButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content" />
+  </LinearLayout>
 </LinearLayout>
