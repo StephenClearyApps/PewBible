@@ -3,6 +3,7 @@ using Android.Content.Res;
 using AndroidX.AppCompat.App;
 using AndroidX.AppCompat.Widget;
 using Android.Views;
+using PewBibleKjv.Logic;
 
 namespace PewBibleKjv;
 
@@ -47,10 +48,8 @@ public class SettingsActivity : AppCompatActivity
     public override void OnConfigurationChanged(Configuration newConfig)
     {
         base.OnConfigurationChanged(newConfig);
-        if (!ThemePreferences.IsFollowingSystem(this))
-            return;
-        ThemePreferences.ApplyFromPreferences(this);
-        Recreate();
+        if (ThemePreferences.HandleSystemThemeChanged(this))
+            Recreate();
     }
 
     private void RefreshThemeUi()

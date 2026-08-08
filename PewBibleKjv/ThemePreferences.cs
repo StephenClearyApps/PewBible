@@ -1,15 +1,8 @@
 ﻿using Android.Content;
-using Android.Content.Res;
-using AndroidX.AppCompat.App;
+using PewBibleKjv.Logic;
+using LogicThemePreferences = PewBibleKjv.Logic.ThemePreferences;
 
 namespace PewBibleKjv;
-
-public enum ThemeMode
-{
-    System = 0,
-    Light = 1,
-    Dark = 2,
-}
 
 public static class ThemePreferences
 {
@@ -18,64 +11,51 @@ public static class ThemePreferences
 
     public static void ApplyFromPreferences(Context context)
     {
-        var selectedMode = GetSavedOverride(context);
-        AppCompatDelegate.DefaultNightMode = ToNightMode(selectedMode);
+        Build(context).ApplyFromPreferences();
     }
 
     public static ThemeMode GetResolvedActiveMode(Context context)
     {
-        var savedOverride = GetSavedOverride(context);
-        return savedOverride == ThemeMode.System ? GetSystemResolvedMode() : savedOverride;
+        return Build(context).GetResolvedActiveMode();
     }
 
-    public static bool IsFollowingSystem(Context context) => GetSavedOverride(context) == ThemeMode.System;
+    public static bool IsFollowingSystem(Context context) => Build(context).IsFollowingSystem();
 
     public static void SetTwoStateMode(Context context, ThemeMode mode)
     {
-        if (mode != ThemeMode.Dark && mode != ThemeMode.Light)
-            throw new ArgumentOutOfRangeException(nameof(mode));
-
-        var systemMode = GetSystemResolvedMode();
-        if (mode == systemMode)
-            mode = ThemeMode.System;
-
-        SaveOverride(context, mode);
-        AppCompatDelegate.DefaultNightMode = ToNightMode(mode);
+        Build(context).SetTwoStateMode(mode);
     }
 
-    private static ThemeMode GetSystemResolvedMode()
+    public static bool HandleSystemThemeChanged(Context context)
     {
-        var nightMode = Resources.System!.Configuration!.UiMode & UiMode.NightMask;
-        return nightMode == UiMode.NightYes ? ThemeMode.Dark : ThemeMode.Light;
+        return Build(context).HandleSystemThemeChanged();
     }
 
-    private static ThemeMode GetSavedOverride(Context context)
+    private static LogicThemePreferences Build(Context context)
     {
         var preferences = context.ApplicationContext!.GetSharedPreferences(PreferencesName, FileCreationMode.Private)!;
+        MigrateLegacyThemePreference(preferences);
+        var simpleStorage = new SharedPreferencesSimpleStorageAdapter(preferences);
+        var systemThemeReader = new AndroidSystemThemeReaderAdapter(context.Resources!);
+        var themeModeApplier = new AppCompatThemeModeApplierAdapter();
+        return new LogicThemePreferences(simpleStorage, systemThemeReader, themeModeApplier);
+    }
+
+    private static void MigrateLegacyThemePreference(ISharedPreferences preferences)
+    {
         if (!preferences.Contains(ThemeModePreferenceKey))
-            return ThemeMode.System;
-        var selectedModeValue = preferences.GetInt(ThemeModePreferenceKey, (int)ThemeMode.System);
-        if (!Enum.IsDefined(typeof(ThemeMode), selectedModeValue))
-            return ThemeMode.System;
-        return (ThemeMode)selectedModeValue;
-    }
-
-    private static void SaveOverride(Context context, ThemeMode mode)
-    {
-        var preferences = context.ApplicationContext!.GetSharedPreferences(PreferencesName, FileCreationMode.Private)!;
-        if (mode == ThemeMode.System)
-            preferences.Edit()!.Remove(ThemeModePreferenceKey)!.Commit();
-        else
-            preferences.Edit()!.PutInt(ThemeModePreferenceKey, (int)mode)!.Commit();
-    }
-
-    private static int ToNightMode(ThemeMode mode)
-    {
-        return mode switch
+            return;
+        try
         {
-            ThemeMode.Light => AppCompatDelegate.ModeNightNo,
-            ThemeMode.Dark => AppCompatDelegate.ModeNightYes,
-            _ => AppCompatDelegate.ModeNightFollowSystem,
-        };
+            preferences.GetString(ThemeModePreferenceKey, null);
+        }
+        catch (Java.Lang.ClassCastException)
+        {
+            var value = preferences.GetInt(ThemeModePreferenceKey, (int)ThemeMode.System);
+            preferences.Edit()!
+                .Remove(ThemeModePreferenceKey)!
+                .PutString(ThemeModePreferenceKey, ((ThemeMode)value).ToString())!
+                .Commit();
+        }
     }
 }
