@@ -28,7 +28,7 @@ public class SettingsActivity : AppCompatActivity
             if (_refreshingThemeUi)
                 return;
 
-            var selectedMode = args.IsChecked ? ThemeMode.Dark : ThemeMode.Light;
+            var selectedMode = args.IsChecked ? ThemeMode.Light : ThemeMode.Dark;
             ThemePreferences.SetTwoStateMode(this, selectedMode);
             RefreshThemeUi();
         };
@@ -46,7 +46,7 @@ public class SettingsActivity : AppCompatActivity
     {
         var activeTheme = ThemePreferences.GetResolvedActiveMode(this);
         _refreshingThemeUi = true;
-        _themeToggleSwitch.Checked = activeTheme == ThemeMode.Dark;
+        _themeToggleSwitch.Checked = activeTheme == ThemeMode.Light;
         _refreshingThemeUi = false;
 
         if (activeTheme == ThemeMode.Dark)
