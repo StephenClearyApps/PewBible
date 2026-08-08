@@ -1,4 +1,5 @@
-﻿using PewBibleKjv.Logic;
+﻿using System;
+using PewBibleKjv.Logic;
 using UnitTests.Util;
 using Xunit;
 
