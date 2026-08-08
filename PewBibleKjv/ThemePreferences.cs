@@ -18,29 +18,17 @@ public static class ThemePreferences
 
     public static void ApplyFromPreferences(Context context)
     {
-        var selectedMode = GetSelectedMode(context);
+        var selectedMode = GetSavedOverride(context);
         AppCompatDelegate.DefaultNightMode = ToNightMode(selectedMode);
-    }
-
-    private static ThemeMode GetSelectedMode(Context context)
-    {
-        var savedOverride = GetSavedOverride(context);
-        return savedOverride ?? ThemeMode.System;
     }
 
     public static ThemeMode GetResolvedActiveMode(Context context)
     {
         var savedOverride = GetSavedOverride(context);
-        return savedOverride ?? GetSystemResolvedMode();
+        return savedOverride == ThemeMode.System ? GetSystemResolvedMode() : savedOverride;
     }
 
-    public static bool IsFollowingSystem(Context context) => GetSavedOverride(context) == null;
-
-    private static ThemeMode GetSystemResolvedMode()
-    {
-        var nightMode = Resources.System!.Configuration!.UiMode & UiMode.NightMask;
-        return nightMode == UiMode.NightYes ? ThemeMode.Dark : ThemeMode.Light;
-    }
+    public static bool IsFollowingSystem(Context context) => GetSavedOverride(context) == ThemeMode.System;
 
     public static void SetTwoStateMode(Context context, ThemeMode mode)
     {
@@ -55,18 +43,21 @@ public static class ThemePreferences
         AppCompatDelegate.DefaultNightMode = ToNightMode(mode);
     }
 
-    private static ThemeMode? GetSavedOverride(Context context)
+    private static ThemeMode GetSystemResolvedMode()
+    {
+        var nightMode = Resources.System!.Configuration!.UiMode & UiMode.NightMask;
+        return nightMode == UiMode.NightYes ? ThemeMode.Dark : ThemeMode.Light;
+    }
+
+    private static ThemeMode GetSavedOverride(Context context)
     {
         var preferences = context.ApplicationContext!.GetSharedPreferences(PreferencesName, FileCreationMode.Private)!;
         if (!preferences.Contains(ThemeModePreferenceKey))
-            return null;
+            return ThemeMode.System;
         var selectedModeValue = preferences.GetInt(ThemeModePreferenceKey, (int)ThemeMode.System);
         if (!Enum.IsDefined(typeof(ThemeMode), selectedModeValue))
-            return null;
-        var selectedMode = (ThemeMode)selectedModeValue;
-        if (selectedMode == ThemeMode.Dark || selectedMode == ThemeMode.Light)
-            return selectedMode;
-        return null;
+            return ThemeMode.System;
+        return (ThemeMode)selectedModeValue;
     }
 
     private static void SaveOverride(Context context, ThemeMode mode)
