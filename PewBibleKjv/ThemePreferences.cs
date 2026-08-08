@@ -69,6 +69,24 @@ public static class ThemePreferences
         return toggledMode;
     }
 
+    public static ThemeMode SetTwoStateMode(Context context, ThemeMode mode)
+    {
+        if (mode != ThemeMode.Dark && mode != ThemeMode.Light)
+            throw new ArgumentOutOfRangeException(nameof(mode));
+
+        var systemMode = GetSystemResolvedMode();
+        if (mode == systemMode)
+        {
+            ClearOverride(context);
+            AppCompatDelegate.DefaultNightMode = AppCompatDelegate.ModeNightFollowSystem;
+            return systemMode;
+        }
+
+        SaveOverride(context, mode);
+        AppCompatDelegate.DefaultNightMode = ToNightMode(mode);
+        return mode;
+    }
+
     public static void SetSelectedMode(Context context, ThemeMode mode)
     {
         if (mode == ThemeMode.SystemDefault || mode == ThemeMode.Unspecified || mode == ThemeMode.System)

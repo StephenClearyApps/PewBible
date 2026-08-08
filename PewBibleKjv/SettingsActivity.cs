@@ -1,11 +1,13 @@
 ﻿using AndroidX.AppCompat.App;
+using AndroidX.AppCompat.Widget;
 
 namespace PewBibleKjv;
 
 [Activity(Label = "@string/settings_title")]
 public class SettingsActivity : AppCompatActivity
 {
-    private ImageButton _themeToggleButton = null!;
+    private SwitchCompat _themeToggleSwitch = null!;
+    private bool _refreshingThemeUi;
 
     protected override void OnCreate(Bundle? savedInstanceState)
     {
@@ -13,10 +15,14 @@ public class SettingsActivity : AppCompatActivity
         ThemePreferences.ApplyFromPreferences(this);
         SetContentView(Resource.Layout.Settings);
 
-        _themeToggleButton = FindViewById<ImageButton>(Resource.Id.themeToggleButton)!;
-        _themeToggleButton.Click += (_, __) =>
+        _themeToggleSwitch = FindViewById<SwitchCompat>(Resource.Id.themeToggleButton)!;
+        _themeToggleSwitch.CheckedChange += (_, args) =>
         {
-            ThemePreferences.ToggleTwoState(this);
+            if (_refreshingThemeUi)
+                return;
+
+            var selectedMode = args.IsChecked ? ThemeMode.Dark : ThemeMode.Light;
+            ThemePreferences.SetTwoStateMode(this, selectedMode);
             RefreshThemeUi();
         };
 
@@ -32,16 +38,17 @@ public class SettingsActivity : AppCompatActivity
     private void RefreshThemeUi()
     {
         var activeTheme = ThemePreferences.GetResolvedActiveMode(this);
+        _refreshingThemeUi = true;
+        _themeToggleSwitch.Checked = activeTheme == ThemeMode.Dark;
+        _refreshingThemeUi = false;
 
         if (activeTheme == ThemeMode.Dark)
         {
-            _themeToggleButton.SetImageResource(Resource.Drawable.ic_theme_dark);
-            _themeToggleButton.ContentDescription = GetString(Resource.String.theme_dark);
+            _themeToggleSwitch.ContentDescription = GetString(Resource.String.theme_dark);
         }
         else
         {
-            _themeToggleButton.SetImageResource(Resource.Drawable.ic_theme_light);
-            _themeToggleButton.ContentDescription = GetString(Resource.String.theme_light);
+            _themeToggleSwitch.ContentDescription = GetString(Resource.String.theme_light);
         }
     }
 }
