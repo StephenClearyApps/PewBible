@@ -31,7 +31,7 @@ public sealed class ThemePreferencesUnitTests
     public void GetResolvedActiveMode_WithExplicitOverride_UsesOverride()
     {
         var (sut, storage, _) = CreateSut(systemMode: ThemeMode.Light);
-        storage.Save("ThemeMode", ThemeMode.Dark.ToString());
+        storage.SaveInt("ThemeMode", (int)ThemeMode.Dark);
 
         var resolved = sut.GetResolvedActiveMode();
 
@@ -45,7 +45,7 @@ public sealed class ThemePreferencesUnitTests
 
         sut.SetTwoStateMode(ThemeMode.Light);
 
-        Assert.Equal(ThemeMode.System.ToString(), storage.Load("ThemeMode"));
+        Assert.Equal((int)ThemeMode.System, storage.LoadInt("ThemeMode"));
         Assert.True(sut.IsFollowingSystem());
         Assert.Equal(ThemeMode.System, applier.LastAppliedMode);
     }
@@ -57,7 +57,7 @@ public sealed class ThemePreferencesUnitTests
 
         sut.SetTwoStateMode(ThemeMode.Dark);
 
-        Assert.Equal(ThemeMode.Dark.ToString(), storage.Load("ThemeMode"));
+        Assert.Equal((int)ThemeMode.Dark, storage.LoadInt("ThemeMode"));
         Assert.False(sut.IsFollowingSystem());
         Assert.Equal(ThemeMode.Dark, applier.LastAppliedMode);
     }

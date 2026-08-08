@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using PewBibleKjv.Logic.Adapters.Services;
+﻿using PewBibleKjv.Logic.Adapters.Services;
 using PewBibleKjv.Logic.Adapters.UI;
 
 namespace PewBibleKjv.Logic;
@@ -21,17 +20,17 @@ public sealed class ThemePreferences
 
     public void ApplyFromPreferences()
     {
-        var selectedMode = GetSelectedMode();
+        var selectedMode = GetSavedOverride();
         _themeModeApplier.Apply(selectedMode);
     }
 
     public ThemeMode GetResolvedActiveMode()
     {
         var savedOverride = GetSavedOverride();
-        return savedOverride ?? _systemThemeReader.GetSystemResolvedMode();
+        return savedOverride == ThemeMode.System ? _systemThemeReader.GetSystemResolvedMode() : savedOverride;
     }
 
-    public bool IsFollowingSystem() => GetSavedOverride() == null;
+    public bool IsFollowingSystem() => GetSavedOverride() == ThemeMode.System;
 
     public void SetTwoStateMode(ThemeMode mode)
     {
@@ -54,39 +53,19 @@ public sealed class ThemePreferences
         return true;
     }
 
-    private ThemeMode GetSelectedMode()
+    private ThemeMode GetSavedOverride()
     {
-        var savedOverride = GetSavedOverride();
-        return savedOverride ?? ThemeMode.System;
-    }
-
-    private ThemeMode? GetSavedOverride()
-    {
-        var rawValue = _simpleStorage.Load(ThemeModePreferenceKey);
-        if (rawValue == null)
-            return null;
-
-        if (int.TryParse(rawValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out var value) &&
-            Enum.IsDefined(typeof(ThemeMode), value))
-        {
-            var parsed = (ThemeMode)value;
-            if (parsed == ThemeMode.Light || parsed == ThemeMode.Dark)
-                return parsed;
-            return null;
-        }
-
-        if (!Enum.TryParse<ThemeMode>(rawValue, ignoreCase: true, out var enumValue))
-            return null;
-        if (enumValue == ThemeMode.Light || enumValue == ThemeMode.Dark)
-            return enumValue;
-        return null;
+        var rawValue = _simpleStorage.LoadInt(ThemeModePreferenceKey);
+        if (!Enum.IsDefined(typeof(ThemeMode), rawValue))
+            return ThemeMode.System;
+        return (ThemeMode)rawValue;
     }
 
     private void SaveOverride(ThemeMode mode)
     {
         if (mode == ThemeMode.System)
-            _simpleStorage.Save(ThemeModePreferenceKey, ThemeMode.System.ToString());
+            _simpleStorage.Clear(ThemeModePreferenceKey);
         else
-            _simpleStorage.Save(ThemeModePreferenceKey, mode.ToString());
+            _simpleStorage.SaveInt(ThemeModePreferenceKey, (int)mode);
     }
 }
