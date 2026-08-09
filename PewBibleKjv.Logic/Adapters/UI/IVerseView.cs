@@ -11,18 +11,6 @@ public interface IVerseView
     event Action OnScroll;
 
     /// <summary>
-    /// Notification that the user has swiped left. <see cref="CurrentAbsoluteVerseNumber"/> has not been updated yet.
-    /// The parameter is the verse location that was current at the time the swipe was started.
-    /// </summary>
-    event Action<Location> OnSwipeLeft;
-
-    /// <summary>
-    /// Notification that the user has swiped left. <see cref="CurrentAbsoluteVerseNumber"/> has not been updated yet.
-    /// The parameter is the verse location that was current at the time the swipe was started.
-    /// </summary>
-    event Action<Location> OnSwipeRight;
-
-    /// <summary>
     /// Returns the current verse number at the top of the view.
     /// </summary>
     int CurrentAbsoluteVerseNumber { get; }

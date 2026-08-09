@@ -14,9 +14,7 @@ public sealed class RecyclerViewVerseViewAdapter: IVerseView
     private readonly RecyclerView _recyclerView;
     private readonly LinearLayoutManager _layoutManager;
     private readonly RecyclerViewScrollListener _scrollListener;
-    private readonly SwipeTouchListener _swipeTouchListener;
     private int _lastPosition = Bible.InvalidAbsoluteVerseNumber;
-    private Location? _startSwipeLocation;
 
     public RecyclerViewVerseViewAdapter(Context context, RecyclerView recyclerView, LinearLayoutManager layoutManager, int chapterHeadingVerseOffset)
     {
@@ -27,17 +25,9 @@ public sealed class RecyclerViewVerseViewAdapter: IVerseView
         _scrollListener = new RecyclerViewScrollListener();
         _scrollListener.Scrolled += ScrollListenerOnScrolled;
         _recyclerView.AddOnScrollListener(_scrollListener);
-
-        _swipeTouchListener = new SwipeTouchListener(context);
-        _swipeTouchListener.OnDown += SwipeTouchListenerOnOnDown;
-        _swipeTouchListener.OnSwipeLeft += SwipeTouchListenerOnOnSwipeLeft;
-        _swipeTouchListener.OnSwipeRight += SwipeTouchListenerOnOnSwipeRight;
-        _recyclerView.SetOnTouchListener(_swipeTouchListener);
     }
 
     public event Action? OnScroll;
-    public event Action<Location>? OnSwipeLeft;
-    public event Action<Location>? OnSwipeRight;
 
     public int CurrentAbsoluteVerseNumber => _layoutManager.FindFirstVisibleItemPosition();
 
@@ -51,12 +41,6 @@ public sealed class RecyclerViewVerseViewAdapter: IVerseView
     }
 
     public void Jump(Location location) => _layoutManager.ScrollToPositionWithOffset(location.AbsoluteVerseNumber, location.Verse == 1 ? -_chapterHeadingVerseOffset : 0);
-
-    private void SwipeTouchListenerOnOnDown() => _startSwipeLocation = CurrentVerseLocation;
-
-    private void SwipeTouchListenerOnOnSwipeRight() => OnSwipeRight?.Invoke(_startSwipeLocation!);
-
-    private void SwipeTouchListenerOnOnSwipeLeft() => OnSwipeLeft?.Invoke(_startSwipeLocation!);
 
     private void ScrollListenerOnScrolled(RecyclerView recyclerView, int i, int arg3)
     {

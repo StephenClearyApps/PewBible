@@ -1,16 +1,18 @@
 ﻿using Android.Content;
+using Android.Content.PM;
 using Android.Content.Res;
 using AndroidX.AppCompat.App;
 using PewBibleKjv.Text;
 
 namespace PewBibleKjv;
 
-[Activity(Label = "Choose Book")]
+[Activity(Label = "Choose Book", ConfigurationChanges = ConfigChanges.UiMode)]
 public class ChooseBookActivity : AppCompatActivity
 {
     protected override void OnCreate(Bundle? savedInstanceState)
     {
         base.OnCreate(savedInstanceState);
+        ThemePreferences.ApplyFromPreferences(this);
 
         // Set our view from our layout resource
         SetContentView(Resource.Layout.ChooseBook);
@@ -32,5 +34,12 @@ public class ChooseBookActivity : AppCompatActivity
                 };
             }
         }
+    }
+
+    public override void OnConfigurationChanged(Configuration newConfig)
+    {
+        base.OnConfigurationChanged(newConfig);
+        ThemePreferences.HandleSystemThemeChanged(this);
+        Recreate();
     }
 }

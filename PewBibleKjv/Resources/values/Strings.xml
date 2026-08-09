@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="app_name">Pew Bible (KJV)</string>
+  <string name="settings_title">Settings</string>
+  <string name="settings_theme_heading">Theme</string>
+  <string name="theme_light">Light</string>
+  <string name="theme_dark">Dark</string>
+  <string name="menu_settings">Settings</string>
 </resources>

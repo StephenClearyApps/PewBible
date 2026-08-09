@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
 using Android.Content;
+using Android.Content.PM;
+using Android.Content.Res;
 using Android.Views;
 using AndroidX.AppCompat.App;
 using PewBibleKjv.Text;
@@ -7,12 +9,13 @@ using PewBibleKjv.Util;
 
 namespace PewBibleKjv;
 
-[Activity(Label = "Choose Chapter")]
+[Activity(Label = "Choose Chapter", ConfigurationChanges = ConfigChanges.UiMode)]
 public class ChooseChapterActivity : AppCompatActivity
 {
     protected override void OnCreate(Bundle? savedInstanceState)
     {
         base.OnCreate(savedInstanceState);
+        ThemePreferences.ApplyFromPreferences(this);
         var bookIndex = Intent!.GetIntExtra("BookIndex", -1);
         if (bookIndex == -1)
         {
@@ -30,6 +33,13 @@ public class ChooseChapterActivity : AppCompatActivity
         var buttonWidth = MaximumButtonWidth();
         grid.SetColumnWidth(buttonWidth);
         grid.Adapter = new ChapterAdapter(this, bookIndex, buttonWidth);
+    }
+
+    public override void OnConfigurationChanged(Configuration newConfig)
+    {
+        base.OnConfigurationChanged(newConfig);
+        ThemePreferences.HandleSystemThemeChanged(this);
+        Recreate();
     }
 
     private static Intent MainActivityIntent(Context context)

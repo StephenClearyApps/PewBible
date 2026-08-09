@@ -84,57 +84,5 @@ namespace UnitTests
             Assert.Equal(VerseHelper.Find("John", 2).ChapterHeadingText, app.StubChapterHeading.Text);
             Assert.NotEqual(john1ChapterHeading, app.StubChapterHeading.Text);
         }
-        
-        [Fact]
-        public void SwipeLeft_MovesToNextChapter()
-        {
-            var app = new StubbedApp();
-            var john1ChapterHeading = app.StubChapterHeading.Text;
-            app.StubVerseView.RaiseOnSwipeLeft();
-            var expectedVerse = VerseHelper.Find("John", 2);
-            Assert.Equal(expectedVerse.AbsoluteVerseNumber, app.StubVerseView.CurrentAbsoluteVerseNumber);
-            Assert.Equal(expectedVerse.ChapterHeadingText, app.StubChapterHeading.Text);
-            Assert.NotEqual(john1ChapterHeading, app.StubChapterHeading.Text);
-        }
-
-        [Fact]
-        public void SwipeRight_MovesToPreviousChapter()
-        {
-            var app = new StubbedApp();
-            var john1ChapterHeading = app.StubChapterHeading.Text;
-            app.StubVerseView.RaiseOnSwipeRight();
-            var expectedVerse = VerseHelper.Find("John", 1).PreviousChapter();
-            Assert.Equal(expectedVerse.AbsoluteVerseNumber, app.StubVerseView.CurrentAbsoluteVerseNumber);
-            Assert.Equal(expectedVerse.ChapterHeadingText, app.StubChapterHeading.Text);
-            Assert.NotEqual(john1ChapterHeading, app.StubChapterHeading.Text);
-        }
-
-        [Fact]
-        public void ScrollDuringSwipeLeft_UsesOriginalLocation()
-        {
-            var app = new StubbedApp();
-            var john1ChapterHeading = app.StubChapterHeading.Text;
-            var john1Location = app.StubVerseView.CurrentVerseLocation;
-            app.StubVerseView.RaiseOnScroll(VerseHelper.Find("John", 2).AbsoluteVerseNumber);
-            var expectedVerse = VerseHelper.Find("John").NextChapter();
-            app.StubVerseView.RaiseOnSwipeLeft(john1Location);
-            Assert.Equal(expectedVerse.AbsoluteVerseNumber, app.StubVerseView.CurrentAbsoluteVerseNumber);
-            Assert.Equal(expectedVerse.ChapterHeadingText, app.StubChapterHeading.Text);
-            Assert.NotEqual(john1ChapterHeading, app.StubChapterHeading.Text);
-        }
-
-        [Fact]
-        public void ScrollDuringSwipeRight_UsesOriginalLocation()
-        {
-            var app = new StubbedApp();
-            var john1ChapterHeading = app.StubChapterHeading.Text;
-            var john1Location = app.StubVerseView.CurrentVerseLocation;
-            app.StubVerseView.RaiseOnScroll(app.StubVerseView.CurrentAbsoluteVerseNumber - 1);
-            var expectedVerse = VerseHelper.Find("John").PreviousChapter();
-            app.StubVerseView.RaiseOnSwipeRight(john1Location);
-            Assert.Equal(expectedVerse.AbsoluteVerseNumber, app.StubVerseView.CurrentAbsoluteVerseNumber);
-            Assert.Equal(expectedVerse.ChapterHeadingText, app.StubChapterHeading.Text);
-            Assert.NotEqual(john1ChapterHeading, app.StubChapterHeading.Text);
-        }
     }
 }

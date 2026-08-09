@@ -69,7 +69,7 @@ public sealed class History
     public void Save(int currentAbsoluteVerseNumber)
     {
         if (currentAbsoluteVerseNumber == Bible.InvalidAbsoluteVerseNumber)
-            throw new InvalidOperationException("Invalid verse number");
+            throw new InvalidOperationException($"Invalid verse number {currentAbsoluteVerseNumber}");
         _history[_currentIndex] = currentAbsoluteVerseNumber;
         _simpleStorage.Save("history-currentIndex", _currentIndex.ToString(CultureInfo.InvariantCulture));
         _simpleStorage.Save("history-history", string.Join(",", _history.Select(x => x.ToString(CultureInfo.InvariantCulture))));
@@ -83,7 +83,7 @@ public sealed class History
     public int MoveBack(int currentAbsoluteVerseNumber)
     {
         if (currentAbsoluteVerseNumber == Bible.InvalidAbsoluteVerseNumber)
-            throw new InvalidOperationException("Invalid verse number");
+            throw new InvalidOperationException($"Invalid verse number {currentAbsoluteVerseNumber}");
         if (!CanMoveBack)
             throw new InvalidOperationException("Invalid state");
         _history[_currentIndex] = currentAbsoluteVerseNumber;
@@ -100,7 +100,7 @@ public sealed class History
     public int MoveForward(int currentAbsoluteVerseNumber)
     {
         if (currentAbsoluteVerseNumber == Bible.InvalidAbsoluteVerseNumber)
-            throw new InvalidOperationException("Invalid verse number");
+            throw new InvalidOperationException($"Invalid verse number {currentAbsoluteVerseNumber}");
         if (!CanMoveForward)
             throw new InvalidOperationException("Invalid state");
         _history[_currentIndex] = currentAbsoluteVerseNumber;
@@ -118,8 +118,10 @@ public sealed class History
     /// <param name="jumpAbsoluteVerseNumber">The verse number for the new position.</param>
     public void AddJump(int currentAbsoluteVerseNumber, int jumpAbsoluteVerseNumber)
     {
-        if (currentAbsoluteVerseNumber == Bible.InvalidAbsoluteVerseNumber || jumpAbsoluteVerseNumber == Bible.InvalidAbsoluteVerseNumber)
-            throw new InvalidOperationException("Invalid verse number");
+        if (currentAbsoluteVerseNumber == Bible.InvalidAbsoluteVerseNumber)
+            throw new InvalidOperationException($"Invalid current verse number {currentAbsoluteVerseNumber}");
+        if (jumpAbsoluteVerseNumber == Bible.InvalidAbsoluteVerseNumber)
+            throw new InvalidOperationException($"Invalid jump verse number {jumpAbsoluteVerseNumber}");
         _history[_currentIndex] = currentAbsoluteVerseNumber;
 
         // If the user is jumping from the same location, don't insert a duplicate.
