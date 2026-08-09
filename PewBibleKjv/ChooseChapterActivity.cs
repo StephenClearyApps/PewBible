@@ -38,8 +38,8 @@ public class ChooseChapterActivity : AppCompatActivity
     public override void OnConfigurationChanged(Configuration newConfig)
     {
         base.OnConfigurationChanged(newConfig);
-        if (ThemePreferences.HandleSystemThemeChanged(this))
-            Recreate();
+        ThemePreferences.HandleSystemThemeChanged(this);
+        Recreate();
     }
 
     private static Intent MainActivityIntent(Context context)

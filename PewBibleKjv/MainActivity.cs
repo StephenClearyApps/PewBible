@@ -124,8 +124,8 @@ public class MainActivity : AppCompatActivity
     public override void OnConfigurationChanged(Configuration newConfig)
     {
         base.OnConfigurationChanged(newConfig);
-        if (ThemePreferences.HandleSystemThemeChanged(this))
-            Recreate();
+        ThemePreferences.HandleSystemThemeChanged(this);
+        Recreate();
     }
 
     private void UpdateStatusBarAppearance()
