@@ -18,6 +18,7 @@ public class MainActivity : AppCompatActivity
     private CoreApp _app = null!;
     private ImageButton _backButton = null!;
     private ImageButton _forwardButton = null!;
+    private ImageButton _searchButton = null!;
     private TextViewChapterHeadingAdapter _chapterHeadingAdapter = null!;
     private RecyclerViewVerseViewAdapter _verseViewAdapter = null!;
     private SharedPreferencesSimpleStorageAdapter _simpleStorageAdapter = null!;
@@ -69,6 +70,8 @@ public class MainActivity : AppCompatActivity
         _simpleStorageAdapter = new SharedPreferencesSimpleStorageAdapter(ApplicationContext!.GetSharedPreferences("global", FileCreationMode.Private)!);
         _backButton = FindViewById<ImageButton>(Resource.Id.backButton)!;
         _forwardButton = FindViewById<ImageButton>(Resource.Id.forwardButton)!;
+        _searchButton = FindViewById<ImageButton>(Resource.Id.searchButton)!;
+        _searchButton.Click += (_, __) => StartActivity(typeof(SearchActivity));
         _historyControlsAdapter = new ViewHistoryControlsAdapter(_backButton, _forwardButton);
 
         CreateApp();
@@ -116,12 +119,14 @@ public class MainActivity : AppCompatActivity
     private int IntentStartingVerse()
     {
         // Determine if we have an intent to go to a particular verse.
-        var bookIndex = Intent!.GetIntExtra("BookIndex", -1);
+        var verseNumber = Intent!.GetIntExtra("VerseNumber", Bible.InvalidAbsoluteVerseNumber);
+        if (verseNumber != Bible.InvalidAbsoluteVerseNumber)
+            return verseNumber;
+        var bookIndex = Intent.GetIntExtra("BookIndex", -1);
         var chapterIndex = Intent.GetIntExtra("ChapterIndex", -1);
-        var startingVerse = Bible.InvalidAbsoluteVerseNumber;
         if (bookIndex != -1 && chapterIndex != -1)
-            startingVerse = Structure.Books[bookIndex].Chapters[chapterIndex].BeginVerse;
-        return startingVerse;
+            return Structure.Books[bookIndex].Chapters[chapterIndex].BeginVerse;
+        return Bible.InvalidAbsoluteVerseNumber;
     }
 
 		private sealed class CustomOnBackInvokedCallback(Action action) : OnBackPressedCallback(enabled: true)
